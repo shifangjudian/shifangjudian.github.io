@@ -1,13 +1,421 @@
-```html
-  <!DOCTYPE html>
-  <html>
-  <head>
-    <title>�ҵ���վ</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h1>Hello GitHub Pages!</h1>
-    <script src="script.js"></script>
-  </body>
-  </html>
-  ```
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高端服装定制</title>
+    <style>
+        /* 基础重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: '微软雅黑', sans-serif;
+            padding-top: 150px; /* 顶部固定区域高度 */
+        }
+
+        /* 顶部固定容器 */
+        .top-fixed {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 品牌信息区域 */
+        .brand-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            width: 120px;
+            height: 60px;
+            background: url('https://placehold.co/120x60') no-repeat;
+            background-size: contain;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .company-name {
+            display: inline-block;
+            margin-left: 20px;
+            font-size: 28px;
+            color: #333;
+            vertical-align: middle;
+        }
+
+        /* 导航菜单容器 */
+        .nav-container {
+            padding: 15px 30px;
+            background: #f8f8f8;
+        }
+
+        /* 主导航菜单 */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            position: relative;
+        }
+
+        .nav-menu > li {
+            position: relative;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #666;
+            font-size: 16px;
+            padding: 10px 15px;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        /* 下拉菜单样式 */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu li {
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 20px;
+            color: #444;
+            font-size: 14px;
+        }
+
+        /* 悬停效果 */
+        .nav-menu > li:hover > a {
+            color: #000;
+            background: rgba(0,0,0,0.05);
+        }
+
+        .nav-menu > li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .brand-header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                width: 100px;
+                height: 50px;
+            }
+
+            .company-name {
+                font-size: 22px;
+                margin-left: 15px;
+            }
+
+            .nav-container {
+                padding: 10px 15px;
+            }
+
+            .nav-menu {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+
+            .nav-menu a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                background: #f0f0f0;
+                display: none;
+            }
+
+            .nav-menu > li:hover .dropdown-menu {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .company-name {
+                font-size: 18px;
+            }
+
+            .nav-menu {
+                gap: 10px;
+            }
+
+            .nav-menu a {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部固定区域 -->
+    <div class="top-fixed">
+        <!-- 品牌信息 -->
+        <div class="brand-header">
+            <div class="logo"></div>
+            <h1 class="company-name">北京十方聚典服饰科技有限公司</h1>
+        </div>
+
+        <!-- 导航菜单 -->
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
+                
+                <li>
+                    <a href="#hot">HOT</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#new">新品上市</a></li>
+                        <li><a href="#sale">特价专区</a></li>
+                        <li><a href="#best">畅销排行</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#chef">厨师服</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#chef-summer">夏季款</a></li>
+                        <li><a href="#chef-winter">冬季款</a></li>
+                        <li><a href="#chef-special">特别定制</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#shirt">衬衫</a>
+				                    <ul class="dropdown-menu">
+                        <li><a href="#chef-summer">夏季款</a></li>
+                        <li><a href="#chef-winter">冬季款</a></li>
+                        <li><a href="#chef-special">特别定制</a></li>
+                    </ul>
+					</li>
+                <li><a href="#apron">围裙</a>
+				                    <ul class="dropdown-menu">
+                        <li><a href="#chef-summer">服务员围裙</a></li>
+                        <li><a href="#chef-winter">厨师围裙</a></li>
+                        <li><a href="#chef-special">特别定制</a></li>
+                    </ul>
+					</li>
+                
+                <li>
+                    <a href="#accessories">配饰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#hats">厨师帽</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="https://www.baidu.com" target="_blank">品牌故事</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 其他内容保持不变... -->
+	<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高端服装定制</title>
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: '微软雅黑', sans-serif;
+            padding-top: 200px; /* 根据顶部高度调整 */
+        }
+
+        /* 顶部固定容器（保持原有样式不变） */
+        .top-fixed {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 新增：轮播图容器 */
+        .carousel-container {
+            position: relative;
+            max-width: 1920px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        /* 轮播图主体 */
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        /* 单个轮播项 */
+        .carousel-item {
+            min-width: 100%;
+            position: relative;
+            aspect-ratio: 16/6; /* 保持比例 */
+        }
+
+        /* 轮播图片样式 */
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 导航按钮 */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .carousel-item {
+                aspect-ratio: 4/3; /* 手机端更方形的比例 */
+            }
+
+            .carousel-btn {
+                padding: 10px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 160px;
+            }
+
+            .carousel-item {
+                aspect-ratio: 1/1; /* 手机竖屏比例 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部固定区域（保持原有结构） -->
+    <div class="top-fixed">
+        <!-- 原有品牌信息和导航栏 -->
+    </div>
+
+    <!-- 新增轮播图 -->
+    <div class="carousel-container">
+        <div class="carousel-slide">
+            <!-- 替换以下图片 -->
+            <div class="carousel-item">
+                <img src="https://cdn.shopify.com/static/sample-images/garnished.jpeg" alt="轮播图1">
+            </div>
+            <div class="carousel-item">
+                <img src="https://cdn.shopify.com/static/sample-images/bath.jpeg" alt="轮播图2">
+            </div>
+            <div class="carousel-item">
+                <img src="https://cdn.shopify.com/static/sample-images/shoes.jpeg" alt="轮播图3">
+            </div>
+        </div>
+        <button class="carousel-btn prev-btn">?</button>
+        <button class="carousel-btn next-btn">?</button>
+    </div>
+
+    <!-- 其他内容区域 -->
+
+    <script>
+        // 轮播图控制脚本
+        const slide = document.querySelector('.carousel-slide');
+        const items = document.querySelectorAll('.carousel-item');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        
+        let currentIndex = 0;
+        const totalItems = items.length;
+
+        function updateSlide() {
+            slide.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalItems;
+            updateSlide();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+            updateSlide();
+        });
+
+        // 自动播放（可选）
+        let autoPlay = setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalItems;
+            updateSlide();
+        }, 5000);
+
+        // 鼠标悬停暂停
+        slide.parentElement.addEventListener('mouseenter', () => clearInterval(autoPlay));
+        slide.parentElement.addEventListener('mouseleave', () => {
+            autoPlay = setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateSlide();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
+</body>
+</html>
+</body>
+</html>

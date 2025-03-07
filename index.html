@@ -37,7 +37,7 @@
         .logo {
             width: 90px;
             height: 40px;
-            background: url('https://s21.ax1x.com/2025/03/03/pEGbtde.jpg') no-repeat;
+            background: url(/staic/img/9+1=10.jpg) no-repeat;
             background-size: contain;
             display: inline-block;
             vertical-align: middle;
@@ -158,7 +158,7 @@
         /* 轮播图样式 */
         .carousel-container {
             position: relative;
-            max-width: 1920px;
+            max-width: 1600px;
             margin: 0 auto;
             overflow: hidden;
         }
@@ -595,8 +595,116 @@
     </script>
 	   
 </body>
-</html>
- <style>
+</html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三列图片展示</title>
+    <style>
+        /* 重置默认样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 外层容器 */
+        .container {
+            max-width: 1500px;    /* 最大宽度 */
+            margin: 0 auto;       /* 水平居中 */
+            padding: 0 10px;      /* 左右留白10px */
+        }
+
+        /* 图片行容器 */
+        .image-row {
+		padding: 20px;
+            display: flex;
+            justify-content: space-between; /* 水平平均分布 */
+            flex-wrap: wrap;      /* 允许换行 */
+            gap: 10px;            /* 图片间距 */
+        }
+
+        /* 单个图片容器 */
+        .image-item {
+            width: 470px;         /* 固定宽度 */
+            height: 350px;        /* 固定高度 */
+            position: relative;    /* 定位基准 */
+            overflow: hidden;      /* 隐藏溢出部分 */
+            margin-bottom: 10px;   /* 底部间距 */
+        }
+
+        /* 图片样式 */
+        .image-item img {
+            width: 100%;          /* 充满容器 */
+            height: 100%;         /* 充满容器 */
+            object-fit: cover;     /* 保持比例填充 */
+            transition: transform 0.3s ease; /* 悬停动画 */
+        }
+
+        /* 鼠标悬停效果 */
+        .image-item:hover img {
+            transform: scale(1.1); /* 放大效果 */
+        }
+
+        /* 文字按钮容器 */
+        .image-button {
+            position: absolute;    /* 绝对定位 */
+            top: 50%;             /* 垂直居中 */
+            left: 50%;             /* 水平居中 */
+            transform: translate(-50%, -50%); /* 精确居中 */
+            background: rgba(255, 255, 255, 0.9); /* 白色背景 */
+            padding: 8px 15px;     /* 按钮内边距 */
+            text-align: center;     /* 文字居中 */
+            cursor: pointer;       /* 手型光标 */
+        }
+
+        /* 响应式设计：手机端 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;   /* 手机端增加留白 */
+            }
+            .image-item {
+                width: 100%;       /* 手机端占满宽度 */
+                height: 250px;      /* 调整高度 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-row">
+            <!-- 第一个图片项 -->
+            <div class="image-item">
+                <a href="https://s21.ax1x.com/2025/03/06/pEY0LRA.jpg" target="_blank"> <!-- 替换为你的链接 -->
+                    <img src="https://s21.ax1x.com/2025/03/06/pEY0LRA.jpg" alt="图片1"> <!-- 替换为你的图片路径 -->
+                    <div class="image-button">
+                        <span>查看详情1</span> <!-- 替换为你的文字 -->
+                    </div>
+                </a>
+            </div>
+
+            <!-- 第二个图片项（复制修改即可） -->
+            <div class="image-item">
+                <a href="https://s21.ax1x.com/2025/03/06/pEY0LRA.jpg" target="_blank">
+                    <img src="https://s21.ax1x.com/2025/03/06/pEY0LRA.jpg" alt="图片2">
+                    <div class="image-button">
+                        <span>查看详情2</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 第三个图片项（复制修改即可） -->
+            <div class="image-item">
+                <a href="http://www.baidu.com" target="_blank">
+                    <img src="https://s21.ax1x.com/2025/03/06/pEY0LRA.jpg" alt="图片3">
+                    <div class="image-button">
+                        <span>查看详情3</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
         /* 基础样式重置 */
         * {
             margin: 0;
@@ -615,8 +723,8 @@
         /* 中灰色底图 */
         .base-layer {
             width: 100%;        /* 宽度自适应容器 */
-            height: 6000px;     /* 修改高度请调整这个值 */
-            background: #CCCCCC;   /* 中灰色背景 */
+            height: 1500px;     /* 修改高度请调整这个值 */
+            background: url(/staic/container.JPG);   /* 中灰色背景 */
             position: absolute;  /* 绝对定位作为底层 */
             z-index: 1;         /* 底层层级 */
         }
@@ -624,7 +732,7 @@
         /* 图片展示区域 */
         .gallery {
 		top: 50px;
-		width: 90%;
+		width: 85%;
 		margin: auto;
             position: relative;  /* 相对定位覆盖在底图上 */
             z-index: 2;          /* 上层级 */
@@ -633,8 +741,8 @@
             grid-template-columns: repeat(3, 1fr);  /* 3列布局 */
             /* 关键修改位置 ▼▼▼ */
 
-    row-gap: 0px;   /* 控制行间距（纵向） */
-    column-gap: 10px; /* 控制列间距（横向） */
+    row-gap: 25px;   /* 控制行间距（纵向） */
+    column-gap: 30px; /* 控制列间距（横向） */
     /* ▲▲▲ 修改这些数值即可调整间距 */
 }
 
@@ -658,16 +766,19 @@
             width: 100%;
             height: 100%;
             object-fit: cover;      /* 保持图片比例 */
-            transition: opacity 0.3s;  /* 渐变效果 */
+            transition: opacity 0.4s;  /* 渐变效果 */
         }
 
         /* 悬停图片 */
         .hover-img {
+		 width: 100%;
+            height: 100%;
+            object-fit: cover;      /* 保持图片比例 */
             position: absolute;
             top: 0;
             left: 0;
             opacity: 0;             /* 默认隐藏 */
-            transition: opacity 0.3s;
+            transition: opacity 0.4s;
         }
 
         /* 鼠标悬停效果 */
@@ -681,12 +792,20 @@
         /* 文字样式 */
         .text-line {
             margin-top: 8px;       /* 修改间距调整这个值 */
-            font-size: 20px;       /* 修改文字大小 */
+            font-size: 30px;       /* 修改文字大小 */
             line-height: 1;      /* 修改行距调整这个值 */
             color: #333;           /* 文字颜色 */
         }
+		.text-line.big {
+		text-align:center;
+		padding-top: 70px;
+    font-size: 40px;  /* 大号文字大小（桌面端） */
+    color: #333;      /* 主标题颜色 */
+    margin-top: 10px; /* 可单独调整标题间距 */
+	color: #333;           /* 文字颜色 */
+}
 .text-line.title {
-    font-size: 16px;  /* 大号文字大小（桌面端） */
+    font-size: 30px;  /* 大号文字大小（桌面端） */
     color: #333;      /* 主标题颜色 */
     margin-top: 10px; /* 可单独调整标题间距 */
 }
@@ -707,6 +826,9 @@
             .image-box {
                 margin-bottom: 30px;  /* 底部间距 */
             }
+						    .text-line.big {
+        font-size: 20px;  /* 移动端标题大小 */
+    }
 			    .text-line.title {
         font-size: 14px;  /* 移动端标题大小 */
     }
@@ -722,12 +844,44 @@
 <body>
     <div class="container">
         <!-- 中灰色底图 -->
+		    <div class="text-line big">
+        <p>热销单品</p>
+		 <div class="text-line title">
+		<p>wellcome</p>
+    </div>
         <div class="base-layer"></div>
-
         <!-- 图片展示区域 -->
         <div class="gallery">
             <!-- 第1个图片块 -->
             <div class="image-box">
+                <a href="https://www.baidu.com" class="image-link">
+                    <img src="https://s21.ax1x.com/2025/03/06/pEY0LRA.jpg" class="default-img" alt="图片1">
+                    <img src="https://s21.ax1x.com/2025/03/06/pEY0OxI.jpg" class="hover-img" alt="悬停图片1">
+                </a>
+                <div class="text-line title">惠质兰心</div>
+                <div class="text-line subtitle">EW08C1700A11P6</div>
+            </div>
+
+            <!-- 第2个图片块（复制修改即可） -->
+            <div class="image-box">
+                <a href="#链接2" class="image-link">
+                    <img src="https://s21.ax1x.com/2025/03/06/pEY0OxI.jpg" class="default-img" alt="图片2">
+                    <img src="https://s21.ax1x.com/2025/03/06/pEY0LRA.jpg" class="hover-img" alt="悬停图片2">
+                </a>
+                <div class="text-line">第一行文字2</div>
+                <div class="text-line">第二行文字2</div>
+            </div>
+
+            <!-- 第3个图片块 -->
+            <div class="image-box">
+                <a href="#链接3" class="image-link">
+                    <img src="https://dummyimage.com/40x60/000/fff" class="default-img" alt="图片3">
+                    <img src="https://dummyimage.com/40x60/fff/000" class="hover-img" alt="悬停图片3">
+                </a>
+                <div class="text-line">第一行文字3</div>
+                <div class="text-line">第二行文字3</div>
+            </div>
+			            <div class="image-box">
                 <a href="https://www.baidu.com" class="image-link">
                     <img src="https://s21.ax1x.com/2025/03/06/pEY0LRA.jpg" class="default-img" alt="图片1">
                     <img src="https://s21.ax1x.com/2025/03/06/pEY0OxI.jpg" class="hover-img" alt="悬停图片1">

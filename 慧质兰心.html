@@ -1,0 +1,76 @@
+<style>
+/* 轮播图容器样式 */
+.carousel-container {
+    position: relative;
+    width: 95%; /* 容器宽度(可修改为固定值如800px) */
+    max-width: 1200px; /* 最大宽度(PC端限制) */
+    margin: 20px auto; /* 上下边距 左右居中 */
+    overflow: hidden;
+    aspect-ratio: 16/9; /* 宽高比(可选) 16:9 | 4:3 | 删除此项使用高度控制 */
+}
+
+/* 轮播项通用样式 */
+.carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+/* 单个轮播项 */
+.carousel-item {
+    min-width: 100%;
+    position: relative;
+}
+
+/* 图片尺寸控制 */
+.carousel-item img {
+    width: 100%;
+    
+    /* 高度控制方案（选择一种） */
+    /* 方案1：固定高度 */
+    height: 500px; /* 固定高度值 */
+    
+    /* 方案2：根据容器自动高度（需删除aspect-ratio） */
+    /* height: auto; */
+    
+    /* 方案3：视窗高度比例 */
+    /* height: 60vh; */ /* 60%视窗高度 */
+    
+    /* 公共属性 */
+    object-fit: cover; /* 图片填充方式: cover | contain */
+    display: block;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .carousel-container {
+        width: 100%; /* 手机端全屏显示 */
+        margin: 0 auto;
+    }
+    
+    .carousel-item img {
+        /* 手机端高度设置 */
+        height: 50vh; /* 方案A：视窗比例 */
+        /* height: 300px; */ /* 方案B：固定高度 */
+        
+        /* 手机端特殊填充方式 */
+        object-fit: contain; /* 小屏幕显示完整图片 */
+    }
+    
+    /* 手机端隐藏导航按钮 */
+    .carousel-btn {
+        display: none;
+    }
+}
+
+/* 导航按钮定位 */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /* 按钮尺寸 */
+    width: 40px;
+    height: 40px;
+}
+
+/* 其他保持原有样式... */
+</style>

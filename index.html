@@ -1,4 +1,134 @@
 <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* ================= 可调整的CSS变量 ================= */
+        :root {
+            --btn-size: 60px;         /* 按钮直径 */
+            --btn-color: #007bff;       /* 按钮主颜色 */
+            --btn-hover-color: #0056b3; /* 悬停颜色 */
+            --btn-spacing: 15px;       /* 按钮间距 */
+            --btn-position-right: 60px; /* 距离右侧距离 */
+            --btn-position-bottom: 60px;/* 距离底部距离 */
+            --show-scroll-pos: 300px;  /* 滚动多少像素后显示返回顶部按钮 */
+        }
+
+        /* ================= 悬浮按钮容器 ================= */
+        .float-buttons {
+            position: fixed; /* 固定定位 */
+            bottom: var(--btn-position-bottom);
+            right: var(--btn-position-right);
+            z-index: 9999;   /* 确保在最顶层 */
+            display: flex;
+            flex-direction: column; /* 垂直排列 */
+            gap: var(--btn-spacing); /* 按钮间距 */
+        }
+
+        /* ================= 按钮基础样式 ================= */
+        .float-btn {
+            width: var(--btn-size);
+            height: var(--btn-size);
+            border-radius: 50%;       /* 圆形 */
+            background: var(--btn-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* 阴影 */
+            transition: all 0.3s;     /* 动画过渡 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: calc(var(--btn-size)*0.4); /* 图标大小自适应 */
+        }
+
+        /* 悬停效果 */
+        .float-btn:hover {
+            background: var(--btn-hover-color);
+            transform: scale(1.1);    /* 放大效果 */
+        }
+
+        /* 默认隐藏返回顶部按钮 */
+        #backToTop {
+            display: none;
+        }
+		        .dingbu {
+            width: 50px;
+            height: 50px;
+            background: url(/staic/回到顶部.png) no-repeat;
+            background-size: contain;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+		        .shouye {
+            width: 50px;
+            height: 50px;
+            background: url(/staic/回到首页.png) no-repeat;
+            background-size: contain;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        /* ================= 移动端适配 ================= */
+        @media (max-width: 768px) {
+            :root {
+                --btn-size: 40px;
+                --btn-position-right: 20px;
+                --btn-position-bottom: 20px;
+            }
+			
+        }
+    </style>
+</head>
+<body>
+        <!-- 悬浮按钮组 -->
+    <div class="float-buttons">
+        <!-- 返回顶部按钮 -->
+        <button id="backToTop" class="float-btn" title="返回顶部">
+            <i class="dingbu"></i>
+        </button>
+        <!-- 返回首页按钮 -->
+        <button id="backToHome" class="float-btn" title="返回首页">
+            <i class="shouye"></i>
+        </button>
+    </div>
+
+    <script>
+        // ================= 获取元素 =================
+        const backToTopBtn = document.getElementById('backToTop');
+        const backToHomeBtn = document.getElementById('backToHome');
+
+        // ================= 滚动监听 =================
+        window.addEventListener('scroll', function() {
+            // 获取当前滚动位置
+            const scrollY = window.scrollY || document.documentElement.scrollTop;
+            
+            // 当滚动超过指定像素时显示按钮
+            if (scrollY > parseInt(getComputedStyle(document.documentElement)
+                .getPropertyValue('--show-scroll-pos'))) {
+                backToTopBtn.style.display = 'flex';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+
+        // ================= 返回顶部功能 =================
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // 平滑滚动
+            });
+        });
+
+        // ================= 返回首页功能 =================
+        backToHomeBtn.addEventListener('click', function() {
+            // 修改下方引号内的地址为你的首页链接
+            window.location.href = "https://www.yourdomain.com/"; 
+        });
+    </script>
+</body>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">

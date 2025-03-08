@@ -1,134 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简约悬浮按钮</title>
     <style>
-        /* ================= 可调整的CSS变量 ================= */
-        :root {
-            --btn-size: 60px;         /* 按钮直径 */
-            --btn-color: #007bff;       /* 按钮主颜色 */
-            --btn-hover-color: #0056b3; /* 悬停颜色 */
-            --btn-spacing: 15px;       /* 按钮间距 */
-            --btn-position-right: 60px; /* 距离右侧距离 */
-            --btn-position-bottom: 60px;/* 距离底部距离 */
-            --show-scroll-pos: 300px;  /* 滚动多少像素后显示返回顶部按钮 */
-        }
-
-        /* ================= 悬浮按钮容器 ================= */
-        .float-buttons {
-            position: fixed; /* 固定定位 */
-            bottom: var(--btn-position-bottom);
-            right: var(--btn-position-right);
-            z-index: 9999;   /* 确保在最顶层 */
+        /* 按钮容器 - 修改right/bottom调整位置 */
+        .float-btns {
+            position: fixed;
+            right: 25px;    /* 距离右侧 */
+            bottom: 25px;   /* 距离底部 */
+            z-index: 999;
             display: flex;
-            flex-direction: column; /* 垂直排列 */
-            gap: var(--btn-spacing); /* 按钮间距 */
+            flex-direction: column;
+            gap: 12px;      /* 按钮间距 */
         }
 
-        /* ================= 按钮基础样式 ================= */
+        /* 通用按钮样式 */
         .float-btn {
-            width: var(--btn-size);
-            height: var(--btn-size);
-            border-radius: 50%;       /* 圆形 */
-            background: var(--btn-color);
-            color: white;
+            width: 48px;     /* 按钮尺寸 */
+            height: 48px;
+            border-radius: 50%;
             border: none;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* 阴影 */
-            transition: all 0.3s;     /* 动画过渡 */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: calc(var(--btn-size)*0.4); /* 图标大小自适应 */
+            background: #666; /* 中灰色背景 */
+            color: #fff;       /* 图标颜色 */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* 悬停效果 */
+        /* 鼠标悬停效果 */
         .float-btn:hover {
-            background: var(--btn-hover-color);
-            transform: scale(1.1);    /* 放大效果 */
+            background: #999; /* 浅灰色背景 */
+            transform: translateY(-2px); /* 上浮效果 */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        /* 默认隐藏返回顶部按钮 */
-        #backToTop {
-            display: none;
-        }
-		        .dingbu {
-            width: 50px;
-            height: 50px;
-            background: url(/staic/回到顶部.png) no-repeat;
-            background-size: contain;
-            display: inline-block;
-            vertical-align: middle;
-            cursor: pointer;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-		        .shouye {
-            width: 50px;
-            height: 50px;
-            background: url(/staic/回到首页.png) no-repeat;
-            background-size: contain;
-            display: inline-block;
-            vertical-align: middle;
-            cursor: pointer;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-        /* ================= 移动端适配 ================= */
-        @media (max-width: 768px) {
-            :root {
-                --btn-size: 40px;
-                --btn-position-right: 20px;
-                --btn-position-bottom: 20px;
-            }
-			
+        /* 图标样式 */
+        .icon {
+            width: 22px;    /* 图标尺寸 */
+            height: 22px;
+            fill: currentColor; /* 继承文字颜色 */
         }
     </style>
 </head>
 <body>
-        <!-- 悬浮按钮组 -->
-    <div class="float-buttons">
-        <!-- 返回顶部按钮 -->
-        <button id="backToTop" class="float-btn" title="返回顶部">
-            <i class="dingbu"></i>
+
+
+    <!-- 悬浮按钮容器 -->
+    <div class="float-btns">
+        <!-- 首页按钮 -->
+        <button class="float-btn" onclick="goHome()">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/>
+            </svg>
         </button>
-        <!-- 返回首页按钮 -->
-        <button id="backToHome" class="float-btn" title="返回首页">
-            <i class="shouye"></i>
+        
+        <!-- 返回顶部按钮 -->
+        <button class="float-btn" onclick="scrollToTop()">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M7 14l5-5 5 5H7z"/>
+            </svg>
         </button>
     </div>
 
     <script>
-        // ================= 获取元素 =================
-        const backToTopBtn = document.getElementById('backToTop');
-        const backToHomeBtn = document.getElementById('backToHome');
-
-        // ================= 滚动监听 =================
-        window.addEventListener('scroll', function() {
-            // 获取当前滚动位置
-            const scrollY = window.scrollY || document.documentElement.scrollTop;
-            
-            // 当滚动超过指定像素时显示按钮
-            if (scrollY > parseInt(getComputedStyle(document.documentElement)
-                .getPropertyValue('--show-scroll-pos'))) {
-                backToTopBtn.style.display = 'flex';
-            } else {
-                backToTopBtn.style.display = 'none';
-            }
-        });
-
-        // ================= 返回顶部功能 =================
-        backToTopBtn.addEventListener('click', function() {
+        // 平滑返回顶部
+        function scrollToTop() {
             window.scrollTo({
                 top: 0,
-                behavior: 'smooth' // 平滑滚动
+                behavior: "smooth"
             });
-        });
+        }
 
-        // ================= 返回首页功能 =================
-        backToHomeBtn.addEventListener('click', function() {
-            // 修改下方引号内的地址为你的首页链接
-            window.location.href = "https://www.yourdomain.com/"; 
+        // 返回首页（修改为你的实际地址）
+        function goHome() {
+            window.location.href = "/";
+        }
+
+        // 可选：滚动超过300px显示按钮
+        window.addEventListener('scroll', function() {
+            const btns = document.querySelector('.float-btns');
+            btns.style.opacity = (window.scrollY > 300) ? '1' : '0';
+            btns.style.pointerEvents = (window.scrollY > 300) ? 'all' : 'none';
         });
     </script>
 </body>
+</html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">

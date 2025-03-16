@@ -1041,6 +1041,7 @@
     <!-- Leaflet地图库 -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+	 <script src="https://cdn.jsdelivr.net/npm/gcoord@2.0.3/dist/gcoord.js"></script>
     <style>
         #myMap { 
             height: 500px;   /* 控制地图高度 */
@@ -1072,9 +1073,9 @@
 <script>
 // ========== 配置参数（修改这里） ==========
 const config = {
-    center: [40.00244,116.783421], // 中心坐标 [纬度, 经度]（北京）
-    zoom: 15,                     // 缩放级别 1-18
-    markerPos: [40.00244,116.783421], // 标记点坐标
+    center: [40.00243543,116.78342287], // 中心坐标 [纬度, 经度]（北京）
+    zoom: 18,                     // 缩放级别 1-18
+    markerPos: [40.00243543,116.78342287], // 标记点坐标
     locationName: "北京十方聚典服饰科技有限公司"       // 地点名称（显示在弹出窗口）
 };
 // ======================================
@@ -1083,19 +1084,25 @@ const config = {
 const map = L.map('myMap').setView(config.center, config.zoom);
 
 // 添加地图图层（使用OpenStreetMap）
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap'
+L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+    attribution: '© 高德地图',
+    subdomains: ['1', '2', '3', '4'],
+    maxZoom: 18,
+    minZoom: 3
 }).addTo(map);
+// 监听地图加载错误
+map.on('layeradd', function(e) {
+    e.layer.on('tileerror', function() {
+        alert('地图加载失败，请检查网络连接！');
+    });
+});
 
 // 生成第三方地图链接
 function createMapLinks(lat, lng) {
     return `
         <div style="text-align:center;padding:10px;">
             <h3 style="margin:0 0 15px 0;">${config.locationName}</h3>
-            <a href="https://map.baidu.com/?latlng=${lat},${lng}&title=${config.locationName}" 
-               target="_blank">百度地图</a>
-            <a href="https://apis.map.qq.com/uri/v1/marker?coord=${lat},${lng}&title=${config.locationName}" 
-               target="_blank">腾讯地图</a>
+
             <a href="https://uri.amap.com/marker?position=${lng},${lat}&name=${config.locationName}" 
                target="_blank">高德地图</a>
         </div>

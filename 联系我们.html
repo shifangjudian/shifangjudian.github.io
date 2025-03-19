@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        /* 基础容器样式 */
+        .container {
+            position: relative;
+            width: 1560px;
+			margin: 0 auto;
+			padding: 0 10px;
+            height: 900px; /* 全屏高度 */
+            overflow: hidden; /* 防止内容溢出 */
+            background: #f0f0f0;
+        }
+
+        /* 背景图片样式 */
+        .background-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 保持图片比例填充容器 */
+        }
+
+        /* 二维码样式 */
+        .qrcode {
+            position: absolute;
+            width: 120px; /* 默认大小 */
+            height: 120px;
+            left: 50%;          /* 定位到容器水平中线 */
+            top: 50%;           /* 定位到容器垂直中线 */
+            transform: translate(-50%, -50%); /* 通过偏移实现精确居中 */
+            -webkit-touch-callout: none; /* 禁用长按菜单 */
+            user-select: none;
+            touch-action: none; /* 禁用默认触摸行为 */
+            transition: transform 0.1s; /* 平滑移动效果 */
+            cursor: move; /* 桌面端光标提示 */
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 背景图片（需替换src） -->
+        <img src="https://s21.ax1x.com/2025/03/18/pEd03tK.jpg" class="background-img">
+        <!-- 二维码图片（需替换src） -->
+        <img src="img/二维码.jpg" class="qrcode">
+    </div>
+
+    <script>
+        // 获取元素引用
+        const qrcode = document.querySelector('.qrcode');
+        const container = document.querySelector('.container');
+        let isMoving = false;
+        let startX = 0, startY = 0;
+        let initialX = 0, initialY = 0;
+        let longPressTimer;
+        let lastTouchEnd = 0; // 用于双击检测
+
+        /* 触摸开始事件处理 */
+        qrcode.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            
+            // 保存初始位置
+            const transform = getComputedTransform();
+            initialX = transform.x;
+            initialY = transform.y;
+            
+            // 启动长按计时器（1秒后触发）
+            longPressTimer = setTimeout(() => {
+                window.location.href = 'weixin://dl/add'; // 微信添加链接（需替换）
+            }, 1000);
+        });
+
+        /* 触摸移动事件处理 */
+        qrcode.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            clearTimeout(longPressTimer); // 移动时取消长按检测
+            
+            // 单指移动处理
+            if(e.touches.length === 1){
+                const touch = e.touches[0];
+                const deltaX = touch.clientX - startX;
+                const deltaY = touch.clientY - startY;
+                
+                // 计算新位置
+                let newX = initialX + deltaX;
+                let newY = initialY + deltaY;
+                
+                // 边界限制（防止移出屏幕）
+                const containerRect = container.getBoundingClientRect();
+                const qrcodeRect = qrcode.getBoundingClientRect();
+                const maxX = (containerRect.width - qrcodeRect.width)/2;
+                const maxY = (containerRect.height - qrcodeRect.height)/2;
+                
+                newX = Math.min(Math.max(newX, -maxX), maxX);
+                newY = Math.min(Math.max(newY, -maxY), maxY);
+                
+                // 应用新位置
+                qrcode.style.transform = `translate(${newX}px, ${newY}px)`;
+            }
+            // 双指缩放处理
+            else if(e.touches.length === 2){
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                
+                // 计算两点间距离
+                const currentDistance = Math.hypot(
+                    touch2.clientX - touch1.clientX,
+                    touch2.clientY - touch1.clientY
+                );
+                
+                const initialDistance = Math.hypot(
+                    touch2.clientX - startX,
+                    touch2.clientY - startY
+                );
+                
+                // 计算缩放比例（限制在0.5-3倍之间）
+                let scale = currentDistance / initialDistance;
+                scale = Math.min(Math.max(scale, 0.5), 3);
+                
+                // 应用缩放（保留原有位移）
+                const transform = getComputedTransform();
+                qrcode.style.transform = `translate(${transform.x}px, ${transform.y}px) scale(${scale})`;
+            }
+        });
+
+        /* 触摸结束事件处理 */
+        qrcode.addEventListener('touchend', (e) => {
+            clearTimeout(longPressTimer);
+            
+            // 双击检测（300ms内两次点击）
+            const now = new Date().getTime();
+            if (now - lastTouchEnd <= 300) {
+                resetPosition();
+            }
+            lastTouchEnd = now;
+        });
+
+        /* 获取当前变换值 */
+        function getComputedTransform() {
+            const style = window.getComputedStyle(qrcode);
+            const matrix = new DOMMatrixReadOnly(style.transform);
+            return {
+                x: matrix.m41, // translateX值
+                y: matrix.m42  // translateY值
+            };
+        }
+
+        /* 响应式初始化 */
+        function initResponsive() {
+            const screenWidth = window.innerWidth;
+            qrcode.style.width = screenWidth * 0.3 + 'px'; // 默认宽度为屏幕30%
+            resetPosition(); // 重置位置
+        }
+
+        /* 重置位置和大小 */
+        function resetPosition() {
+            qrcode.style.transform = 'translate(0, 0) scale(1)';
+        }
+
+        /* 放大按钮 */
+        function zoomIn() {
+            const transform = getComputedTransform();
+            const scale = getCurrentScale();
+            qrcode.style.transform = `translate(${transform.x}px, ${transform.y}px) scale(${scale * 1.2})`;
+        }
+
+        /* 缩小按钮 */
+        function zoomOut() {
+            const transform = getComputedTransform();
+            const scale = getCurrentScale();
+            qrcode.style.transform = `translate(${transform.x}px, ${transform.y}px) scale(${scale * 0.8})`;
+        }
+
+        /* 获取当前缩放比例 */
+        function getCurrentScale() {
+            const transformStr = qrcode.style.transform;
+            const match = transformStr.match(/scale\(([\d.]+)\)/);
+            return match ? parseFloat(match[1]) : 1;
+        }
+
+        // 初始化适配
+        window.addEventListener('resize', initResponsive);
+        initResponsive();
+    </script>
+</body>
+</html>

@@ -710,7 +710,7 @@
 		padding: 20px;
             display: flex;
             justify-content: space-between; /* 水平平均分布 */
-          
+     
             gap: 10px;            /* 图片间距 */
         }
 
@@ -760,6 +760,11 @@
             .image-item {
                 width: 100%;       /* 手机端占满宽度 */
                 height: 250px;      /* 调整高度 */
+				flex-wrap: wrap;      /* 允许换行 */
+            }
+			 .image-row {
+			 flex-wrap: wrap;      /* 允许换行 */
+			 gap: 4px; 
             }
         }
     </style>

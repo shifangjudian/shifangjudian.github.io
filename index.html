@@ -121,18 +121,23 @@
 
         /* 品牌信息区域 */
         .brand-header {
-            padding: 20px 30px;
+            padding: 3px 120px;
             border-bottom: 1px solid #eee;
         }
 
         .logo {
-            width: 90px;
-            height: 40px;
+                margin: -1px 0;
+    position: relative;
+    top: -1px;
+			width: 100px;
+            height: 70px;
             background: url(img/9+1logo.png) no-repeat;
-            background-size: contain;
+            background-size: 100%;
             display: inline-block;
-            vertical-align: middle;
+            vertical-align: top;
+			line-height: 0;
             cursor: pointer;
+			overflow: hidden;  /* 隐藏可能溢出的内容 */
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
@@ -300,12 +305,15 @@
             }
 
             .brand-header {
-                padding: 15px 20px;
+                padding: 2px 30px;
             }
 
             .logo {
                 width: 60px;
-                height: 30px;
+                height: 42px;
+				  margin: -1px 0;
+    position: relative;
+    top: -1px;
             }
 
             .company-name {

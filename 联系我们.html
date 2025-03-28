@@ -1,192 +1,590 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北京十方聚典服饰科技有限公司</title>
     <style>
-        /* ����������ʽ */
-        .container {
-            position: relative;
-            width: 1560px;
-			margin: 0 auto;
-			padding: 0 10px;
-            height: 900px; /* ȫ���߶� */
-            overflow: hidden; /* ��ֹ������� */
-            background: #f0f0f0;
+        /* 按钮容器 - 修改right/bottom调整位置 */
+        .float-btns {
+            position: fixed;
+            right: 25px;    /* 距离右侧 */
+            bottom: 25px;   /* 距离底部 */
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;      /* 按钮间距 */
         }
 
-        /* ����ͼƬ��ʽ */
-        .background-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* ����ͼƬ����������� */
+        /* 通用按钮样式 */
+        .float-btn {
+            width: 48px;     /* 按钮尺寸 */
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #666; /* 中灰色背景 */
+            color: #fff;       /* 图标颜色 */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ��ά����ʽ */
-        .qrcode {
-            position: absolute;
-            width: 120px; /* Ĭ�ϴ�С */
-            height: 120px;
-            left: 50%;          /* ��λ������ˮƽ���� */
-            top: 50%;           /* ��λ��������ֱ���� */
-            transform: translate(-50%, -50%); /* ͨ��ƫ��ʵ�־�ȷ���� */
-            -webkit-touch-callout: none; /* ���ó����˵� */
-            user-select: none;
-            touch-action: none; /* ����Ĭ�ϴ�����Ϊ */
-            transition: transform 0.1s; /* ƽ���ƶ�Ч�� */
-            cursor: move; /* ����˹����ʾ */
+        /* 鼠标悬停效果 */
+        .float-btn:hover {
+            background: #999; /* 浅灰色背景 */
+            transform: translateY(-2px); /* 上浮效果 */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-
+        /* 图标样式 */
+        .icon {
+            width: 22px;    /* 图标尺寸 */
+            height: 22px;
+            fill: currentColor; /* 继承文字颜色 */
+        }
     </style>
 </head>
 <body>
-    <!-- ������ -->
-    <div class="container">
-        <!-- ����ͼƬ�����滻src�� -->
-        <img src="https://s21.ax1x.com/2025/03/18/pEd03tK.jpg" class="background-img">
-        <!-- ��ά��ͼƬ�����滻src�� -->
-        <img src="../img/��ά��.jpg"  alt="image" class="qrcode">
+
+
+    <!-- 悬浮按钮容器 -->
+    <div class="float-btns">
+        <!-- 首页按钮 -->
+        <button class="float-btn" onClick="goHome()">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/>
+            </svg>
+        </button>
+        
+        <!-- 返回顶部按钮 -->
+        <button class="float-btn" onClick="scrollToTop()">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M7 14l5-5 5 5H7z"/>
+            </svg>
+        </button>
     </div>
 
     <script>
-        // ��ȡԪ������
-        const qrcode = document.querySelector('.qrcode');
-        const container = document.querySelector('.container');
-        let isMoving = false;
-        let startX = 0, startY = 0;
-        let initialX = 0, initialY = 0;
-        let longPressTimer;
-        let lastTouchEnd = 0; // ����˫�����
+        // 平滑返回顶部
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
 
-        /* ������ʼ�¼����� */
-        qrcode.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            startX = touch.clientX;
-            startY = touch.clientY;
-            
-            // �����ʼλ��
-            const transform = getComputedTransform();
-            initialX = transform.x;
-            initialY = transform.y;
-            
-            // ����������ʱ����1��󴥷���
-            longPressTimer = setTimeout(() => {
-                window.location.href = 'weixin://dl/add'; // ΢���������ӣ����滻��
-            }, 1000);
+        // 返回首页（修改为你的实际地址）
+        function goHome() {
+            window.location.href = "https://www.shifangjudian.com";
+        }
+
+        // 可选：滚动超过300px显示按钮
+        window.addEventListener('scroll', function() {
+            const btns = document.querySelector('.float-btns');
+            btns.style.opacity = (window.scrollY > 300) ? '1' : '0';
+            btns.style.pointerEvents = (window.scrollY > 300) ? 'all' : 'none';
         });
-
-        /* �����ƶ��¼����� */
-        qrcode.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            clearTimeout(longPressTimer); // �ƶ�ʱȡ���������
-            
-            // ��ָ�ƶ�����
-            if(e.touches.length === 1){
-                const touch = e.touches[0];
-                const deltaX = touch.clientX - startX;
-                const deltaY = touch.clientY - startY;
-                
-                // ������λ��
-                let newX = initialX + deltaX;
-                let newY = initialY + deltaY;
-                
-                // �߽����ƣ���ֹ�Ƴ���Ļ��
-                const containerRect = container.getBoundingClientRect();
-                const qrcodeRect = qrcode.getBoundingClientRect();
-                const maxX = (containerRect.width - qrcodeRect.width)/2;
-                const maxY = (containerRect.height - qrcodeRect.height)/2;
-                
-                newX = Math.min(Math.max(newX, -maxX), maxX);
-                newY = Math.min(Math.max(newY, -maxY), maxY);
-                
-                // Ӧ����λ��
-                qrcode.style.transform = `translate(${newX}px, ${newY}px)`;
-            }
-            // ˫ָ���Ŵ���
-            else if(e.touches.length === 2){
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-                
-                // ������������
-                const currentDistance = Math.hypot(
-                    touch2.clientX - touch1.clientX,
-                    touch2.clientY - touch1.clientY
-                );
-                
-                const initialDistance = Math.hypot(
-                    touch2.clientX - startX,
-                    touch2.clientY - startY
-                );
-                
-                // �������ű�����������0.5-3��֮�䣩
-                let scale = currentDistance / initialDistance;
-                scale = Math.min(Math.max(scale, 0.5), 3);
-                
-                // Ӧ�����ţ�����ԭ��λ�ƣ�
-                const transform = getComputedTransform();
-                qrcode.style.transform = `translate(${transform.x}px, ${transform.y}px) scale(${scale})`;
-            }
-        });
-
-        /* ���������¼����� */
-        qrcode.addEventListener('touchend', (e) => {
-            clearTimeout(longPressTimer);
-            
-            // ˫����⣨300ms�����ε����
-            const now = new Date().getTime();
-            if (now - lastTouchEnd <= 300) {
-                resetPosition();
-            }
-            lastTouchEnd = now;
-        });
-
-        /* ��ȡ��ǰ�任ֵ */
-        function getComputedTransform() {
-            const style = window.getComputedStyle(qrcode);
-            const matrix = new DOMMatrixReadOnly(style.transform);
-            return {
-                x: matrix.m41, // translateXֵ
-                y: matrix.m42  // translateYֵ
-            };
-        }
-
-        /* ��Ӧʽ��ʼ�� */
-        function initResponsive() {
-            const screenWidth = window.innerWidth;
-            qrcode.style.width = screenWidth * 0.3 + 'px'; // Ĭ�Ͽ���Ϊ��Ļ30%
-            resetPosition(); // ����λ��
-        }
-
-        /* ����λ�úʹ�С */
-        function resetPosition() {
-            qrcode.style.transform = 'translate(0, 0) scale(1)';
-        }
-
-        /* �Ŵ�ť */
-        function zoomIn() {
-            const transform = getComputedTransform();
-            const scale = getCurrentScale();
-            qrcode.style.transform = `translate(${transform.x}px, ${transform.y}px) scale(${scale * 1.2})`;
-        }
-
-        /* ��С��ť */
-        function zoomOut() {
-            const transform = getComputedTransform();
-            const scale = getCurrentScale();
-            qrcode.style.transform = `translate(${transform.x}px, ${transform.y}px) scale(${scale * 0.8})`;
-        }
-
-        /* ��ȡ��ǰ���ű��� */
-        function getCurrentScale() {
-            const transformStr = qrcode.style.transform;
-            const match = transformStr.match(/scale\(([\d.]+)\)/);
-            return match ? parseFloat(match[1]) : 1;
-        }
-
-        // ��ʼ������
-        window.addEventListener('resize', initResponsive);
-        initResponsive();
     </script>
+</body>
+</html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北京十方聚典服饰科技有限公司</title>
+    <style>
+        /* 基础重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+	font-family: '微软雅黑', sans-serif;
+	padding-top: 135px;
+	background-color: #F9F9F9;
+        }
+
+        /* 顶部固定容器 */
+        .top-fixed {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            z-index: 1000;
+            box-shadow: 0 2px 0px rgba(0,0,0,0.1);
+        }
+
+        /* 品牌信息区域 */
+        .brand-header {
+            padding: 3px 120px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+                margin: -1px 0;
+    position: relative;
+    top: -1px;
+			width: 100px;
+            height: 70px;
+            background: url(img/9+1logo.png) no-repeat;
+            background-size: 100%;
+            display: inline-block;
+            vertical-align: top;
+			line-height: 0;
+            cursor: pointer;
+			overflow: hidden;  /* 隐藏可能溢出的内容 */
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .logo:active {
+            transform: scale(0.95);
+        }
+
+        .company-name {
+            display: inline-block;
+            margin-left: 20px;
+            font-size: 28px;
+            color: #333;
+            vertical-align: middle;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .company-name:hover {
+            color: #2c7be5;
+            text-shadow: 0 2px 5px rgba(44,123,229,0.2);
+        }
+
+        .company-name:active {
+            transform: translateY(1px);
+        }
+
+        .company-name::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(44,123,229,0.1);
+            border-radius: 50%;
+            transition: width 0.3s ease, height 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .company-name:active::after {
+            width: 100px;
+            height: 100px;
+            opacity: 0;
+        }
+
+        /* 导航菜单容器 */
+        .nav-container {
+            padding: 15px 30px;
+            background: #f8f8f8;
+        }
+
+        /* 主导航菜单 */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            position: relative;
+        }
+
+        .nav-menu > li {
+            position: relative;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #666;
+            font-size: 16px;
+            padding: 10px 15px;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        /* 下拉菜单样式 */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu li {
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 20px;
+            color: #444;
+            font-size: 14px;
+        }
+
+        /* 悬停效果 */
+        .nav-menu > li:hover > a {
+            color: #000;
+            background: rgba(0,0,0,0.05);
+        }
+
+        .nav-menu > li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 轮播图样式 */
+        .carousel-container {
+            position: relative;
+            max-width: 1600px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            position: relative;
+            aspect-ratio: 16/9;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .brand-header {
+                padding: 2px 30px;
+            }
+
+            .logo {
+                width: 60px;
+                height: 42px;
+				  margin: -1px 0;
+    position: relative;
+    top: -1px;
+            }
+
+            .company-name {
+                font-size: 22px;
+                margin-left: 15px;
+            }
+
+            .nav-container {
+                padding: 10px 15px;
+            }
+
+            .nav-menu {
+                gap: 15px;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                justify-content: flex-start;
+                padding-bottom: 5px;
+            }
+
+            .nav-menu::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-menu a {
+                font-size: 13px;
+                padding: 8px 10px;
+                white-space: nowrap;
+            }
+
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                background: #f0f0f0;
+                display: none;
+                min-width: 160px;
+            }
+
+            .nav-menu > li:hover .dropdown-menu,
+            .nav-menu > li .dropdown-menu.show {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .carousel-item {
+                aspect-ratio: 16/9;
+            }
+
+            .carousel-btn {
+                padding: 10px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .company-name {
+                font-size: 16px;
+            }
+
+            .nav-menu {
+                gap: 10px;
+            }
+
+            .nav-menu a {
+                font-size: 12px;
+                padding: 6px 8px;
+            }
+
+            body {
+                padding-top: 115px;
+            }
+
+            .carousel-item {
+                aspect-ratio: 16/9;
+            }
+        }
+    </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<body>
+    <!-- 顶部固定区域 -->
+    <div class="top-fixed">
+        <!-- 品牌信息 -->
+        <div class="brand-header">
+            <div class="logo"></div>
+            <h1 class="company-name">北京十方聚典服饰科技有限公司</h1>
+        </div>
+
+        <!-- 导航菜单 -->
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="https://www.shifangjudian.com">首页</a></li>
+                <li>
+                    <a href="index.html#产品展示">HOT</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html#产品展示">新品上市</a></li>
+                        <li><a href="index.html#产品展示">特价专区</a></li>
+                        <li><a href="index.html#产品展示">畅销排行</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html#厨师服">厨师服</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html#短袖厨师服">夏季款</a></li>
+                        <li><a href="index.html#长袖厨师服">冬季款</a></li>
+                        <li><a href="index.html#长袖厨师服">特别定制</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html#衬衫">衬衫</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html#衬衫">夏季款</a></li>
+                        <li><a href="index.html#衬衫">冬季款</a></li>
+                        <li><a href="index.html#衬衫">特别定制</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html#产品展示">围裙</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html#产品展示">服务员围裙</a></li>
+                        <li><a href="index.html#厨师围裙">厨师围裙</a></li>
+                        <li><a href="index.html#产品展示">特别定制</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html#帽子">配饰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html#帽子">帽子</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#联系我们" target="_blank">品牌故事</a></li>
+                <li><a href="index.html#联系我们">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+
+ 
+            
+
+            <!-- 复制以下区块创建更多图片 -->
+            <!-- 第4-6个图片块（示例保留三个，按需复制） -->
+<div id="联系我们"></div>
+			
+        </div>
+    </div>
+			<div style="
+    font-family: 'SimHei', sans-serif;  /* 黑体（优先显示黑体，无则用系统无衬线字体） */
+    color: #333333;                    /* 红色字体 */
+    font-size: 20px;                    /* 字号 */
+    text-align: center;                /* 水平居中 */
+    margin-top: 10px;                 /* 距离顶部200像素 */
+">
+    北京十方聚典服饰科技有限公司
+</div>
+	<div style="
+    font-family: 'SimHei', sans-serif;  /* 黑体（优先显示黑体，无则用系统无衬线字体） */
+    color: #333333;                    /* 红色字体 */
+    font-size: 14px;                    /* 字号 */
+    text-align: center;                /* 水平居中 */
+    margin-top: 6px;                 /* 距离顶部100像素 */
+">
+    Beijing Shifangjudian Apparel Technology Co., Ltd.
+</div>	
+
+</div>
+	<div style="
+    font-family: 'SimHei', sans-serif;  /* 黑体（优先显示黑体，无则用系统无衬线字体） */
+    color: #333333;                    /* 红色字体 */
+    font-size: 16px;                    /* 字号 */
+    text-align: center;                /* 水平居中 */
+    margin-top: 6px;                 /* 距离顶部140像素 */
+">
+    北京东燕郊开发区MOBO国际中心1号楼
+</div>	
+</div>
+	<div style="
+    font-family: 'SimHei', sans-serif;  /* 黑体（优先显示黑体，无则用系统无衬线字体） */
+    color: #333333;                    /* 红色字体 */
+    font-size: 16px;                    /* 字号 */
+    text-align: center;                /* 水平居中 */
+    margin-top: 6px;                 /* 距离顶部120像素 */
+">
+    联系人：李经理 15230643645 （微信同号）
+</div>	
+
+
+  	 <!DOCTYPE html>
+	<html>
+	<head>
+    <title>可跳转第三方地图的示例</title>
+    <!-- Leaflet地图库 -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+	 <script src="https://cdn.jsdelivr.net/npm/gcoord@2.0.3/dist/gcoord.js"></script>
+    <style>
+        #myMap { 
+            height: 400px;   /* 控制地图高度 */
+            width: 75%;     /* 控制地图宽度 */
+            margin: 20px auto;
+            border: 2px solid #0078A8;
+            border-radius: 8px; /* 圆角边框 */
+        }
+        /* 自定义弹出窗口样式 */
+        .leaflet-popup-content a {
+            display: block;
+            margin: 8px 0;
+            padding: 6px 12px;
+            background: #0078A8;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .leaflet-popup-content a:hover {
+            background: #005f8b;
+        }
+    </style>
+</head>
+<body>
+
+<div id="myMap"></div>
+
+<script>
+// ========== 配置参数（修改这里） ==========
+const config = {
+    center: [40.00243543,116.78342287], // 中心坐标 [纬度, 经度]（北京）
+    zoom: 15,                     // 缩放级别 1-18
+    markerPos: [40.00243543,116.78342287], // 标记点坐标
+    locationName: "北京十方聚典服饰科技有限公司"       // 地点名称（显示在弹出窗口）
+};
+// ======================================
+
+// 初始化地图
+const map = L.map('myMap').setView(config.center, config.zoom);
+
+// 添加地图图层（使用OpenStreetMap）
+L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+    attribution: '© 高德地图',
+    subdomains: ['1', '2', '3', '4'],
+    maxZoom: 18,
+    minZoom: 3
+}).addTo(map);
+// 监听地图加载错误
+map.on('layeradd', function(e) {
+    e.layer.on('tileerror', function() {
+        alert('地图加载失败，请检查网络连接！');
+    });
+});
+
+// 生成第三方地图链接
+function createMapLinks(lat, lng) {
+    return `
+        <div style="text-align:center;padding:10px;">
+            <h3 style="margin:0 0 15px 0;">${config.locationName}</h3>
+
+            <a href="https://uri.amap.com/marker?position=${lng},${lat}&name=${config.locationName}" 
+               target="_blank">高德地图</a>
+        </div>
+    `;
+}
+
+// 添加标记点
+L.marker(config.markerPos)
+    .addTo(map)
+    .bindPopup(createMapLinks(config.markerPos[0], config.markerPos[1]))
+    .openPopup();
+</script>
+
+</body>
+</html>
+
+
 </body>
 </html>

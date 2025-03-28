@@ -456,50 +456,56 @@
     <!-- 添加视口标签实现移动端适配 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+       .image-container {
+        max-width: 1080px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 3px; /* 默认添加少量留白 */
+    }
+
+    .responsive-image {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .multi-image-container {
+        font-size: 0; /* 消除行内元素间隙 */
+    }
+
+    /* 手机端适配 */
+    @media (max-width: 768px) {
         .image-container {
-            max-width: 1080px;  /* 最大宽度限制 */
-            width: 100%;        /* 自适应宽度 */
-            margin: 0 auto;    /* 水平居中 */
-            padding: 0px;      /* 添加留白 */
+            padding: 0; /* 完全消除容器留白 */
+            max-width: 100%; /* 确保容器不限制宽度 */
         }
 
-        .responsive-image {
-            width: 100%;       /* 充满容器 */
-            height: auto;      /* 保持原始比例 */
-            display: block;    /* 消除图片底部间隙 */
-			
+        /* 多图模式强制垂直排列 */
+        .multi-image-container img {
+            display: block !important;
+            width: 100% !important;
+            margin: 5px 0 !important;
         }
-		 .multi-image-container {
-        font-size: 0;   
-		 }  
-
-        /* 手机端适配 */
-        @media (max-width: 768px) {
-            .image-container {
-                padding: 0px;  /* 减少留白 */
-            }
-            /* 可选：在小屏幕上微调图片尺寸 */
-            /* .responsive-image { max-width: 100% } */
-        }
+    }
     </style>
 </head>
 <body>
     <div class="image-container">
-        <img src="img/套版1详情_01.jpg" alt="详情描述0" >
-		<img src="img/套版1详情_03.jpg" alt="详情描述1" >
-		<img src="img/A04详情_01.jpg" alt="详情描述" >
-<img src="img/A04详情_02.jpg" alt="详情描述" >
-<img src="img/A04详情_03.jpg" alt="详情描述" >
-<img src="img/A04详情_04.jpg" alt="详情描述" >
-<img src="img/A04详情_05.jpg" alt="详情描述" >
-<img src="img/A04详情_06.jpg" alt="详情描述" >
-<img src="img/A04详情_07.jpg" alt="详情描述" >
-<img src="img/A04详情_08.jpg" alt="详情描述" >
-<img src="img/A04详情_09.jpg" alt="详情描述" >
-<img src="img/A04详情_10.jpg" alt="详情描述" >
-<img src="img/A10C详情_17.jpg" alt="详情描述" >
-<img src="img/A10C详情_18.jpg" alt="详情描述" >
-<img src="img/套版2详情_02.jpg" alt="详情描述2" >
+<img src="img/套版1详情_01.jpg" loading="lazy" alt="详情描述0"  class="responsive-image">
+<img src="img/套版1详情_03.jpg" loading="lazy" alt="详情描述1"  class="responsive-image">
+<img src="img/A04详情_01.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A04详情_02.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A04详情_03.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A04详情_04.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A04详情_05.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A04详情_06.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A04详情_07.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A04详情_08.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A04详情_09.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A04详情_10.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A10C详情_17.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/A10C详情_18.jpg" loading="lazy" alt="详情描述"  class="responsive-image">
+<img src="img/套版2详情_02.jpg" loading="lazy" alt="详情描述2"  class="responsive-image">
 
     </div>
 </body>

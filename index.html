@@ -1077,8 +1077,8 @@
                         <img src="https://free.picui.cn/free/2025/08/29/68b151ed8a97c.jpg" 
                              alt="Chef Jacket 1" class="w-full h-200 object-cover">
                         <div class="p-4">
-                            <h4 class="text-m md:text-m">女款：慧智兰心 / 男款：君临天下</h4>
-                            <p class="text-sm text-gray-500">EW08Z1700A11P6 / E07C1700A11P6</p>
+                            <h4 class="text-m md:text-m">君临天下</h4>
+                            <p class="text-sm text-gray-500">E07C1700A11P6</p>
                         </div>
                     </div>
 					</a>
@@ -1184,6 +1184,7 @@
             box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
         }
     </style>
+			  <a href="chef.html" class="block">
 			 <div class="text-center mt-3 mb-16">
                     <button class="view-all-btn text-white font-semibold py-3 px-8 rounded-full inline-flex items-center">
                         <span>查看全部款式</span>
@@ -1192,6 +1193,7 @@
                         </svg>
                     </button>
                 </div>
+				</a>
             <!-- Shirts -->
 			<section id="shirt" class="content-section">
              <div id="shirt" class="mb-5">
@@ -1389,6 +1391,38 @@
                         </div>
                     </div>
 					</a>
+														 <a href="金榜题名.html" class="block">							
+                    <div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <img src="https://free.picui.cn/free/2025/08/29/68b152685b8a0.jpg" 
+                             alt="Chef Jacket 1" class="w-full h-200 object-cover">
+                        <div class="p-4">
+                            <h4 class="font-medium">金榜题名</h4>
+                            <p class="text-sm text-gray-500">A31D1700A12</p>
+                        </div>
+                    </div>
+					</a>
+					 <a href="平步青云.html" class="block">
+				 <div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <img src="https://free.picui.cn/free/2025/08/29/68b15261091b6.jpg" 
+                             alt="Chef Jacket 1" class="w-full h-200 object-cover">
+                        <div class="p-4">
+                            <h4 class="font-medium">平步青云</h4>
+                            <p class="text-sm text-gray-500">A27D1700A11</p>
+                        </div>
+                    </div>
+					</a>
+					
+					                                        <!-- Product 1 -->
+										 <a href="风调雨顺.html" class="block">					
+                    <div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <img src="https://free.picui.cn/free/2025/08/29/68b15264bc4d0.jpg" 
+                             alt="Chef Jacket 1" class="w-full h-200 object-cover">
+                        <div class="p-4">
+                            <h4 class="font-medium">风调雨顺</h4>
+                            <p class="text-sm text-gray-500">A32D0800A12</p>
+                        </div>
+                    </div>
+			   </a>
 				</div>
             </div>
   </section>
@@ -1770,21 +1804,6 @@ L.marker(config.markerPos)
         </div>
     </footer>
 
-    <!-- Floating Action Buttons -->
-    <div class="fixed bottom-8 right-8 space-y-3 z-50">
-        <a href="#contact" class="float-btn block w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg">
-            <i class="fas fa-envelope text-xl"></i>
-            <span class="sr-only">Contact Us</span>
-        </a>
-        <a href="#home" class="float-btn block w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-white shadow-lg">
-            <i class="fas fa-home text-xl"></i>
-            <span class="sr-only">Home</span>
-        </a>
-        <a href="#" id="to-top" class="float-btn block w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center text-white shadow-lg opacity-0 invisible transition-all duration-300">
-            <i class="fas fa-arrow-up text-xl"></i>
-            <span class="sr-only">To Top</span>
-        </a>
-    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1867,28 +1886,7 @@ L.marker(config.markerPos)
             partnerScroller.addEventListener('mouseleave', () => {
                 scrollInterval = setInterval(scrollPartners, 30);
             });
-            
-            // Show/hide "to top" button based on scroll position
-            const toTopButton = document.getElementById('to-top');
-            
-            window.addEventListener('scroll', () => {
-                if (window.pageYOffset > 300) {
-                    toTopButton.classList.remove('opacity-0', 'invisible');
-                    toTopButton.classList.add('opacity-100', 'visible');
-                } else {
-                    toTopButton.classList.remove('opacity-100', 'visible');
-                    toTopButton.classList.add('opacity-0', 'invisible');
-                }
-            });
-            
-            toTopButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-            
+                        
             // Mobile menu toggle
             const mobileMenuButton = document.querySelector('button.md\\:hidden');
             const nav = document.querySelector('nav.hidden.md\\:flex');

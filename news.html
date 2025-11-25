@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻动态 - 北京十方聚典服饰科技有限公司</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', 'Microsoft YaHei', '微软雅黑', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .container-custom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .pagination-btn.active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .news-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #111;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .breadcrumb {
+            font-family: 'Montserrat', 'Microsoft YaHei', '微软雅黑', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header with Logo -->
+    <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
+        <div class="container-custom flex items-center">
+            <div class="flex items-center">
+                <!-- Logo -->
+                <a href="http://www.shifangjudian.com" class="group mr-1" target="_blank">
+                    <img src="https://free.picui.cn/free/2025/08/25/68abad178a3f5.png" 
+                         alt="网站Logo" 
+                         class="h-11 w-auto object-contain transition-all duration-300 group-hover:opacity-90 group-hover:scale-105">
+                </a>
+                
+                <!-- Company name -->
+                <div class="ml-2 leading-tight">
+                    <div class="text-[14px] font-semibold">北京十方聚典服饰科技有限公司</div>
+                    <div class="text-[8.5px] text-gray-500">Beijing Shifang Judian Garment Technology Co., Ltd</div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="hidden md:flex ml-auto space-x-8">
+                <a href="index.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>首页</div>
+                    <div class="text-xs text-gray-500">Home</div>
+                </a>
+                <a href="产品汇总.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>HOT</div>
+                    <div class="text-xs text-gray-500">Hot Items</div>
+                </a>
+                <a href="chef.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>厨师服</div>
+                    <div class="text-xs text-gray-500">Chef Uniform</div>
+                </a>
+                <a href="shirt.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>衬衫</div>
+                    <div class="text-xs text-gray-500">Shirt</div>
+                </a>
+                <a href="apron.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>围裙</div>
+                    <div class="text-xs text-gray-500">Apron</div>
+                </a>
+                <a href="hat.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>帽子</div>
+                    <div class="text-xs text-gray-500">Hat</div>
+                </a>
+                <a href="story.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>关于我们</div>
+                    <div class="text-xs text-gray-500">Contact Us</div>
+                </a>
+            </nav>
+            
+            <!-- Mobile menu button -->
+            <button class="md:hidden ml-auto text-gray-700 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 面包屑导航 -->
+    <div class="bg-gray-100 py-4">
+        <div class="container-custom">
+            <nav class="flex breadcrumb" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="index.html" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                            <i class="fas fa-home mr-2"></i>
+                            首页
+                        </a>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                            <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">新闻动态</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- 新闻动态页面内容 -->
+    <section class="py-12 bg-white">
+        <div class="container-custom">
+            <!-- 页面标题 -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold mb-4">新闻动态</h1>
+                <p class="text-gray-600 text-lg">News & Events</p>
+            </div>
+            
+            <!-- 新闻列表 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- 新闻卡片 1 -->
+                <div class="news-card bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <img src="https://free.picui.cn/free/2025/08/25/68ac1a8065b82.png" 
+                             alt="新闻图片" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">公司新闻</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs text-gray-500">2025年8月25日</span>
+                            <a href="news-detail.html" class="text-xs text-blue-600 font-medium">阅读更多 →</a>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 line-clamp-2">全新厨师服系列发布，融合时尚与功能性设计</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">我们自豪地推出全新一代厨师服系列，采用创新面料技术，提供更佳的透气性和耐用性，同时保持优雅外观。</p>
+                    </div>
+                </div>
+                
+                <!-- 新闻卡片 2 -->
+                <div class="news-card bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <img src="https://free.picui.cn/free/2025/08/25/68ac1a803ecf1.png" 
+                             alt="新闻图片" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded-full">行业资讯</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs text-gray-500">2025年8月20日</span>
+                            <a href="news-detail.html" class="text-xs text-blue-600 font-medium">阅读更多 →</a>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 line-clamp-2">餐饮行业制服设计趋势分析：舒适性与品牌形象并重</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">随着餐饮行业竞争加剧，制服设计已成为品牌差异化的重要元素。舒适性、功能性和品牌形象的完美结合是当前趋势。</p>
+                    </div>
+                </div>
+                
+                <!-- 新闻卡片 3 -->
+                <div class="news-card bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <img src="https://free.picui.cn/free/2025/08/25/68ac1a806bf98.png" 
+                             alt="新闻图片" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">公司新闻</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs text-gray-500">2025年8月15日</span>
+                            <a href="news-detail.html" class="text-xs text-blue-600 font-medium">阅读更多 →</a>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 line-clamp-2">与米其林三星餐厅达成战略合作，提供定制制服解决方案</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">我们荣幸地宣布与多家米其林三星餐厅达成战略合作，为其提供高端定制制服解决方案，彰显品牌独特魅力。</p>
+                    </div>
+                </div>
+                
+                <!-- 新闻卡片 4 -->
+                <div class="news-card bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <img src="https://free.picui.cn/free/2025/08/25/68ac1a8065b82.png" 
+                             alt="新闻图片" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded-full">行业资讯</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs text-gray-500">2025年8月10日</span>
+                            <a href="news-detail.html" class="text-xs text-blue-600 font-medium">阅读更多 →</a>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 line-clamp-2">十方聚典荣获2025年度餐饮行业最佳供应商奖</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">在2025年度餐饮行业评选中，十方聚典凭借卓越的产品质量和服务荣获"最佳供应商奖"，这是对我们持续努力的肯定。</p>
+                    </div>
+                </div>
+                
+                <!-- 新闻卡片 5 -->
+                <div class="news-card bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <img src="https://free.picui.cn/free/2025/08/25/68ac1a803ecf1.png" 
+                             alt="新闻图片" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">公司新闻</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs text-gray-500">2025年8月5日</span>
+                            <a href="news-detail.html" class="text-xs text-blue-600 font-medium">阅读更多 →</a>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 line-clamp-2">全新围裙系列上市，专为现代餐饮环境设计</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">我们推出了全新围裙系列，采用防水防污面料，结合人体工学设计，为餐饮工作者提供更舒适的工作体验。</p>
+                    </div>
+                </div>
+                
+                <!-- 新闻卡片 6 -->
+                <div class="news-card bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <img src="https://free.picui.cn/free/2025/08/25/68ac1a806bf98.png" 
+                             alt="新闻图片" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105">
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded-full">行业资讯</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs text-gray-500">2025年7月28日</span>
+                            <a href="news-detail.html" class="text-xs text-blue-600 font-medium">阅读更多 →</a>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 line-clamp-2">2025下半年餐饮制服流行色彩趋势预测</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">根据最新市场调研，我们预测2025下半年餐饮制服将更注重自然色调与品牌色彩的融合，强调专业与舒适并重。</p>
+                    </div>
+                </div>
+            </div>
+            
+           
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container-custom">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">北京十方聚典服饰科技有限公司</h3>
+                    <p class="text-gray-400 text-sm">Beijing Shifang Judian Garment Technology Co., Ltd</p>
+                    <div class="mt-4 flex space-x-4">
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Products / 产品</h3>
+                    <ul class="space-y-2">
+                        <li><a href="chef.html" class="text-gray-400 hover:text-white text-sm">Chef Uniforms / 厨师服</a></li>
+                        <li><a href="shirt.html" class="text-gray-400 hover:text-white text-sm">Shirts / 衬衫</a></li>
+                        <li><a href="apron.html" class="text-gray-400 hover:text-white text-sm">Aprons / 围裙</a></li>
+                        <li><a href="hat.html" class="text-gray-400 hover:text-white text-sm">Hat / 帽子</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Services / 服务</h3>
+                    <ul class="space-y-2">
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Custom Embroidery / 刺绣</a></li>
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Printing Services / 印花</a></li>
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Bulk Orders / 批量订购</a></li>
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Color Matching / 颜色匹配</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact / 联系</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400 text-sm">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Beijing, China / 中国北京</span>
+                        </li>
+                        <li class="flex items-center text-gray-400 text-sm">
+                            <i class="fas fa-phone-alt mr-2"></i>
+                            <span>+86 19931868426</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2023 Beijing Shifang Judian Garment Technology Co., Ltd. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 分页按钮功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const paginationButtons = document.querySelectorAll('.pagination-btn');
+            
+            // 分页按钮功能
+            paginationButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // 移除所有分页按钮的active类
+                    paginationButtons.forEach(btn => btn.classList.remove('active'));
+                    // 为当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    // 这里可以添加AJAX请求来加载对应页面的新闻
+                });
+            });
+            
+            // 移动端菜单功能
+            const mobileMenuButton = document.querySelector('button.md\\:hidden');
+            const nav = document.querySelector('nav.hidden.md\\:flex');
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    if (nav.classList.contains('hidden')) {
+                        nav.classList.remove('hidden');
+                        nav.classList.add('block', 'absolute', 'top-full', 'left-0', 'w-full', 'bg-white', 'shadow-md', 'py-4', 'px-8');
+                    } else {
+                        nav.classList.add('hidden');
+                        nav.classList.remove('block', 'absolute', 'top-full', 'left-0', 'w-full', 'bg-white', 'shadow-md', 'py-4', 'px-8');
+                    }
+                });
+            }
+            
+            // 关闭移动端菜单当点击外部区域
+            document.addEventListener('click', (e) => {
+                if (!nav.contains(e.target) && e.target !== mobileMenuButton) {
+                    nav.classList.add('hidden');
+                    nav.classList.remove('block', 'absolute', 'top-full', 'left-0', 'w-full', 'bg-white', 'shadow-md', 'py-4', 'px-8');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

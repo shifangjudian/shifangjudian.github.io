@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全新厨师服系列发布，融合时尚与功能性设计 - 北京十方聚典服饰科技有限公司</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', '微软雅黑', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .container-custom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #111;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .breadcrumb {
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', '微软雅黑', sans-serif;
+        }
+        
+        .news-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        
+        .news-content p {
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+            color: #4b5563;
+        }
+        
+        .news-content ul, .news-content ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        
+        .news-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+            color: #4b5563;
+        }
+        
+        .news-content blockquote {
+            border-left: 4px solid #3b82f6;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #6b7280;
+        }
+        
+        .related-news-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .related-news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header with Logo -->
+    <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
+        <div class="container-custom flex items-center">
+            <div class="flex items-center">
+                <!-- Logo -->
+                <a href="http://www.shifangjudian.com" class="group mr-1" target="_blank">
+                    <img src="https://free.picui.cn/free/2025/08/25/68abad178a3f5.png" 
+                         alt="网站Logo" 
+                         class="h-11 w-auto object-contain transition-all duration-300 group-hover:opacity-90 group-hover:scale-105">
+                </a>
+                
+                <!-- Company name -->
+                <div class="ml-2 leading-tight">
+                    <div class="text-[14px] font-semibold">北京十方聚典服饰科技有限公司</div>
+                    <div class="text-[8.5px] text-gray-500">Beijing Shifang Judian Garment Technology Co., Ltd</div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="hidden md:flex ml-auto space-x-8">
+                <a href="index.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>首页</div>
+                    <div class="text-xs text-gray-500">Home</div>
+                </a>
+                <a href="产品汇总.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>HOT</div>
+                    <div class="text-xs text-gray-500">Hot Items</div>
+                </a>
+                <a href="chef.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>厨师服</div>
+                    <div class="text-xs text-gray-500">Chef Uniform</div>
+                </a>
+                <a href="shirt.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>衬衫</div>
+                    <div class="text-xs text-gray-500">Shirt</div>
+                </a>
+                <a href="apron.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>围裙</div>
+                    <div class="text-xs text-gray-500">Apron</div>
+                </a>
+                <a href="hat.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>帽子</div>
+                    <div class="text-xs text-gray-500">Hat</div>
+                </a>
+                <a href="story.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>关于我们</div>
+                    <div class="text-xs text-gray-500">Contact Us</div>
+                </a>
+            </nav>
+            
+            <!-- Mobile menu button -->
+            <button class="md:hidden ml-auto text-gray-700 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 面包屑导航 -->
+    <div class="bg-gray-100 py-4">
+        <div class="container-custom">
+            <nav class="flex breadcrumb" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="index.html" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                            <i class="fas fa-home mr-2"></i>
+                            首页
+                        </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                            <a href="news.html" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2">新闻动态</a>
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                            <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">新闻详情</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- 新闻详情页面内容 -->
+    <section class="py-12 bg-white">
+        <div class="container-custom">
+            <div class="max-w-4xl mx-auto">
+                <!-- 新闻标题和元信息 -->
+                <div class="mb-8 border-b pb-6">
+                    <div class="flex items-center mb-4">
+                        <span class="px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">公司新闻</span>
+                        <span class="ml-4 text-sm text-gray-500">2025年8月25日</span>
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-4">全新厨师服系列发布，融合时尚与功能性设计</h1>
+                    <p class="text-gray-600 text-lg">我们自豪地推出全新一代厨师服系列，采用创新面料技术，提供更佳的透气性和耐用性，同时保持优雅外观。</p>
+                </div>
+                
+                <!-- 新闻特色图片 -->
+                <div class="mb-8 rounded-lg overflow-hidden">
+                    <img src="https://free.picui.cn/free/2025/08/25/68ac1a8065b82.png" 
+                         alt="全新厨师服系列" 
+                         class="w-full h-auto object-cover">
+                </div>
+                
+                <!-- 新闻正文内容 -->
+                <div class="news-content mb-12">
+                    <p>北京十方聚典服饰科技有限公司今日正式发布了全新一代厨师服系列，该系列产品融合了时尚设计与功能性需求，旨在为现代餐饮行业提供更专业、舒适的制服解决方案。</p>
+                    
+                    <h2>创新面料技术</h2>
+                    <p>全新厨师服系列采用了我们自主研发的"ComfortTech+"面料技术，这种面料具有卓越的透气性和吸湿排汗功能，即使在高温厨房环境下也能保持干爽舒适。同时，面料经过特殊处理，具备优异的抗皱和防污性能，大大延长了服装的使用寿命。</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold mb-2 text-blue-600">透气性提升</h3>
+                            <p>与传统面料相比，透气性提高了40%，确保厨师在高温环境下保持舒适。</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold mb-2 text-blue-600">耐用性增强</h3>
+                            <p>经过特殊工艺处理，耐磨性比传统厨师服提高60%，延长使用寿命。</p>
+                        </div>
+                    </div>
+                    
+                    <h2>人体工学设计</h2>
+                    <p>我们的设计团队与多位资深厨师合作，深入研究了厨房工作环境中的动作特点，对厨师服的版型进行了全面优化：</p>
+                    
+                    <ul>
+                        <li><strong>肩部活动区域</strong>：采用立体剪裁，增加活动余量，确保厨师在翻炒、切配等动作时不受限制</li>
+                        <li><strong>腰部设计</strong>：可调节腰带设计，适应不同体型需求，提高穿着舒适度</li>
+                        <li><strong>口袋布局</strong>：科学规划口袋位置和大小，方便厨师存放常用工具</li>
+                        <li><strong>袖口设计</strong>：采用防滑收紧设计，防止袖口接触食材或灶台</li>
+                    </ul>
+                    
+                    <blockquote>
+                        "我们相信，优秀的厨师服不仅应该具备功能性，更应该体现厨师的专业形象和品牌价值。"
+                        <footer class="mt-2 text-sm">—— 十方聚典设计总监 张明</footer>
+                    </blockquote>
+                    
+                    <h2>时尚元素融合</h2>
+                    <p>在保证功能性的同时，我们也注重厨师服的时尚感。新系列提供了多种颜色选择，从经典黑白到现代灰蓝，满足不同餐厅的品牌形象需求。同时，我们引入了简约而精致的细节设计，如定制纽扣、品牌标识刺绣等，提升整体质感。</p>
+                    
+                    <div class="my-8">
+                        <img src="https://free.picui.cn/free/2025/08/25/68ac1a803ecf1.png" 
+                             alt="厨师服细节展示" 
+                             class="w-full h-auto rounded-lg shadow-md">
+                        <p class="text-center text-sm text-gray-500 mt-2">全新厨师服系列细节展示</p>
+                    </div>
+                    
+                    <h2>可持续性承诺</h2>
+                    <p>作为企业社会责任的一部分，新系列厨师服采用了环保生产工艺和可回收材料。我们致力于减少生产过程中的水资源消耗和碳排放，同时确保产品在使用寿命结束后能够被妥善回收利用。</p>
+                    
+                    <h2>市场反响与未来规划</h2>
+                    <p>新系列厨师服已在多家高端餐厅进行试点使用，获得了积极反馈。米其林二星餐厅"味源"主厨李师傅表示："这款厨师服在保持专业形象的同时，真正考虑到了我们工作中的实际需求，特别是透气性和活动自由度方面的改进非常明显。"</p>
+                    
+                    <p>未来，我们计划根据市场反馈继续优化产品，并推出更多针对不同餐饮场景的专用制服系列。同时，我们也将加强定制服务能力，为餐饮企业提供更个性化的品牌制服解决方案。</p>
+                    
+                    <div class="bg-blue-50 p-6 rounded-lg mt-8">
+                        <h3 class="text-lg font-semibold mb-2">产品咨询</h3>
+                        <p>如需了解更多关于全新厨师服系列的信息或获取样品，请联系我们的销售团队：</p>
+                        <p class="mt-2"><i class="fas fa-phone-alt mr-2"></i>联系电话：+86 19931868426</p>
+                        <p><i class="fas fa-envelope mr-2"></i>电子邮箱：info@shifangjudian.com</p>
+                    </div>
+                </div>
+                
+                <!-- 分享和标签 -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-t border-b py-4 mb-12">
+                    <div class="mb-4 md:mb-0">
+                        <span class="text-gray-700 font-medium mr-2">联系我们:</span>
+                        <div class="inline-flex space-x-2">
+                            <a href="call.html" class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center">
+                                <i class="fab fa-weixin text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-gray-700 font-medium mr-2">标签:</span>
+                        <a href="#" class="inline-block bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm mr-2 transition-colors">厨师服</a>
+                        <a href="#" class="inline-block bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm mr-2 transition-colors">新品发布</a>
+                        <a href="#" class="inline-block bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm transition-colors">餐饮制服</a>
+                    </div>
+                </div>
+                
+                <!-- 相关新闻 -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold mb-6">相关新闻</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- 相关新闻卡片 1 -->
+                        <a href="news-detail.html" class="related-news-card bg-white rounded-lg overflow-hidden shadow-md block">
+                            <div class="relative overflow-hidden">
+                                <img src="https://free.picui.cn/free/2025/08/25/68ac1a806bf98.png" 
+                                     alt="相关新闻" 
+                                     class="w-full h-40 object-cover transition-transform duration-500 hover:scale-105">
+                                <div class="absolute top-4 left-4">
+                                    <span class="px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">公司新闻</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-bold mb-2">与米其林三星餐厅达成战略合作</h3>
+                                <p class="text-gray-600 text-sm">我们荣幸地宣布与多家米其林三星餐厅达成战略合作，为其提供高端定制制服解决方案。</p>
+                                <div class="flex justify-between items-center mt-3">
+                                    <span class="text-xs text-gray-500">2025年8月15日</span>
+                                    <span class="text-xs text-blue-600 font-medium">阅读更多 →</span>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <!-- 相关新闻卡片 2 -->
+                        <a href="news-detail.html" class="related-news-card bg-white rounded-lg overflow-hidden shadow-md block">
+                            <div class="relative overflow-hidden">
+                                <img src="https://free.picui.cn/free/2025/08/25/68ac1a803ecf1.png" 
+                                     alt="相关新闻" 
+                                     class="w-full h-40 object-cover transition-transform duration-500 hover:scale-105">
+                                <div class="absolute top-4 left-4">
+                                    <span class="px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded-full">行业资讯</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-bold mb-2">餐饮行业制服设计趋势分析</h3>
+                                <p class="text-gray-600 text-sm">舒适性、功能性和品牌形象的完美结合是当前餐饮制服设计的主要趋势。</p>
+                                <div class="flex justify-between items-center mt-3">
+                                    <span class="text-xs text-gray-500">2025年8月20日</span>
+                                    <span class="text-xs text-blue-600 font-medium">阅读更多 →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 导航按钮 -->
+                <div class="flex justify-between">
+                    <a href="news.html" class="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        返回新闻列表
+                    </a>
+                    <a href="news-detail.html" class="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+                        下一篇：餐饮行业制服设计趋势分析
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container-custom">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">北京十方聚典服饰科技有限公司</h3>
+                    <p class="text-gray-400 text-sm">Beijing Shifang Judian Garment Technology Co., Ltd</p>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-weixin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-weibo"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Products / 产品</h3>
+                    <ul class="space-y-2">
+                        <li><a href="chef.html" class="text-gray-400 hover:text-white text-sm">Chef Uniforms / 厨师服</a></li>
+                        <li><a href="shirt.html" class="text-gray-400 hover:text-white text-sm">Shirts / 衬衫</a></li>
+                        <li><a href="apron.html" class="text-gray-400 hover:text-white text-sm">Aprons / 围裙</a></li>
+                        <li><a href="hat.html" class="text-gray-400 hover:text-white text-sm">Hat / 帽子</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Services / 服务</h3>
+                    <ul class="space-y-2">
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Custom Embroidery / 刺绣</a></li>
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Printing Services / 印花</a></li>
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Bulk Orders / 批量订购</a></li>
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Color Matching / 颜色匹配</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact / 联系</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400 text-sm">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Beijing, China / 中国北京</span>
+                        </li>
+                        <li class="flex items-center text-gray-400 text-sm">
+                            <i class="fas fa-phone-alt mr-2"></i>
+                            <span>+86 19931868426</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2023 Beijing Shifang Judian Garment Technology Co., Ltd. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('button.md\\:hidden');
+            const nav = document.querySelector('nav.hidden.md\\:flex');
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    if (nav.classList.contains('hidden')) {
+                        nav.classList.remove('hidden');
+                        nav.classList.add('block', 'absolute', 'top-full', 'left-0', 'w-full', 'bg-white', 'shadow-md', 'py-4', 'px-8');
+                    } else {
+                        nav.classList.add('hidden');
+                        nav.classList.remove('block', 'absolute', 'top-full', 'left-0', 'w-full', 'bg-white', 'shadow-md', 'py-4', 'px-8');
+                    }
+                });
+            }
+            
+            // 关闭移动端菜单当点击外部区域
+            document.addEventListener('click', (e) => {
+                if (!nav.contains(e.target) && e.target !== mobileMenuButton) {
+                    nav.classList.add('hidden');
+                    nav.classList.remove('block', 'absolute', 'top-full', 'left-0', 'w-full', 'bg-white', 'shadow-md', 'py-4', 'px-8');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

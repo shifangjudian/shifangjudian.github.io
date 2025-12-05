@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>助力打造环球地标餐饮品牌——Help build a global landmark food and beverage brand</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .container-custom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5px;
+        }
+        
+        /* Navigation underline animation */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #111;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Floating buttons */
+        .float-btn {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s;
+        }
+        
+        .float-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 产品详情页样式 - 从第一个文件复制过来的所有样式 */
+        /* 面料特点图片文字组合样式 - 修改为2行2列 */
+        .feature-image-text {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .feature-item {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-image {
+            height: 600px; /* 修改为500px高度 */
+            overflow: hidden;
+        }
+        
+        .feature-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-item:hover .feature-image img {
+            transform: scale(1.05);
+        }
+        
+        .feature-text-content {
+            padding: 20px;
+        }
+        
+        .feature-text-content h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #d32f2f;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-text-content h4 i {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .feature-text-content p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        
+        /* 产品展示区域 */
+        .product-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .product-images {
+            flex: 0 0 500px; /* 固定宽度，适应主图尺寸 */
+            min-width: 300px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .main-image-container {
+            width: 400px;
+            height: 620px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+            cursor: zoom-in;
+            position: relative;
+            border: 1px solid #eee;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .image-thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .thumbnail.active {
+            border-color: #d32f2f;
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-details {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            background-color: #fefefe;
+        }
+        
+        .product-title {
+            font-size: 28px;
+            color: #222;
+            margin-bottom: 10px;
+        }
+        
+        .product-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .product-description {
+            margin-bottom: 30px;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        /* 产品规格选择 */
+        .product-options {
+            margin-bottom: 30px;
+        }
+        
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .option-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .option-btn {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            background-color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option-btn:hover {
+            border-color: #d32f2f;
+        }
+        
+        .option-btn.active {
+            border-color: #d32f2f;
+            background-color: #ffebee;
+            color: #d32f2f;
+            font-weight: 600;
+        }
+        
+        .size-chart-link {
+            color: #d32f2f;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 15px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .size-chart-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* 产品卖点 - 2行2列横向展示 */
+        .product-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ffebee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #d32f2f;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .feature-text h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .feature-text p {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        /* 标签页 */
+        .product-tabs {
+            margin-bottom: 40px;
+        }
+        
+
+        .tab-headers {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 30px;
+        }
+        
+        .tab-header {
+            padding: 15px 30px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s;
+        }
+        
+        .tab-header.active {
+            color: #d32f2f;
+            border-bottom: 3px solid #d32f2f;
+            margin-bottom: -2px;
+        }
+        
+        .tab-content {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-pane {
+            display: none;
+        }
+        
+        .tab-pane.active {
+            display: block;
+        }
+        
+        /* 产品描述图文混合样式 */
+        .description-content {
+            line-height: 1.8;
+        }
+        
+        .description-content h3 {
+            font-size: 20px;
+            margin: 25px 0 15px;
+            color: #333;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .description-content h4 {
+            font-size: 17px;
+            margin: 20px 0 10px;
+            color: #555;
+        }
+        
+        .description-content p {
+            margin-bottom: 15px;
+        }
+        
+        .description-content ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .description-content li {
+            margin-bottom: 8px;
+        }
+        
+        .detail-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .detail-image {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+        }
+        
+        .detail-image img {
+            width: 100%;
+            height: 400px; /* 修改为300px高度 */
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .detail-image p {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* 定制服务样式 */
+        .custom-services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .custom-service {
+            flex: 1;
+            min-width: 250px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .custom-service::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .custom-service.embroidery::before {
+            background-image: url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .custom-service.printing::before {
+            background-image: url('https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .custom-service.special-size::before {
+            background-image: url('https://images.unsplash.com/photo-1558769132-cb1a40ed0ada?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .custom-service > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .custom-service-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 235, 238, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #d32f2f;
+            font-size: 24px;
+        }
+        
+        .custom-service h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .custom-service p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* 时间轴样式 - 图文搭配 */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #d32f2f;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .timeline-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-content h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #d32f2f;
+            display: flex;
+            align-items: center;
+        }
+        
+        .timeline-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #ffebee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: #d32f2f;
+            font-size: 14px;
+        }
+        
+        .timeline-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: #fff;
+            top: 40px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 0 4px #d32f2f;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: -10px;
+            background-color: #fff;
+            top: 40px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 0 4px #d32f2f;
+        }
+        
+        .timeline-item:nth-child(odd)::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background-color: #d32f2f;
+            top: 50px;
+            right: 0;
+            z-index: 0;
+        }
+        
+        .timeline-item:nth-child(even)::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background-color: #d32f2f;
+            top: 50px;
+            left: 0;
+            z-index: 0;
+        }
+        
+        /* 规格表格 */
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .specs-table tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .specs-table td {
+            padding: 15px 10px;
+        }
+        
+        .specs-table td:first-child {
+            font-weight: 600;
+            color: #555;
+            width: 30%;
+        }
+        
+		
+		/* 相关推荐区域样式 */
+.related-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 改为4列 */
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .related-container {
+        grid-template-columns: repeat(3, 1fr); /* 中等屏幕显示3列 */
+    }
+}
+
+@media (max-width: 768px) {
+    .related-container {
+        grid-template-columns: repeat(2, 1fr); /* 小屏幕显示2列 */
+    }
+}
+
+@media (max-width: 480px) {
+    .related-container {
+        grid-template-columns: 1fr; /* 超小屏幕显示1列 */
+    }
+}
+        /* 推荐产品 - 2行3列展示 */
+        .related-products {
+            margin-bottom: 60px;
+			width: 1200px;
+			margin-left: auto; /* 如果需要水平居中 */
+    margin-right: auto;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .related-items {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+        
+        .related-item {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .related-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .related-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .related-item-info {
+            padding: 20px;
+        }
+        
+        .related-item-title {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        
+        .related-item-code {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+		/* 平板端响应式 (768px-1024px) */
+@media (max-width: 1024px) {
+    .related-items {
+        grid-template-columns: repeat(4, 1fr); /* 平板端4列 */
+        gap: 20px;
+    }
+    
+    .related-products {
+        width: 100%;
+        padding: 0 20px;
+    }
+}
+
+/* 手机端响应式 */
+@media (max-width: 768px) {
+    .related-items {
+        grid-template-columns: repeat(2, 1fr); /* 手机端2列 */
+        gap: 15px;
+    }
+    
+    .related-item img {
+        height: 200px; /* 手机端图片高度调小 */
+    }
+    
+    .related-item-info {
+        padding: 15px;
+    }
+    
+    .related-item-title {
+        font-size: 14px;
+    }
+    
+    .related-item-code {
+        font-size: 12px;
+    }
+}
+
+/* 超小屏幕手机端 */
+@media (max-width: 480px) {
+    .related-items {
+        grid-template-columns: 1fr; /* 超小屏幕1列 */
+    }
+}
+
+/* 相关推荐容器样式 */
+.related-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 桌面端4列 */
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* 平板端响应式 (768px-1024px) */
+@media (max-width: 1024px) {
+    .related-container {
+        grid-template-columns: repeat(4, 1fr); /* 平板端4列 */
+        gap: 20px;
+    }
+}
+
+/* 手机端响应式 */
+@media (max-width: 768px) {
+    .related-container {
+        grid-template-columns: repeat(2, 1fr); /* 手机端2列 */
+    }
+}
+
+/* 超小屏幕手机端 */
+@media (max-width: 480px) {
+    .related-container {
+        grid-template-columns: 1fr; /* 超小屏幕1列 */
+    }
+}
+        /* 尺码表模态框 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        .modal-close:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .size-chart-img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .size-guide {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .size-guide h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .size-guide p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        /* 图片放大遮罩 */
+        .image-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            cursor: zoom-out;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .image-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .zoomed-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-overlay.active .zoomed-image {
+            transform: scale(1);
+        }
+        
+        .close-zoom {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 洗涤保养说明样式 - 添加图标 */
+        .care-guide {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+        
+        .care-section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .care-section h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .care-section h4 i {
+            margin-right: 10px;
+            color: #d32f2f;
+        }
+        
+        .care-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .care-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .care-list li i {
+            margin-right: 10px;
+            color: #d32f2f;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        
+        .care-tips {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 4px solid #d32f2f;
+        }
+        
+        .care-tips h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .product-showcase {
+                flex-direction: column;
+            }
+            
+            .product-images {
+                flex: 1;
+                width: 100%;
+                padding: 20px;
+            }
+            
+            .main-image-container {
+                height: auto; /* 手机端高度自适应 */
+                max-width: 350px; /* 手机端最大宽度350px */
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .main-image {
+                height: auto; /* 手机端图片高度自适应 */
+                object-fit: contain; /* 手机端图片完整显示 */
+            }
+            
+            .product-details {
+                padding: 20px;
+            }
+            
+            .product-features {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .feature {
+                padding: 12px;
+            }
+            
+            .tab-headers {
+                flex-wrap: wrap;
+            }
+            
+            .tab-header {
+                padding: 10px 15px;
+                font-size: 14px;
+                flex: 1;
+                text-align: center;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item:nth-child(odd)::before {
+                width: 20px;
+                right: auto;
+                left: 40px;
+            }
+            
+            .timeline-item:nth-child(even)::before {
+                width: 20px;
+                left: 40px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::after {
+                left: 30px;
+                right: auto;
+            }
+            
+            .timeline-item:nth-child(even) .timeline-content::after {
+                left: 30px;
+            }
+            
+            .related-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .custom-service {
+                min-width: 100%;
+            }
+            
+            /* 面料特点响应式 */
+            .feature-image-text {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .feature-image {
+                height: 500px; /* 手机端调整为300px */
+            }
+            
+            /* 设计亮点响应式 */
+            .detail-image img {
+                height: 400px; /* 手机端调整为200px */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-image-container {
+                max-width: 100%; /* 手机端宽度100%显示 */
+                height: 550px; /* 保持550px高度 */
+            }
+            
+            .main-image {
+                height: 100%; /* 图片高度填充容器 */
+                object-fit: cover; /* 保持图片填充效果 */
+            }
+            
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .option-buttons {
+                justify-content: center;
+            }
+            
+            .option-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .related-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .detail-image {
+                min-width: 100%;
+            }
+        }
+        
+        /* 联系人背景样式 */
+        .background-container {
+            max-width: 1080px;
+            width: 100%;
+            min-height: 1080px;
+            margin: 0 auto;
+            background-image: url('https://s21.ax1x.com/2025/03/28/pErV0ne.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            z-index: 1;
+            overflow: visible;
+        }
+
+        /* 二维码样式 */
+        .wechat-qrcode {
+            width: 300px;  /* 固定宽度 */
+            height: 300px; /* 固定高度 */
+            position: absolute; /* 绝对定位 */
+            top: 25%; /* 垂直居中起点 */
+            left: 70%; /* 水平居中起点 */
+            transform: translate(-50%, -50%); /* 精确居中 */
+            transition: opacity 0.3s; /* 添加悬停效果过渡 */
+        }
+
+        /* 手机端适配 */
+        @media (max-width: 768px) {
+            .background-container {
+                max-width: 100vw;
+                min-height: 100vh;  /* 改为最小高度保证基础可视区域 */
+                height: auto;        /* 高度自适应内容 */
+                background-position: top center; /* 根据图片重点调整定位 */
+                overflow: auto; /* 允许内容滚动 */
+                background-size: contain; /* 小屏幕保证完整显示背景图 */
+                background-repeat: no-repeat;
+            }
+            
+            .wechat-qrcode {
+                width: 100px;
+                height: 100px;
+                top: 12%;
+                left: 70%;
+            }
+        }
+        
+        /* 地图样式 */
+        #myMap { 
+            height: 400px;   /* 控制地图高度 */
+            width: 75%;     /* 控制地图宽度 */
+            margin: 20px auto;
+            border: 2px solid #0078A8;
+            border-radius: 8px; /* 圆角边框 */
+        }
+        
+        /* 自定义弹出窗口样式 */
+        .leaflet-popup-content a {
+            display: block;
+            margin: 8px 0;
+            padding: 6px 12px;
+            background: #0078A8;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .leaflet-popup-content a:hover {
+            background: #005f8b;
+        }
+        
+        /* 原有其他样式保持不变 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body class="bg-gray-50">
+    <!-- Header with Logo -->
+    <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
+        <div class="container-custom flex items-center">
+            <div class="flex items-center">
+                <!-- Logo with hover effect -->
+                <a href="http://www.shifangjudian.com" class="group mr-1" target="_blank">
+                    <img src="https://free.picui.cn/free/2025/08/25/68abad178a3f5.png" 
+                         alt="网站Logo" 
+                         class="h-11 w-auto object-contain transition-all duration-300 group-hover:opacity-90 group-hover:scale-105">
+                </a>
+                
+                <!-- Company name -->
+                <div class="ml-2 leading-tight">
+                    <div class="text-[14px] font-semibold">北京十方聚典服饰科技有限公司</div>
+                    <div class="text-[8.5px] text-gray-500">Beijing Shifang Judian Garment Technology Co., Ltd</div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="hidden md:flex ml-auto space-x-8">
+                <a href="index.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>首页</div>
+                    <div class="text-xs text-gray-500">Home</div>
+                </a>
+                <a href="产品汇总.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>HOT</div>
+                    <div class="text-xs text-gray-500">Hot Items</div>
+                </a>
+                <a href="chef.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>厨师服</div>
+                    <div class="text-xs text-gray-500">Chef Uniform</div>
+                </a>
+                <a href="shirt.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>衬衫</div>
+                    <div class="text-xs text-gray-500">Shirt</div>
+                </a>
+                <a href="apron.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>围裙</div>
+                    <div class="text-xs text-gray-500">Apron</div>
+                </a>
+                <a href="hat.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>帽子</div>
+                    <div class="text-xs text-gray-500">Hat</div>
+                </a>
+                <a href="story.html" class="nav-link text-sm font-medium text-gray-900">
+                    <div>关于我们</div>
+                    <div class="text-xs text-gray-500">Contact Us</div>
+                </a>
+            </nav>
+            
+            <!-- Mobile menu button -->
+            <button class="md:hidden ml-auto text-gray-700 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 产品详情内容 - 插入在这里 -->
+    <main class="container-custom mt-6">
+        <!-- 产品展示区域 -->
+        <section class="product-showcase">
+            <div class="product-images" id="productImages">
+                <div class="main-image-container" id="mainImageContainer">
+                    <img id="mainImage" class="main-image" src="https://free.picui.cn/free/2025/08/29/68b1533f90c0a.jpg" alt="ChefMaster系列厨师服">
+                </div>
+                <div class="image-thumbnails" id="imageThumbnails">
+                    <!-- 缩略图将通过JavaScript动态生成 -->
+                </div>
+            </div>
+            
+            <div class="product-details">
+                <h1 class="product-title">E07C 君临天下系列 / 时尚轻奢功能厨师服</h1>
+			    <p class="product-subtitle">高级透气面料，专业设计，舒适耐穿</p>
+                <p class="product-description">
+                    【君临天下系列 / 时尚轻奢功能厨师服】采用涤棉混纺与独家定制面料，产品创新采用多种功能性面料拼接工艺，确保您在繁忙的厨房中保持干爽与舒适。
+					 重构经典版型，结合传统修身版型与舒适版型的双重优势，符合人体工学的剪裁，让您在工作中行动自如，展现专业风范。既保持专业形象又确保全天候舒适体验。
+                </p>
+
+                <!-- 颜色选择 -->
+                <div class="product-options">
+                    <p class="option-title">颜色款式</p>
+                    <div class="option-buttons" id="colorOptions">
+                        <button class="option-btn active" data-color="white" data-color-name="经典白">长袖-白色</button>
+                        <button class="option-btn" data-color="black" data-color-name="炭黑">长袖-黑色</button>
+                        <button class="option-btn" data-color="blue" data-color-name="海军蓝">短袖-白色</button>
+                        <button class="option-btn" data-color="gray" data-color-name="高级灰">短袖-黑色</button>
+                    </div>
+                </div>
+                
+                <!-- 尺码选择 -->
+                <div class="product-options">
+                    <p class="option-title">可选尺码 <a class="size-chart-link" id="sizeChartLink">尺码推荐</a></p>
+                    <div class="option-buttons">
+                        <button class="option-btn active" data-option="size" data-value="m">M</button>
+                        <button class="option-btn" data-option="size" data-value="l">L</button>
+                        <button class="option-btn" data-option="size" data-value="xl">XL</button>
+                        <button class="option-btn" data-option="size" data-value="xxl">2XL</button>
+                        <button class="option-btn" data-option="size" data-value="xxxl">3XXL</button>
+		                <button class="option-btn" data-option="size" data-value="xxxl">4XL</button>	
+						<button class="option-btn" data-option="size" data-value="xxxl">5XL</button>
+						<button class="option-btn" data-option="size" data-value="xxxl">6XL</button>			
+                    </div>
+                </div>
+                
+                <!-- 产品卖点 - 2行2列 -->
+                <div class="product-features">
+                    <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>工艺版型</h3>
+                    <p>男 / 女通用版型</p>
+                        </div>
+                    </div>
+                   <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-stamp"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>面料材质</h3>
+                    <p>华服尼+柔舒格（长袖）</p>
+					<p>劲爽雅斜+耐美舒针织（短袖）</p>
+                        </div>
+                    </div>
+				   <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>功能面料拼接</h3>
+                    <p>关键部位采用不同功能面料拼接，肘部腋下、背部透气、舒展自如</p>
+                        </div>
+                    </div>
+                   <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-stamp"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>Logo定制</h3>
+                    <p>支持企业Logo刺绣或印花定制，提升团队专业形象，彰显品牌价值</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-expand-alt"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>特体加大尺码</h3>
+                    <p>提供4XL-6XL特体尺码，专为不同体型设计，确保合身舒适</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-copyright"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>独家定制面料</h3>
+                    <p>专为工装研发的定制面料，强化耐磨、抗撕裂性能，延长使用寿命</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 产品标签页 -->
+        <section class="product-tabs">
+            <div class="tab-headers">
+                <div class="tab-header active" data-tab="description">产品描述</div>
+                <div class="tab-header" data-tab="custom">定制服务</div>
+                <div class="tab-header" data-tab="specs">产品规格</div>
+                <div class="tab-header" data-tab="care">洗涤保养</div>
+            </div>
+            
+            <div class="tab-content">
+                <!-- 产品描述 -->
+                <div class="tab-pane active" id="description">
+                    <div class="description-content">
+                        <h3>【E07C 君临天下系列 / 时尚轻奢功能厨师服】</h3>
+                        
+                        
+                        <!-- 修改为2行2列的面料特点 -->
+                        <div class="feature-image-text">
+                            <div class="feature-item">
+                                <div class="feature-image">
+                                    <img src="https://free.picui.cn/free/2025/08/29/68b151ed8a97c.jpg" alt="透气性面料">
+                                </div>
+                                <div class="feature-text-content">
+                                    <h4><i class="fas fa-wind"></i>透气性佳</h4>
+                                    <p>特殊织法让空气自由流通，保持身体干爽。高密度纤维结构形成微气候调节层，即使在高温厨房环境中也能保持舒适。</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-image">
+                                    <img src="https://images.unsplash.com/photo-1505022610485-0249ba5b3675?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="防油防水面料">
+                                </div>
+                                <div class="feature-text-content">
+                                    <h4><i class="fas fa-tint"></i>防油防水</h4>
+                                    <p>经过纳米级特殊处理的表面能有效抵御油污和水渍，液体滴落时形成水珠滚落，保持厨师服清洁干爽，减少洗涤频率。</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-image">
+                                    <img src="https://images.unsplash.com/photo-1598703101326-3a0b72d4f1b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="耐高温面料">
+                                </div>
+                                <div class="feature-text-content">
+                                    <h4><i class="fas fa-fire"></i>耐高温</h4>
+                                    <p>可承受高达300°C的厨房高温环境，特殊防火纤维配方使面料不易变形或褪色，确保长期使用后仍保持原有性能。</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-image">
+                                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="易清洗面料">
+                                </div>
+                                <div class="feature-text-content">
+                                    <h4><i class="fas fa-tshirt"></i>易清洗</h4>
+                                    <p>机洗后不易变形，特殊抗皱处理使面料快干免熨烫，节省时间和精力。多次洗涤后仍能保持颜色鲜艳和性能稳定。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 细节展示图片 -->
+                        <div class="detail-images">
+                            <div class="detail-image">
+                                <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="双排扣设计">
+                                <p>经典双排扣设计，美观大方</p>
+                            </div>
+                            <div class="detail-image">
+                                <img src="https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="多功能口袋">
+                                <p>多功能口袋设计，方便放置工具</p>
+                            </div>
+                            <div class="detail-image">
+                                <img src="https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="透气设计">
+                                <p>透气孔设计，保持空气流通</p>
+                            </div>
+                        </div>
+                        
+                        <h4>设计亮点</h4>
+                        <ul>
+                            <li><strong>经典双排扣设计</strong>：美观大方，符合厨师专业形象</li>
+                            <li><strong>多功能口袋设计</strong>：侧边口袋可放置温度计、笔记本等工具</li>
+                            <li><strong>腋下透气孔设计</strong>：增强空气流通，长时间穿着依然舒适</li>
+                            <li><strong>可调节袖口</strong>：适应不同臂围，确保穿着合身</li>
+                            <li><strong>背部透气网眼设计</strong>：保持背部干爽，提升舒适度</li>
+                            <li><strong>防撕裂接缝</strong>：增加耐用性，延长使用寿命</li>
+                        </ul>
+                        
+                        <h4>适用场景</h4>
+                        <p>餐厅厨房、酒店后厨、烹饪学校、家庭厨房、烘焙工作室、食品加工厂等。</p>
+                    </div>
+                </div>
+                
+                <!-- 定制服务 -->
+                <div class="tab-pane" id="custom">
+                    <h3>个性化定制服务</h3>
+                    <p>我们提供全面的个性化定制服务，满足您对厨师服的独特需求，打造专属的专业形象。</p>
+                    
+                    <!-- 定制服务类型 -->
+                    <div class="custom-services">
+                        <div class="custom-service embroidery">
+                            <div class="custom-service-icon">
+                                <i class="fas fa-pen-fancy"></i>
+                            </div>
+                            <h3>刺绣定制</h3>
+                            <p>在厨师服上刺绣您的姓名、职位或餐厅Logo，采用高品质绣线，经久耐用，提升专业形象。</p>
+                        </div>
+                        <div class="custom-service printing">
+                            <div class="custom-service-icon">
+                                <i class="fas fa-stamp"></i>
+                            </div>
+                            <h3>印花定制</h3>
+                            <p>多种印花技术可选，包括丝网印刷、热转印等，支持彩色图案和复杂设计，展现独特风格。</p>
+                        </div>
+                        <div class="custom-service special-size">
+                            <div class="custom-service-icon">
+                                <i class="fas fa-ruler-combined"></i>
+                            </div>
+                            <h3>特体尺码定制</h3>
+                            <p>为非标准体型提供量身定制服务，确保厨师服完美贴合您的身形，提升穿着舒适度。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 定制流程时间轴 -->
+                    <h3 style="margin-top: 40px; margin-bottom: 30px;">定制流程</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="选择款式" class="timeline-image">
+                                <h4><span class="timeline-icon">1</span>选择款式</h4>
+                                <p>从我们的产品系列中选择基础款式，确定颜色和面料类型。我们有多种经典设计和现代款式可供选择。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <img src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="提供设计" class="timeline-image">
+                                <h4><span class="timeline-icon">2</span>提供设计</h4>
+                                <p>提交您的Logo设计文件，或提供设计想法由我们的设计师为您创作。支持多种格式，包括AI、EPS、CDR等矢量文件。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="效果展示" class="timeline-image">
+                                <h4><span class="timeline-icon">3</span>效果展示</h4>
+                                <p>我们的设计师将在3个工作日内提供效果图供您确认。您可以根据效果图提出修改意见，直至满意为止。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="加工制作" class="timeline-image">
+                                <h4><span class="timeline-icon">4</span>加工制作</h4>
+                                <p>确认效果图后，我们开始制作样品，一般需要5-7个工作日。我们使用高质量材料和专业工艺确保产品品质。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <img src="https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="完成交付" class="timeline-image">
+                                <h4><span class="timeline-icon">5</span>完成交付</h4>
+                                <p>样品确认后开始批量生产，预计10-15个工作日完成并交付。我们提供全国配送服务，确保产品安全送达。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin-top: 40px;">
+                        <h4>定制注意事项</h4>
+                        <p>1. 定制订单最小起订量为10件</p>
+                        <p>2. 定制Logo文件需提供矢量格式(AI/EPS/CDR)</p>
+                        <p>3. 特体尺码定制需提供详细身体尺寸数据</p>
+                        <p>4. 所有定制服务均提供设计确认环节</p>
+                        <p>5. 定制生产周期通常为15-20个工作日</p>
+                    </div>
+                </div>
+                
+                <!-- 产品规格 -->
+                <div class="tab-pane" id="specs">
+                    <table class="specs-table">
+                        <tr>
+                            <td>面料成分</td>
+                            <td>65%棉，35%聚酯纤维</td>
+                        </tr>
+                        <tr>
+                            <td>面料重量</td>
+                            <td>220g/㎡</td>
+                        </tr>
+                        <tr>
+                            <td>颜色</td>
+                            <td>经典白、炭黑、海军蓝、高级灰</td>
+                        </tr>
+                        <tr>
+                            <td>尺码</td>
+                            <td>S、M、L、XL、XXL、XXXL</td>
+                        </tr>
+                        <tr>
+                            <td>衣长</td>
+                            <td>S: 78cm, M: 80cm, L: 82cm, XL: 84cm, XXL: 86cm, XXXL: 88cm</td>
+                        </tr>
+                        <tr>
+                            <td>胸围</td>
+                            <td>S: 104cm, M: 108cm, L: 112cm, XL: 116cm, XXL: 120cm, XXXL: 124cm</td>
+                        </tr>
+                        <tr>
+                            <td>肩宽</td>
+                            <td>S: 44cm, M: 46cm, L: 48cm, XL: 50cm, XXL: 52cm, XXXL: 54cm</td>
+                        </tr>
+                        <tr>
+                            <td>袖长</td>
+                            <td>S: 62cm, M: 63cm, L: 64cm, XL: 65cm, XXL: 66cm, XXXL: 67cm</td>
+                        </tr>
+                        <tr>
+                            <td>设计特点</td>
+                            <td>双排扣、透气孔、多功能口袋、可调节袖口</td>
+                        </tr>
+                        <tr>
+                            <td>产地</td>
+                            <td>中国</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <!-- 洗涤保养 - 修改为带图标的版本 -->
+                <div class="tab-pane" id="care">
+                    <h3>洗涤与保养指南</h3>
+                    <p>正确的洗涤和保养方式可以延长厨师服的使用寿命，保持其最佳状态。</p>
+                    
+                    <div class="care-guide">
+                        <!-- 洗涤说明 -->
+                        <div class="care-section">
+                            <h4><i class="fas fa-washing-machine"></i>洗涤说明</h4>
+                            <ul class="care-list">
+                                <li><i class="fas fa-check-circle"></i>可机洗，建议使用温和洗涤模式</li>
+                                <li><i class="fas fa-thermometer-half"></i>水温不超过40℃</li>
+                                <li><i class="fas fa-pump-soap"></i>使用中性洗涤剂，避免漂白剂</li>
+                                <li><i class="fas fa-palette"></i>深浅色衣物分开洗涤</li>
+                                <li><i class="fas fa-sync-alt"></i>建议反面洗涤，保护面料</li>
+                                <li><i class="fas fa-snowflake"></i>冷水洗涤效果更佳，保护颜色</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 干燥与熨烫 -->
+                        <div class="care-section">
+                            <h4><i class="fas fa-sun"></i>干燥与熨烫</h4>
+                            <ul class="care-list">
+                                <li><i class="fas fa-tshirt"></i>悬挂晾干，避免直接曝晒</li>
+                                <li><i class="fas fa-wind"></i>可低温烘干</li>
+                                <li><i class="fas fa-iron"></i>如需熨烫，建议中温熨烫</li>
+                                <li><i class="fas fa-exclamation-triangle"></i>避免长时间高温熨烫同一部位</li>
+                                <li><i class="fas fa-cloud"></i>自然风干有助于保持面料弹性</li>
+                                <li><i class="fas fa-ban"></i>避免使用烘干机高温模式</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 储存建议 -->
+                        <div class="care-section">
+                            <h4><i class="fas fa-box"></i>储存建议</h4>
+                            <ul class="care-list">
+                                <li><i class="fas fa-broom"></i>清洗干净并完全干燥后储存</li>
+                                <li><i class="fas fa-archive"></i>建议悬挂保存，避免折叠压痕</li>
+                                <li><i class="fas fa-tint-slash"></i>存放在通风干燥处，避免潮湿环境</li>
+                                <li><i class="fas fa-sun"></i>远离阳光直射，防止褪色</li>
+                                <li><i class="fas fa-moth"></i>可使用防虫剂，防止虫蛀</li>
+                                <li><i class="fas fa-weight-hanging"></i>避免重物压放，保持衣物形状</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="care-tips">
+                        <h4>保养小贴士</h4>
+                        <p><i class="fas fa-lightbulb"></i> <strong>小面积污渍处理：</strong> 如有油渍，请立即用湿布轻轻擦拭，避免油渍渗透面料。</p>
+                        <p><i class="fas fa-lightbulb"></i> <strong>延长使用寿命：</strong> 定期检查接缝和纽扣，及时修复可延长厨师服使用寿命。</p>
+                        <p><i class="fas fa-lightbulb"></i> <strong>专业清洗建议：</strong> 建议每使用20-30次后进行专业清洗，保持面料性能。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+       
+    </main>
+    
+	
+	
+	<!-- 在每个详情页的<head>中添加 -->
+<script src="products.js"></script>
+
+<!-- 修改推荐产品部分 -->
+<section class="related-products">
+    <h2 class="section-title">您可能还会喜欢</h2>
+    <div class="related-items" id="relatedItems">
+        <!-- 这里会通过JS动态生成 -->
+    </div>
+</section>
+
+<!-- 在每个详情页的底部JavaScript中添加 -->
+<script>
+// 定义当前产品ID（每个页面需要修改这个值）
+const currentProductId = '详情页'; // 这个值根据实际页面修改
+
+// 生成推荐产品
+document.addEventListener('DOMContentLoaded', function() {
+    const relatedItems = document.getElementById('relatedItems');
+    if (relatedItems) {
+        relatedItems.innerHTML = generateRecommendations(currentProductId);
+    }
+});
+</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    <!-- 尺码表模态框 -->
+    <div class="modal-overlay" id="sizeChartModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h2 class="modal-title">推荐尺码参照</h2>
+            <img src="https://free.picui.cn/free/2025/12/05/693282de56fca.png" alt="尺码表" class="size-chart-img">
+            
+            <div class="size-guide">
+                <h4>尺码选择指南</h4>
+                <p>1. 如果您的测量值介于两个尺码之间，建议选择较大的尺码以获得更舒适的穿着体验。</p>
+                <p>2. 厨师服设计偏宽松，以适应厨房活动需求，请勿选择过于紧身的尺码。</p>
+                <p>3. 对于特殊体型或有特殊需求，我们提供定制服务，下滑至页面底部联系客服了解详情。</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="option-btn" id="closeModalBtn" style="background-color: #d32f2f; color: white;">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 图片放大遮罩 -->
+    <div class="image-overlay" id="imageOverlay">
+        <div class="close-zoom" id="closeZoom">
+            <i class="fas fa-times"></i>
+        </div>
+        <img class="zoomed-image" id="zoomedImage" src="" alt="放大图片">
+    </div>
+
+    <!-- 联系人背景和二维码 -->
+    <div class="background-container">
+        <!-- 微信二维码图片 -->
+        <img src="https://free.picui.cn/free/2025/08/26/68ad0dbb356b4.png" 
+             alt="微信二维码" 
+             class="wechat-qrcode"
+             title="长按识别二维码添加好友">
+    </div>
+
+    <!-- 地图部分 -->
+    <div id="myMap"></div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container-custom">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">北京十方聚典服饰科技有限公司</h3>
+                    <p class="text-gray-400 text-sm">Beijing Shifang Judian Garment Technology Co., Ltd</p>
+                    <div class="mt-4 flex space-x-4">
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Products / 产品</h3>
+                    <ul class="space-y-2">
+                        <li><a href="chef.html" class="text-gray-400 hover:text-white text-sm">Chef Uniforms / 厨师服</a></li>
+                        <li><a href="shirt.html" class="text-gray-400 hover:text-white text-sm">Shirts / 衬衫</a></li>
+                        <li><a href="apron.html" class="text-gray-400 hover:text-white text-sm">Aprons / 围裙</a></li>
+                        <li><a href="hat.html" class="text-gray-400 hover:text-white text-sm">Hat / 帽子</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Services / 服务</h3>
+                    <ul class="space-y-2">
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Custom Logo Design / Logo定制</a></li>
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Made-to-Measure / 特体定制</a></li>
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Style Development / 款式研发</a></li>						
+                        <li><a href="story.html" class="text-gray-400 hover:text-white text-sm">Bulk Orders / 批量订购</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact / 联系</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400 text-sm">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Beijing, China / 中国北京</span>
+                        </li>
+                        <li class="flex items-center text-gray-400 text-sm">
+                            <i class="fas fa-phone-alt mr-2"></i>
+                            <span>+86 19931868426</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2023 Beijing Shifang Judian Garment Technology Co., Ltd. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Leaflet地图库 -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gcoord@2.0.3/dist/gcoord.js"></script>
+    
+    <script>
+        // 产品图片数据
+        const productImages = {
+            white: [
+                "https://free.picui.cn/free/2025/08/29/68b1533f90c0a.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b1530be46d4.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b1533f90c0a.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b1530be46d4.jpg"
+            ],
+            black: [
+                "https://free.picui.cn/free/2025/08/29/68b1533f512d2.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b1524f785ba.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b1533f512d2.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b1524f785ba.jpg"
+            ],
+            blue: [
+                "https://free.picui.cn/free/2025/08/29/68b15249dd711.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b1524d87c53.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b15249dd711.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b1524d87c53.jpg"
+            ],
+            gray: [
+                "https://free.picui.cn/free/2025/08/29/68b151f2a752a.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b152f0d64ce.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b151f2a752a.jpg",
+                "https://free.picui.cn/free/2025/08/29/68b152f0d64ce.jpg"
+            ]
+        };
+        
+        // 当前选中的颜色
+        let currentColor = 'white';
+        
+        // 初始化页面图片
+        function initializeProductImages() {
+            const thumbnailsContainer = document.getElementById('imageThumbnails');
+            thumbnailsContainer.innerHTML = '';
+            
+            // 添加缩略图
+            productImages[currentColor].forEach((imageUrl, index) => {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = `thumbnail ${index === 0 ? 'active' : ''}`;
+                thumbnail.setAttribute('data-image', imageUrl);
+                
+                const img = document.createElement('img');
+                img.src = imageUrl.replace('w=800', 'w=200');
+                img.alt = `${getColorName(currentColor)}厨师服 - 图片${index + 1}`;
+                
+                thumbnail.appendChild(img);
+                thumbnailsContainer.appendChild(thumbnail);
+                
+                // 添加点击事件
+                thumbnail.addEventListener('click', function() {
+                    // 更新主图
+                    document.getElementById('mainImage').src = imageUrl;
+                    
+                    // 更新缩略图激活状态
+                    document.querySelectorAll('.thumbnail').forEach(thumb => {
+                        thumb.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+            
+            // 设置主图
+            document.getElementById('mainImage').src = productImages[currentColor][0];
+        }
+        
+        // 获取颜色名称
+        function getColorName(color) {
+            const colorNames = {
+                white: '经典白',
+                black: '炭黑',
+                blue: '海军蓝',
+                gray: '高级灰'
+            };
+            return colorNames[color] || color;
+        }
+        
+        // 颜色切换功能
+        function setupColorSwitching() {
+            const colorButtons = document.querySelectorAll('#colorOptions .option-btn');
+            
+            colorButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const color = this.getAttribute('data-color');
+                    
+                    // 更新按钮激活状态
+                    colorButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // 更新产品图片
+                    currentColor = color;
+                    initializeProductImages();
+                });
+            });
+        }
+        
+        // 主图放大功能
+        function setupImageZoom() {
+            const mainImageContainer = document.getElementById('mainImageContainer');
+            const mainImage = document.getElementById('mainImage');
+            const imageOverlay = document.getElementById('imageOverlay');
+            const zoomedImage = document.getElementById('zoomedImage');
+            const closeZoom = document.getElementById('closeZoom');
+            
+            // 点击主图放大
+            mainImageContainer.addEventListener('click', function() {
+                zoomedImage.src = mainImage.src;
+                imageOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 防止滚动
+            });
+            
+            // 关闭放大
+            closeZoom.addEventListener('click', function() {
+                imageOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // 点击遮罩层关闭
+            imageOverlay.addEventListener('click', function(e) {
+                if (e.target === imageOverlay) {
+                    imageOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // ESC键关闭
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && imageOverlay.classList.contains('active')) {
+                    imageOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+        
+        // 标签页切换功能
+        function setupTabs() {
+            const tabHeaders = document.querySelectorAll('.tab-header');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            tabHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // 移除所有标签头的active类
+                    tabHeaders.forEach(h => {
+                        h.classList.remove('active');
+                    });
+                    
+                    // 给当前点击的标签头添加active类
+                    this.classList.add('active');
+                    
+                    // 隐藏所有标签内容
+                    tabPanes.forEach(pane => {
+                        pane.classList.remove('active');
+                    });
+                    
+                    // 显示对应的标签内容
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+        
+        // 尺码表模态框功能
+        function setupSizeChartModal() {
+            const sizeChartLink = document.getElementById('sizeChartLink');
+            const sizeChartModal = document.getElementById('sizeChartModal');
+            const modalClose = document.getElementById('modalClose');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            
+            // 打开模态框
+            sizeChartLink.addEventListener('click', function() {
+                sizeChartModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 防止滚动
+            });
+            
+            // 关闭模态框
+            function closeModal() {
+                sizeChartModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+            
+            modalClose.addEventListener('click', closeModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            
+            // 点击模态框背景关闭
+            sizeChartModal.addEventListener('click', function(e) {
+                if (e.target === sizeChartModal) {
+                    closeModal();
+                }
+            });
+            
+            // ESC键关闭
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && sizeChartModal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化产品功能
+            initializeProductImages();
+            setupColorSwitching();
+            setupImageZoom();
+            setupTabs();
+            setupSizeChartModal();
+            
+            // 尺码选择功能
+            const sizeButtons = document.querySelectorAll('[data-option="size"]');
+            sizeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    sizeButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuButton = document.querySelector('button.md\\:hidden');
+            const nav = document.querySelector('nav.hidden.md\\:flex');
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    if (nav.classList.contains('hidden')) {
+                        nav.classList.remove('hidden');
+                        nav.classList.add('block', 'absolute', 'top-full', 'left-0', 'w-full', 'bg-white', 'shadow-md', 'py-4', 'px-8');
+                    } else {
+                        nav.classList.add('hidden');
+                        nav.classList.remove('block', 'absolute', 'top-full', 'left-0', 'w-full', 'bg-white', 'shadow-md', 'py-4', 'px-8');
+                    }
+                });
+            }
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!nav.contains(e.target) && e.target !== mobileMenuButton) {
+                    nav.classList.add('hidden');
+                    nav.classList.remove('block', 'absolute', 'top-full', 'left-0', 'w-full', 'bg-white', 'shadow-md', 'py-4', 'px-8');
+                }
+            });
+            
+            // ========== 地图配置参数 ==========
+            const config = {
+                center: [40.00243543,116.78342287], // 中心坐标 [纬度, 经度]（北京）
+                zoom: 15,                     // 缩放级别 1-18
+                markerPos: [40.00243543,116.78342287], // 标记点坐标
+                locationName: "北京十方聚典服饰科技有限公司"       // 地点名称（显示在弹出窗口）
+            };
+            
+            // 初始化地图
+            const map = L.map('myMap').setView(config.center, config.zoom);
+
+            // 添加地图图层（使用OpenStreetMap）
+            L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+                attribution: '© 高德地图',
+                subdomains: ['1', '2', '3', '4'],
+                maxZoom: 18,
+                minZoom: 3
+            }).addTo(map);
+            
+            // 监听地图加载错误
+            map.on('layeradd', function(e) {
+                e.layer.on('tileerror', function() {
+                    alert('地图加载失败，请检查网络连接！');
+                });
+            });
+
+            // 生成第三方地图链接
+function createMapLinks(lat, lng) {
+    return `
+        <div style="text-align:center;padding:10px;">
+            <h3 style="margin:0 0 15px 0;">${config.locationName}</h3>
+            <a href="https://uri.amap.com/marker?position=${lng},${lat}&name=${config.locationName}" 
+               target="_blank"
+               style="display: block; margin: 8px 0; padding: 6px 12px; background: #0078A8; color: white; text-decoration: none; border-radius: 4px; text-align: center;">
+                高德地图
+            </a>
+        </div>
+    `;
+}
+
+            // 添加标记点
+            L.marker(config.markerPos)
+                .addTo(map)
+                .bindPopup(createMapLinks(config.markerPos[0], config.markerPos[1]))
+                .openPopup();
+        });
+    </script>
+</body>
+</html>

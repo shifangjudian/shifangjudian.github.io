@@ -761,7 +761,7 @@
         /* 超小屏幕手机端 */
         @media (max-width: 480px) {
             .related-items {
-                grid-template-columns: 1fr; /* 超小屏幕1列 */
+                grid-template-columns: repeat(2, 1fr); /* 超小屏幕2列 */
             }
         }
 
@@ -1244,7 +1244,7 @@
             }
             
             .related-items {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .detail-image {

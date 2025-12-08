@@ -74,7 +74,7 @@
         }
         
         .feature-image {
-            height: 600px; /* 修改为500px高度 */
+            height: 650px; /* 修改为650px高度 */
             overflow: hidden;
         }
         
@@ -189,16 +189,26 @@
             background-color: #fefefe;
         }
         
+        /* 修改标题样式 - 加粗、不换行、自动缩小字体 */
         .product-title {
             font-size: 28px;
             color: #222;
             margin-bottom: 10px;
+            font-weight: 700; /* 加粗 */
+            white-space: nowrap; /* 不换行 */
+            overflow: hidden; /* 隐藏溢出部分 */
+            text-overflow: ellipsis; /* 显示省略号 */
+            width: 100%; /* 确保宽度100% */
+            display: block;
         }
         
         .product-subtitle {
             color: #666;
             font-size: 16px;
             margin-bottom: 20px;
+            white-space: nowrap; /* 副标题也不换行 */
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .product-description {
@@ -221,16 +231,19 @@
         .option-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
         
         .option-btn {
-            padding: 10px 20px;
+            padding: 8px 15px;
             border: 2px solid #e0e0e0;
             background-color: #fff;
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
+            flex-shrink: 0;
+            white-space: nowrap;
+            font-size: 14px;
         }
         
         .option-btn:hover {
@@ -305,7 +318,6 @@
             margin-bottom: 40px;
         }
         
-
         .tab-headers {
             display: flex;
             border-bottom: 2px solid #eee;
@@ -388,7 +400,7 @@
         
         .detail-image img {
             width: 100%;
-            height: 400px; /* 修改为300px高度 */
+            height: 400px; /* 修改为400px高度 */
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 10px;
@@ -625,39 +637,39 @@
             width: 30%;
         }
         
-		
-		/* 相关推荐区域样式 */
-.related-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 改为4列 */
-    gap: 20px;
-    margin-top: 30px;
-}
+        /* 相关推荐区域样式 */
+        .related-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 改为4列 */
+            gap: 20px;
+            margin-top: 30px;
+        }
 
-/* 响应式设计 */
-@media (max-width: 1200px) {
-    .related-container {
-        grid-template-columns: repeat(3, 1fr); /* 中等屏幕显示3列 */
-    }
-}
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .related-container {
+                grid-template-columns: repeat(3, 1fr); /* 中等屏幕显示3列 */
+            }
+        }
 
-@media (max-width: 768px) {
-    .related-container {
-        grid-template-columns: repeat(2, 1fr); /* 小屏幕显示2列 */
-    }
-}
+        @media (max-width: 768px) {
+            .related-container {
+                grid-template-columns: repeat(2, 1fr); /* 小屏幕显示2列 */
+            }
+        }
 
-@media (max-width: 480px) {
-    .related-container {
-        grid-template-columns: 1fr; /* 超小屏幕显示1列 */
-    }
-}
+        @media (max-width: 480px) {
+            .related-container {
+                grid-template-columns: 1fr; /* 超小屏幕显示1列 */
+            }
+        }
+        
         /* 推荐产品 - 2行3列展示 */
         .related-products {
             margin-bottom: 60px;
-			width: 1200px;
-			margin-left: auto; /* 如果需要水平居中 */
-    margin-right: auto;
+            width: 1200px;
+            margin-left: auto; /* 如果需要水平居中 */
+            margin-right: auto;
         }
         
         .section-title {
@@ -709,79 +721,80 @@
             margin-bottom: 5px;
         }
         
-		/* 平板端响应式 (768px-1024px) */
-@media (max-width: 1024px) {
-    .related-items {
-        grid-template-columns: repeat(4, 1fr); /* 平板端4列 */
-        gap: 20px;
-    }
-    
-    .related-products {
-        width: 100%;
-        padding: 0 20px;
-    }
-}
+        /* 平板端响应式 (768px-1024px) */
+        @media (max-width: 1024px) {
+            .related-items {
+                grid-template-columns: repeat(4, 1fr); /* 平板端4列 */
+                gap: 20px;
+            }
+            
+            .related-products {
+                width: 100%;
+                padding: 0 20px;
+            }
+        }
 
-/* 手机端响应式 */
-@media (max-width: 768px) {
-    .related-items {
-        grid-template-columns: repeat(2, 1fr); /* 手机端2列 */
-        gap: 15px;
-    }
-    
-    .related-item img {
-        height: 200px; /* 手机端图片高度调小 */
-    }
-    
-    .related-item-info {
-        padding: 15px;
-    }
-    
-    .related-item-title {
-        font-size: 14px;
-    }
-    
-    .related-item-code {
-        font-size: 12px;
-    }
-}
+        /* 手机端响应式 */
+        @media (max-width: 768px) {
+            .related-items {
+                grid-template-columns: repeat(2, 1fr); /* 手机端2列 */
+                gap: 15px;
+            }
+            
+            .related-item img {
+                height: 200px; /* 手机端图片高度调小 */
+            }
+            
+            .related-item-info {
+                padding: 15px;
+            }
+            
+            .related-item-title {
+                font-size: 14px;
+            }
+            
+            .related-item-code {
+                font-size: 12px;
+            }
+        }
 
-/* 超小屏幕手机端 */
-@media (max-width: 480px) {
-    .related-items {
-        grid-template-columns: 1fr; /* 超小屏幕1列 */
-    }
-}
+        /* 超小屏幕手机端 */
+        @media (max-width: 480px) {
+            .related-items {
+                grid-template-columns: 1fr; /* 超小屏幕1列 */
+            }
+        }
 
-/* 相关推荐容器样式 */
-.related-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 桌面端4列 */
-    gap: 20px;
-    margin-top: 30px;
-}
+        /* 相关推荐容器样式 */
+        .related-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 桌面端4列 */
+            gap: 20px;
+            margin-top: 30px;
+        }
 
-/* 平板端响应式 (768px-1024px) */
-@media (max-width: 1024px) {
-    .related-container {
-        grid-template-columns: repeat(4, 1fr); /* 平板端4列 */
-        gap: 20px;
-    }
-}
+        /* 平板端响应式 (768px-1024px) */
+        @media (max-width: 1024px) {
+            .related-container {
+                grid-template-columns: repeat(4, 1fr); /* 平板端4列 */
+                gap: 20px;
+            }
+        }
 
-/* 手机端响应式 */
-@media (max-width: 768px) {
-    .related-container {
-        grid-template-columns: repeat(2, 1fr); /* 手机端2列 */
-    }
-}
+        /* 手机端响应式 */
+        @media (max-width: 768px) {
+            .related-container {
+                grid-template-columns: repeat(2, 1fr); /* 手机端2列 */
+            }
+        }
 
-/* 超小屏幕手机端 */
-@media (max-width: 480px) {
-    .related-container {
-        grid-template-columns: 1fr; /* 超小屏幕1列 */
-    }
-}
+        /* 超小屏幕手机端 */
+        @media (max-width: 480px) {
+            .related-container {
+                grid-template-columns: 1fr; /* 超小屏幕1列 */
+            }
+        }
+        
         /* 尺码表模态框 */
         .modal-overlay {
             position: fixed;
@@ -990,41 +1003,146 @@
             color: #333;
         }
         
-        /* 响应式设计 */
+        /* 在桌面端确保显示原产品详情中的选项，隐藏移动版选项 */
+        @media (min-width: 769px) {
+            .product-images .product-options-mobile {
+                display: none;
+            }
+            
+            .product-details .product-options {
+                display: block;
+            }
+        }
+        
+        /* 手机端响应式设计 - 新增移动端布局调整 */
         @media (max-width: 768px) {
+            /* 移动颜色款式和尺码选择到缩略图下面 */
             .product-showcase {
                 flex-direction: column;
+                position: relative;
             }
             
             .product-images {
                 flex: 1;
                 width: 100%;
                 padding: 20px;
-            }
-            
-            .main-image-container {
-                height: auto; /* 手机端高度自适应 */
-                max-width: 350px; /* 手机端最大宽度350px */
-                margin-left: auto;
-                margin-right: auto;
-            }
-            
-            .main-image {
-                height: auto; /* 手机端图片高度自适应 */
-                object-fit: contain; /* 手机端图片完整显示 */
+                position: relative;
+                order: 1; /* 确保图片区域在最上面 */
             }
             
             .product-details {
+                order: 3; /* 详细信息在底部 */
                 padding: 20px;
             }
             
+            /* 在手机端隐藏原产品详情中的颜色和尺码选择 */
+            .product-details .product-options {
+                display: none;
+            }
+            
+            /* 在手机端显示新插入的颜色和尺码选择 */
+            .product-images .product-options-mobile {
+                display: block;
+                margin-top: 20px;
+                padding: 15px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+                width: 100%;
+            }
+            
+            /* 手机端选项按钮缩小显示，不换行不滚动 */
+            .product-images .product-options-mobile .option-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                justify-content: flex-start;
+                width: 100%;
+            }
+            
+            /* 手机端按钮样式 - 缩小尺寸 */
+            .product-images .product-options-mobile .option-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+                min-width: 0;
+                flex: 0 0 auto;
+                white-space: nowrap;
+                text-align: center;
+                border-radius: 4px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            /* 颜色按钮 - 4个一排，等分宽度 */
+            .product-images .product-options-mobile #mobileColorOptions .option-btn {
+                flex: 1;
+                min-width: 0;
+                max-width: calc(25% - 5px); /* 4个按钮，每个占25%宽度减去间距 */
+            }
+            
+            /* 尺码按钮 - 8个两排，每排4个 */
+            .product-images .product-options-mobile #mobileSizeOptions .option-btn {
+                flex: 0 0 calc(25% - 5px); /* 每个按钮占25%宽度减去间距 */
+                max-width: calc(25% - 5px);
+            }
+            
+            /* 确保主图容器有合适高度 */
+            .main-image-container {
+                height: 500px;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                width: 100%;
+            }
+            
+            .main-image {
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+            
+            /* 手机端标题自动缩小字体，确保一行显示 */
+            .product-title {
+                font-size: 22px; /* 桌面端28px，手机端调整为22px */
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-weight: 700;
+                max-width: 100%;
+            }
+            
+            .product-subtitle {
+                font-size: 14px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
             .product-features {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
             
             .feature {
-                padding: 12px;
+                padding: 10px;
+            }
+            
+            .feature-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+                margin-right: 12px;
+            }
+            
+            .feature-text h3 {
+                font-size: 13px;
+            }
+            
+            .feature-text p {
+                font-size: 11px;
             }
             
             .tab-headers {
@@ -1032,8 +1150,8 @@
             }
             
             .tab-header {
-                padding: 10px 15px;
-                font-size: 14px;
+                padding: 10px 12px;
+                font-size: 13px;
                 flex: 1;
                 text-align: center;
             }
@@ -1087,38 +1205,42 @@
             }
             
             .feature-image {
-                height: 500px; /* 手机端调整为300px */
+                height: 500px;
             }
             
             /* 设计亮点响应式 */
             .detail-image img {
-                height: 400px; /* 手机端调整为200px */
+                height: 300px;
             }
         }
         
         @media (max-width: 480px) {
             .main-image-container {
-                max-width: 100%; /* 手机端宽度100%显示 */
-                height: 550px; /* 保持550px高度 */
+                max-width: 100%;
+                height: 400px;
             }
             
             .main-image {
-                height: 100%; /* 图片高度填充容器 */
-                object-fit: cover; /* 保持图片填充效果 */
+                height: 100%;
+                object-fit: cover;
             }
             
             .thumbnail {
-                width: 60px;
-                height: 60px;
+                width: 50px;
+                height: 50px;
             }
             
-            .option-buttons {
-                justify-content: center;
+            /* 超小屏幕进一步缩小标题字体 */
+            .product-title {
+                font-size: 18px; /* 超小屏幕调整为18px */
+                font-weight: 700;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             
-            .option-btn {
-                padding: 8px 15px;
-                font-size: 14px;
+            .product-subtitle {
+                font-size: 12px;
             }
             
             .related-items {
@@ -1127,6 +1249,42 @@
             
             .detail-image {
                 min-width: 100%;
+            }
+            
+            /* 超小屏幕时，进一步调整按钮大小 */
+            .product-images .product-options-mobile .option-btn {
+                padding: 5px 8px;
+                font-size: 11px;
+            }
+            
+            /* 颜色按钮 */
+            .product-images .product-options-mobile #mobileColorOptions .option-btn {
+                max-width: calc(25% - 4px);
+            }
+            
+            /* 尺码按钮 */
+            .product-images .product-options-mobile #mobileSizeOptions .option-btn {
+                flex: 0 0 calc(25% - 4px);
+                max-width: calc(25% - 4px);
+            }
+            
+            .feature-image {
+                height: 200px;
+            }
+            
+            .detail-image img {
+                height: 150px;
+            }
+        }
+        
+        /* 更小屏幕的响应式 */
+        @media (max-width: 360px) {
+            .product-title {
+                font-size: 16px; /* 在非常小的屏幕上进一步缩小 */
+            }
+            
+            .product-subtitle {
+                font-size: 11px;
             }
         }
         
@@ -1268,7 +1426,7 @@
         </div>
     </header>
 
-    <!-- 产品详情内容 - 插入在这里 -->
+    <!-- 产品详情内容 -->
     <main class="container-custom mt-6">
         <!-- 产品展示区域 -->
         <section class="product-showcase">
@@ -1279,18 +1437,47 @@
                 <div class="image-thumbnails" id="imageThumbnails">
                     <!-- 缩略图将通过JavaScript动态生成 -->
                 </div>
+                
+                <!-- 手机端专用颜色和尺码选择器 -->
+                <div class="product-options-mobile">
+                    <!-- 颜色选择 -->
+                    <div class="product-options">
+                        <p class="option-title">颜色款式</p>
+                        <div class="option-buttons" id="mobileColorOptions">
+                            <button class="option-btn active" data-color="white" data-color-name="经典白">长袖-白色</button>
+                            <button class="option-btn" data-color="black" data-color-name="炭黑">长袖-黑色</button>
+                            <button class="option-btn" data-color="blue" data-color-name="海军蓝">短袖-白色</button>
+                            <button class="option-btn" data-color="gray" data-color-name="高级灰">短袖-黑色</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 尺码选择 -->
+                    <div class="product-options">
+                        <p class="option-title">可选尺码 <a class="size-chart-link" id="mobileSizeChartLink">尺码推荐</a></p>
+                        <div class="option-buttons" id="mobileSizeOptions">
+                            <button class="option-btn active" data-option="size" data-value="m">M</button>
+                            <button class="option-btn" data-option="size" data-value="l">L</button>
+                            <button class="option-btn" data-option="size" data-value="xl">XL</button>
+                            <button class="option-btn" data-option="size" data-value="xxl">2XL</button>
+                            <button class="option-btn" data-option="size" data-value="xxxl">3XXL</button>
+                            <button class="option-btn" data-option="size" data-value="4xl">4XL</button>	
+                            <button class="option-btn" data-option="size" data-value="5xl">5XL</button>
+                            <button class="option-btn" data-option="size" data-value="6xl">6XL</button>			
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="product-details">
                 <h1 class="product-title">E07C 君临天下系列 / 时尚轻奢功能厨师服</h1>
-			    <p class="product-subtitle">高级透气面料，专业设计，舒适耐穿</p>
+                <p class="product-subtitle">高级透气面料，专业设计，舒适耐穿</p>
                 <p class="product-description">
                     【君临天下系列 / 时尚轻奢功能厨师服】采用涤棉混纺与独家定制面料，产品创新采用多种功能性面料拼接工艺，确保您在繁忙的厨房中保持干爽与舒适。
-					 重构经典版型，结合传统修身版型与舒适版型的双重优势，符合人体工学的剪裁，让您在工作中行动自如，展现专业风范。既保持专业形象又确保全天候舒适体验。
+                    重构经典版型，结合传统修身版型与舒适版型的双重优势，符合人体工学的剪裁，让您在工作中行动自如，展现专业风范。既保持专业形象又确保全天候舒适体验。
                 </p>
 
-                <!-- 颜色选择 -->
-                <div class="product-options">
+                <!-- 颜色选择 - 桌面端显示 -->
+                <div class="product-options desktop-options">
                     <p class="option-title">颜色款式</p>
                     <div class="option-buttons" id="colorOptions">
                         <button class="option-btn active" data-color="white" data-color-name="经典白">长袖-白色</button>
@@ -1300,76 +1487,76 @@
                     </div>
                 </div>
                 
-                <!-- 尺码选择 -->
-                <div class="product-options">
+                <!-- 尺码选择 - 桌面端显示 -->
+                <div class="product-options desktop-options">
                     <p class="option-title">可选尺码 <a class="size-chart-link" id="sizeChartLink">尺码推荐</a></p>
-                    <div class="option-buttons">
+                    <div class="option-buttons" id="sizeOptions">
                         <button class="option-btn active" data-option="size" data-value="m">M</button>
                         <button class="option-btn" data-option="size" data-value="l">L</button>
                         <button class="option-btn" data-option="size" data-value="xl">XL</button>
                         <button class="option-btn" data-option="size" data-value="xxl">2XL</button>
                         <button class="option-btn" data-option="size" data-value="xxxl">3XXL</button>
-		                <button class="option-btn" data-option="size" data-value="xxxl">4XL</button>	
-						<button class="option-btn" data-option="size" data-value="xxxl">5XL</button>
-						<button class="option-btn" data-option="size" data-value="xxxl">6XL</button>			
+                        <button class="option-btn" data-option="size" data-value="4xl">4XL</button>	
+                        <button class="option-btn" data-option="size" data-value="5xl">5XL</button>
+                        <button class="option-btn" data-option="size" data-value="6xl">6XL</button>			
                     </div>
                 </div>
                 
                 <!-- 产品卖点 - 2行2列 -->
                 <div class="product-features">
                     <div class="feature">
-                <div class="feature-icon">
-                    <i class="fas fa-puzzle-piece"></i>
-                </div>
-                <div class="feature-text">
-                    <h3>工艺版型</h3>
-                    <p>男 / 女通用版型</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-puzzle-piece"></i>
                         </div>
-                    </div>
-                   <div class="feature">
-                <div class="feature-icon">
-                    <i class="fas fa-stamp"></i>
-                </div>
-                <div class="feature-text">
-                    <h3>面料材质</h3>
-                    <p>华服尼+柔舒格（长袖）</p>
-					<p>劲爽雅斜+耐美舒针织（短袖）</p>
-                        </div>
-                    </div>
-				   <div class="feature">
-                <div class="feature-icon">
-                    <i class="fas fa-puzzle-piece"></i>
-                </div>
-                <div class="feature-text">
-                    <h3>功能面料拼接</h3>
-                    <p>关键部位采用不同功能面料拼接，肘部腋下、背部透气、舒展自如</p>
-                        </div>
-                    </div>
-                   <div class="feature">
-                <div class="feature-icon">
-                    <i class="fas fa-stamp"></i>
-                </div>
-                <div class="feature-text">
-                    <h3>Logo定制</h3>
-                    <p>支持企业Logo刺绣或印花定制，提升团队专业形象，彰显品牌价值</p>
+                        <div class="feature-text">
+                            <h3>工艺版型</h3>
+                            <p>男 / 女通用版型</p>
                         </div>
                     </div>
                     <div class="feature">
-                <div class="feature-icon">
-                    <i class="fas fa-expand-alt"></i>
-                </div>
-                <div class="feature-text">
-                    <h3>特体加大尺码</h3>
-                    <p>提供4XL-6XL特体尺码，专为不同体型设计，确保合身舒适</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-stamp"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>面料材质</h3>
+                            <p>华服尼+柔舒格（长袖）</p>
+                            <p>劲爽雅斜+耐美舒针织（短袖）</p>
                         </div>
                     </div>
                     <div class="feature">
-                <div class="feature-icon">
-                    <i class="fas fa-copyright"></i>
-                </div>
-                <div class="feature-text">
-                    <h3>独家定制面料</h3>
-                    <p>专为工装研发的定制面料，强化耐磨、抗撕裂性能，延长使用寿命</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>功能面料拼接</h3>
+                            <p>关键部位采用不同功能面料拼接，肘部腋下、背部透气、舒展自如</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-stamp"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>Logo定制</h3>
+                            <p>支持企业Logo刺绣或印花定制，提升团队专业形象，彰显品牌价值</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-expand-alt"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>特体加大尺码</h3>
+                            <p>提供4XL-6XL特体尺码，专为不同体型设计，确保合身舒适</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-copyright"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>独家定制面料</h3>
+                            <p>专为工装研发的定制面料，强化耐磨、抗撕裂性能，延长使用寿命</p>
                         </div>
                     </div>
                 </div>
@@ -1390,7 +1577,6 @@
                 <div class="tab-pane active" id="description">
                     <div class="description-content">
                         <h3>【E07C 君临天下系列 / 时尚轻奢功能厨师服】</h3>
-                        
                         
                         <!-- 修改为2行2列的面料特点 -->
                         <div class="feature-image-text">
@@ -1648,11 +1834,6 @@
             </div>
         </section>
         
-       
-    </main>
-    
-	
-	
 	<!-- 在每个详情页的<head>中添加 -->
 <script src="products.js"></script>
 
@@ -1677,15 +1858,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
+    </main>
+    
     <!-- 尺码表模态框 -->
     <div class="modal-overlay" id="sizeChartModal">
         <div class="modal-content">
@@ -1861,23 +2035,86 @@ document.addEventListener('DOMContentLoaded', function() {
             return colorNames[color] || color;
         }
         
-        // 颜色切换功能
-        function setupColorSwitching() {
-            const colorButtons = document.querySelectorAll('#colorOptions .option-btn');
+        // 移动端颜色切换功能同步
+        function setupMobileColorSwitching() {
+            const mobileColorButtons = document.querySelectorAll('#mobileColorOptions .option-btn');
+            const desktopColorButtons = document.querySelectorAll('#colorOptions .option-btn');
             
-            colorButtons.forEach(button => {
+            function syncColorSelection(color) {
+                // 同步移动端按钮
+                mobileColorButtons.forEach(btn => {
+                    if (btn.getAttribute('data-color') === color) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                // 同步桌面端按钮
+                desktopColorButtons.forEach(btn => {
+                    if (btn.getAttribute('data-color') === color) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+            
+            mobileColorButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const color = this.getAttribute('data-color');
-                    
-                    // 更新按钮激活状态
-                    colorButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    
-                    // 更新产品图片
                     currentColor = color;
                     initializeProductImages();
+                    syncColorSelection(color);
+                });
+            });
+            
+            desktopColorButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const color = this.getAttribute('data-color');
+                    currentColor = color;
+                    initializeProductImages();
+                    syncColorSelection(color);
+                });
+            });
+        }
+        
+        // 移动端尺码选择功能同步
+        function setupMobileSizeSelection() {
+            const mobileSizeButtons = document.querySelectorAll('#mobileSizeOptions .option-btn');
+            const desktopSizeButtons = document.querySelectorAll('#sizeOptions .option-btn');
+            
+            function syncSizeSelection(size) {
+                // 同步移动端按钮
+                mobileSizeButtons.forEach(btn => {
+                    if (btn.getAttribute('data-value') === size) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                // 同步桌面端按钮
+                desktopSizeButtons.forEach(btn => {
+                    if (btn.getAttribute('data-value') === size) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+            
+            mobileSizeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const size = this.getAttribute('data-value');
+                    syncSizeSelection(size);
+                });
+            });
+            
+            desktopSizeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const size = this.getAttribute('data-value');
+                    syncSizeSelection(size);
                 });
             });
         }
@@ -1951,22 +2188,40 @@ document.addEventListener('DOMContentLoaded', function() {
         // 尺码表模态框功能
         function setupSizeChartModal() {
             const sizeChartLink = document.getElementById('sizeChartLink');
+            const mobileSizeChartLink = document.getElementById('mobileSizeChartLink');
             const sizeChartModal = document.getElementById('sizeChartModal');
             const modalClose = document.getElementById('modalClose');
             const closeModalBtn = document.getElementById('closeModalBtn');
             
-            // 打开模态框
-            sizeChartLink.addEventListener('click', function() {
+            // 打开模态框函数
+            function openModal() {
                 sizeChartModal.classList.add('active');
                 document.body.style.overflow = 'hidden'; // 防止滚动
-            });
+            }
             
-            // 关闭模态框
+            // 关闭模态框函数
             function closeModal() {
                 sizeChartModal.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
             
+            // 桌面端链接打开模态框
+            if (sizeChartLink) {
+                sizeChartLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openModal();
+                });
+            }
+            
+            // 移动端链接打开模态框
+            if (mobileSizeChartLink) {
+                mobileSizeChartLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openModal();
+                });
+            }
+            
+            // 关闭按钮
             modalClose.addEventListener('click', closeModal);
             closeModalBtn.addEventListener('click', closeModal);
             
@@ -1989,23 +2244,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('DOMContentLoaded', function() {
             // 初始化产品功能
             initializeProductImages();
-            setupColorSwitching();
+            setupMobileColorSwitching();
+            setupMobileSizeSelection();
             setupImageZoom();
             setupTabs();
             setupSizeChartModal();
             
-            // 尺码选择功能
-            const sizeButtons = document.querySelectorAll('[data-option="size"]');
-            sizeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    sizeButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                });
-            });
-            
-            // Mobile menu toggle
+            // 移动菜单功能
             const mobileMenuButton = document.querySelector('button.md\\:hidden');
             const nav = document.querySelector('nav.hidden.md\\:flex');
             
@@ -2056,18 +2301,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             // 生成第三方地图链接
-function createMapLinks(lat, lng) {
-    return `
-        <div style="text-align:center;padding:10px;">
-            <h3 style="margin:0 0 15px 0;">${config.locationName}</h3>
-            <a href="https://uri.amap.com/marker?position=${lng},${lat}&name=${config.locationName}" 
-               target="_blank"
-               style="display: block; margin: 8px 0; padding: 6px 12px; background: #0078A8; color: white; text-decoration: none; border-radius: 4px; text-align: center;">
-                高德地图
-            </a>
-        </div>
-    `;
-}
+            function createMapLinks(lat, lng) {
+                return `
+                    <div style="text-align:center;padding:10px;">
+                        <h3 style="margin:0 0 15px 0;">${config.locationName}</h3>
+                        <a href="https://uri.amap.com/marker?position=${lng},${lat}&name=${config.locationName}" 
+                           target="_blank"
+                           style="display: block; margin: 8px 0; padding: 6px 12px; background: #0078A8; color: white; text-decoration: none; border-radius: 4px; text-align: center;">
+                            高德地图
+                        </a>
+                    </div>
+                `;
+            }
 
             // 添加标记点
             L.marker(config.markerPos)

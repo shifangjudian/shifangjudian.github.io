@@ -66,6 +66,7 @@
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+			 height: 900px; /* 设置固定高度，可根据需要调整 */
         }
         
         .feature-item:hover {
@@ -74,20 +75,19 @@
         }
         
         .feature-image {
-            height: 650px; /* 修改为650px高度 */
-            overflow: hidden;
+    height: 100%;
+    width: auto;
+    overflow: hidden;
         }
         
         .feature-image img {
-            width: 100%;
+            width: auto;
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
         }
         
-        .feature-item:hover .feature-image img {
-            transform: scale(1.05);
-        }
+
         
         .feature-text-content {
             padding: 20px;
@@ -1205,8 +1205,10 @@
             }
             
             .feature-image {
-                height: 500px;
+                height: 900px;
+				width: auto;
             }
+			
             
             /* 设计亮点响应式 */
             .detail-image img {
@@ -1269,7 +1271,8 @@
             }
             
             .feature-image {
-                height: 400px;
+                height: 900px;
+				width: auto;
             }
             
             .detail-image img {
@@ -1584,40 +1587,28 @@
                                 <div class="feature-image">
                                     <img src="https://free.picui.cn/free/2025/08/29/68b151ed8a97c.jpg" alt="透气性面料">
                                 </div>
-                                <div class="feature-text-content">
-                                    <h4><i class="fas fa-wind"></i>透气性佳</h4>
-                                    <p>特殊织法让空气自由流通，保持身体干爽。高密度纤维结构形成微气候调节层，即使在高温厨房环境中也能保持舒适。</p>
-                                </div>
+                                
                             </div>
                             
                             <div class="feature-item">
                                 <div class="feature-image">
                                     <img src="https://images.unsplash.com/photo-1505022610485-0249ba5b3675?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="防油防水面料">
                                 </div>
-                                <div class="feature-text-content">
-                                    <h4><i class="fas fa-tint"></i>防油防水</h4>
-                                    <p>经过纳米级特殊处理的表面能有效抵御油污和水渍，液体滴落时形成水珠滚落，保持厨师服清洁干爽，减少洗涤频率。</p>
-                                </div>
+                               
                             </div>
                             
                             <div class="feature-item">
                                 <div class="feature-image">
                                     <img src="https://images.unsplash.com/photo-1598703101326-3a0b72d4f1b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="耐高温面料">
                                 </div>
-                                <div class="feature-text-content">
-                                    <h4><i class="fas fa-fire"></i>耐高温</h4>
-                                    <p>可承受高达300°C的厨房高温环境，特殊防火纤维配方使面料不易变形或褪色，确保长期使用后仍保持原有性能。</p>
-                                </div>
+                               
                             </div>
                             
                             <div class="feature-item">
                                 <div class="feature-image">
                                     <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="易清洗面料">
                                 </div>
-                                <div class="feature-text-content">
-                                    <h4><i class="fas fa-tshirt"></i>易清洗</h4>
-                                    <p>机洗后不易变形，特殊抗皱处理使面料快干免熨烫，节省时间和精力。多次洗涤后仍能保持颜色鲜艳和性能稳定。</p>
-                                </div>
+                                
                             </div>
                         </div>
                         
@@ -1640,14 +1631,35 @@
                             </div>
                         </div>
                         
-                        <h4>设计亮点</h4>
+						
+						 <!-- 修改为2行2列的面料特点 -->
+                        <div class="feature-image-text">
+                            <div class="feature-item">
+                                <div class="feature-image">
+                                    <img src="https://free.picui.cn/free/2025/12/09/69381df71ea6b.jpg" alt="透气性面料">
+                                </div>
+                               
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-image">
+                                    <img src="https://free.picui.cn/free/2025/12/09/69381df71a5d7.jpg" alt="防油防水面料">
+                                </div>
+                               
+                            </div>
+                        </div>
+						
+                        <h4>买家须知/Member's Rights</h4>
                         <ul>
-                            <li><strong>经典双排扣设计</strong>：美观大方，符合厨师专业形象</li>
-                            <li><strong>多功能口袋设计</strong>：侧边口袋可放置温度计、笔记本等工具</li>
-                            <li><strong>腋下透气孔设计</strong>：增强空气流通，长时间穿着依然舒适</li>
-                            <li><strong>可调节袖口</strong>：适应不同臂围，确保穿着合身</li>
-                            <li><strong>背部透气网眼设计</strong>：保持背部干爽，提升舒适度</li>
-                            <li><strong>防撕裂接缝</strong>：增加耐用性，延长使用寿命</li>
+                            <li><strong>尺码选择</strong>：选择尺码可参考上面【尺码推荐】内容，仔细阅读，仅供参考。</li>
+							<li><strong>运输服务</strong>：日常订单预计24小时内发货完成（法定节假日及特殊情况除外）默认申通/中通快递发出。</li>
+                            <li><strong>质保服务</strong>：请务必在产品签收前确认商品是否完好无损，如发现破损，请第一时间联系客服进行确认。</li>
+                            <li><strong>洗涤方式</strong>：皮带等可拆卸部分拆卸后用中性洗涤剂进行洗涤，不可与其他衣物同时混洗，不可高温洗
+涤。洗涤后于阴凉处悬挂风干，不可在太阳直射条件下暴晒，防止褪色。</li>
+                            <li><strong>可调节袖口</strong>：皮带等可拆卸部分拆卸后用中性洗涤剂进行洗涤，不可与其他衣物同时混洗，不可高温洗
+涤。洗涤后于阴凉处悬挂风干，不可在太阳直射条件下暴晒。</li>
+                            <li><strong>背部透气网眼设计</strong>：大部分面料采用复古做旧、染洗工艺，为实现不同的风格特色，降低色彩饱和度。随使
+用时间的持续增加，面料的色泽会越发自然。</li>
                         </ul>
                         
                         <h4>适用场景</h4>
@@ -1872,9 +1884,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             <div class="size-guide">
                 <h4>尺码选择指南</h4>
-                <p>1. 如果您的测量值介于两个尺码之间，建议选择较大的尺码以获得更舒适的穿着体验。</p>
-                <p>2. 厨师服设计偏宽松，以适应厨房活动需求，请勿选择过于紧身的尺码。</p>
-                <p>3. 对于特殊体型或有特殊需求，我们提供定制服务，下滑至页面底部联系客服了解详情。</p>
+                <p>1. 如果您的测量值介于两个尺码之间，建议选择较大的尺码以获得更舒适的穿着体验，确保抬臂、弯腰等活动自如。</p>
+                <p>2. 如果您身材特别高大、健壮或娇小，对于特殊体型或有特殊需求，我们提供定制服务，下滑至页面底部联系客服了解详情。</p>
+				<p>3. 如果您是团体定制不方便选择尺码，可联系客服给您发送全尺码样衣试号，更准确选择适合您的尺码。</p>
             </div>
             
             <div style="text-align: center; margin-top: 20px;">

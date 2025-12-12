@@ -51,7 +51,7 @@ const allProducts = {
 // 推荐产品数据 - 增加到10个以上以支持8个产品的展示
 const recommendedProducts = [
     {
-        id: "chef-002",
+        id: "君临天下",
         title: "君临天下",
         image: "https://free.picui.cn/free/2025/08/29/68b1533f90c0a.jpg",
         code: "NO：CF-CHEF002",
@@ -65,14 +65,14 @@ const recommendedProducts = [
         category: "hat"
     },
     {
-        id: "apron-001",
+        id: "天使之翼",
         title: "雄才大略",
         image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
         code: "NO：CF-APR001",
         category: "apron"
     },
     {
-        id: "shirt-001",
+        id: "一鸣惊人",
         title: "海纳百川",
         image: "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
         code: "NO：CF-SHT001",
@@ -86,7 +86,7 @@ const recommendedProducts = [
         category: "chef"
     },
     {
-        id: "glove-001",
+        id: "君临天下",
         title: "防烫厨师手套",
         image: "https://images.unsplash.com/photo-1589987607627-0e3ad8b76c4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
         code: "NO：CF-GLV001",

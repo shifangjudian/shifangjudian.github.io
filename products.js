@@ -53,14 +53,14 @@ const recommendedProducts = [
     {
         id: "chef-002",
         title: "君临天下",
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        image: "https://free.picui.cn/free/2025/08/29/68b1533f90c0a.jpg",
         code: "NO：CF-CHEF002",
         category: "chef"
     },
     {
         id: "B01T",
         title: "大展宏图",
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        image: "https://free.picui.cn/free/2025/08/29/68b1533f90c0a.jpg",
         code: "NO：CF-CAP001",
         category: "hat"
     },
@@ -95,22 +95,22 @@ const recommendedProducts = [
     // 新增推荐产品
     {
         id: "shoes-001",
-        title: "防滑厨师鞋",
+        title: "通用推荐",
         image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
         code: "NO：CF-SHO001",
         category: "shoes"
     },
     {
         id: "knife-001",
-        title: "专业厨师刀",
+        title: "通用推荐",
         image: "https://images.unsplash.com/photo-1556909211-36987caf7b5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
         code: "NO：CF-KNF001",
         category: "tool"
     },
     {
         id: "coat-001",
-        title: "冬季保暖厨师服",
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        title: "通用推荐",
+        image: "https://free.picui.cn/free/2025/08/29/68b1533f90c0a.jpg",
         code: "NO：CF-CT001",
         category: "chef"
     },

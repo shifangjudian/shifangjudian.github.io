@@ -20,73 +20,87 @@
             padding: 0 5px;
         }
         
-        /* 新增：手机端导航菜单样式 */
-        .mobile-nav {
+        /* 修改：手机端顶部导航栏样式 */
+        .mobile-header {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100%;
             background-color: white;
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 80px 20px 20px;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .mobile-nav.active {
-            transform: translateX(0);
-        }
-        
-        .mobile-nav-overlay {
-            display: none;
-            position: fixed;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            z-index: 100;
+            padding: 8px 15px;
         }
         
-        .mobile-nav-overlay.active {
-            display: block;
-            opacity: 1;
+        .mobile-header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 10px;
+        }
+        
+        .mobile-header-left {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .mobile-logo {
+            height: 40px;
+            width: auto;
+            flex-shrink: 0;
+        }
+        
+        /* 隐藏公司名 */
+        .mobile-company-name {
+            display: none !important;
+        }
+        
+        /* 修改手机端导航栏为水平排列 */
+        .mobile-nav-scroll {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            padding: 4px 0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            flex: 1;
+            min-width: 0;
+            gap: 4px;
+        }
+        
+        .mobile-nav-scroll::-webkit-scrollbar {
+            display: none;
         }
         
         .mobile-nav-item {
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .mobile-nav-item a {
-            display: block;
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            background-color: #f8f8f8;
+            border-radius: 16px;
+            border: 1px solid #e0e0e0;
+            flex-shrink: 0;
+            text-decoration: none;
             color: #333;
             font-weight: 500;
-            text-decoration: none;
-            font-size: 16px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            line-height: 1;
         }
         
-        .mobile-nav-item .english {
-            font-size: 12px;
-            color: #666;
-            margin-top: 4px;
+        .mobile-nav-item:hover,
+        .mobile-nav-item.active {
+            background-color: #d32f2f;
+            color: white;
+            border-color: #d32f2f;
         }
         
-        .mobile-menu-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-            z-index: 1001;
+        .mobile-nav-item i {
+            margin-right: 4px;
+            font-size: 10px;
         }
         
         /* 新增：手机端滑动切换样式 */
@@ -201,6 +215,10 @@
             
             .swipe-slide {
                 display: block;
+            }
+            
+            .mobile-header {
+                display: none !important;
             }
         }
         
@@ -935,6 +953,16 @@
             .related-item-code {
                 font-size: 12px;
             }
+            
+            /* 在手机端显示移动header */
+            .mobile-header {
+                display: block;
+            }
+            
+            /* 隐藏桌面header */
+            header.bg-white {
+                display: none;
+            }
         }
 
         /* 超小屏幕手机端 */
@@ -1189,23 +1217,29 @@
                 display: block;
             }
             
-            .mobile-nav,
-            .mobile-nav-overlay {
+            /* 隐藏移动header */
+            .mobile-header {
                 display: none !important;
             }
         }
         
         /* 手机端响应式设计 - 新增移动端布局调整 */
         @media (max-width: 768px) {
-            /* 隐藏桌面导航，显示移动菜单按钮 */
+            /* 隐藏桌面导航 */
             nav.hidden.md\\:flex {
                 display: none !important;
+            }
+            
+            /* 隐藏桌面header */
+            header.bg-white {
+                display: none;
             }
             
             /* 移动颜色款式和尺码选择到缩略图下面 */
             .product-showcase {
                 flex-direction: column;
                 position: relative;
+                margin-top: 20px;
             }
             
             .product-images {
@@ -1242,7 +1276,6 @@
                 display: flex;
                 flex-wrap: wrap;
                 gap: 6px;
-
                 justify-content: flex-start;
                 width: 100%;
             }
@@ -1410,11 +1443,6 @@
             .detail-image img {
                 height: 300px;
             }
-            
-            /* 显示移动菜单按钮 */
-            .mobile-menu-button {
-                display: block;
-            }
         }
         
         @media (max-width: 480px) {
@@ -1489,6 +1517,20 @@
             
             .product-subtitle {
                 font-size: 11px;
+            }
+            
+            .mobile-logo {
+                height: 35px;
+            }
+            
+            .mobile-nav-item {
+                padding: 4px 6px;
+                font-size: 10px;
+            }
+            
+            .mobile-nav-item i {
+                font-size: 9px;
+                margin-right: 2px;
             }
         }
         
@@ -1573,45 +1615,43 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body class="bg-gray-50">
-    <!-- 新增：移动端导航菜单 -->
-    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
-    <div class="mobile-nav" id="mobileNav">
-        <button class="mobile-menu-close" id="mobileMenuClose">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="mobile-nav-items">
-            <div class="mobile-nav-item">
-                <a href="index.html">首页</a>
-                <div class="english">Home</div>
+    <!-- 新增：手机端顶部header - 包含Logo和导航栏 -->
+    <div class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-header-left">
+                <a href="http://www.shifangjudian.com" target="_blank">
+                    <img src="https://free.picui.cn/free/2025/08/25/68abad178a3f5.png" 
+                         alt="网站Logo" 
+                         class="mobile-logo">
+                </a>
             </div>
-            <div class="mobile-nav-item">
-                <a href="产品汇总.html">HOT</a>
-                <div class="english">Hot Items</div>
-            </div>
-            <div class="mobile-nav-item">
-                <a href="chef.html">厨师服</a>
-                <div class="english">Chef Uniform</div>
-            </div>
-            <div class="mobile-nav-item">
-                <a href="shirt.html">衬衫</a>
-                <div class="english">Shirt</div>
-            </div>
-            <div class="mobile-nav-item">
-                <a href="apron.html">围裙</a>
-                <div class="english">Apron</div>
-            </div>
-            <div class="mobile-nav-item">
-                <a href="hat.html">帽子</a>
-                <div class="english">Hat</div>
-            </div>
-            <div class="mobile-nav-item">
-                <a href="story.html">关于我们</a>
-                <div class="english">Contact Us</div>
+            <!-- 手机端导航栏 - 移除了HOT和关于我们，取消了厨师服默认红色显示 -->
+            <div class="mobile-nav-scroll">
+                <a href="index.html" class="mobile-nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="chef.html" class="mobile-nav-item">
+                    <i class="fas fa-utensils"></i>
+                    <span>厨师服</span>
+                </a>
+                <a href="shirt.html" class="mobile-nav-item">
+                    <i class="fas fa-tshirt"></i>
+                    <span>衬衫</span>
+                </a>
+                <a href="apron.html" class="mobile-nav-item">
+                    <i class="fas fa-scroll"></i>
+                    <span>围裙</span>
+                </a>
+                <a href="hat.html" class="mobile-nav-item">
+                    <i class="fas fa-hat-cowboy"></i>
+                    <span>帽子</span>
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- Header with Logo -->
+    <!-- 桌面端Header -->
     <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
         <div class="container-custom flex items-center">
             <div class="flex items-center">
@@ -1649,7 +1689,7 @@
                 </a>
                 <a href="apron.html" class="nav-link text-sm font-medium text-gray-900">
                     <div>围裙</div>
-                    <div class="text-xs text-gray-500">Apron</div>
+                    <div class="text-xs text-gray500">Apron</div>
                 </a>
                 <a href="hat.html" class="nav-link text-sm font-medium text-gray-900">
                     <div>帽子</div>
@@ -1661,8 +1701,8 @@
                 </a>
             </nav>
             
-            <!-- Mobile menu button -->
-            <button class="md:hidden ml-auto text-gray-700 focus:outline-none mobile-menu-button" id="mobileMenuButton">
+            <!-- 移动菜单按钮（隐藏，因为我们有独立的手机端header） -->
+            <button class="md:hidden ml-auto text-gray-700 focus:outline-none mobile-menu-button" style="display: none;">
                 <i class="fas fa-bars text-xl"></i>
             </button>
         </div>
@@ -2674,67 +2714,6 @@
             }
         }
         
-        // 新增：设置移动端导航菜单
-        function setupMobileMenu() {
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileNav = document.getElementById('mobileNav');
-            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-            const mobileMenuClose = document.getElementById('mobileMenuClose');
-            
-            // 打开移动菜单
-            function openMobileMenu() {
-                mobileNav.classList.add('active');
-                mobileNavOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            
-            // 关闭移动菜单
-            function closeMobileMenu() {
-                mobileNav.classList.remove('active');
-                mobileNavOverlay.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-            
-            // 点击菜单按钮打开菜单
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    openMobileMenu();
-                });
-            }
-            
-            // 点击关闭按钮关闭菜单
-            if (mobileMenuClose) {
-                mobileMenuClose.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    closeMobileMenu();
-                });
-            }
-            
-            // 点击遮罩层关闭菜单
-            if (mobileNavOverlay) {
-                mobileNavOverlay.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    closeMobileMenu();
-                });
-            }
-            
-            // ESC键关闭菜单
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-                    closeMobileMenu();
-                }
-            });
-            
-            // 点击菜单项后关闭菜单
-            const mobileNavItems = document.querySelectorAll('.mobile-nav-item a');
-            mobileNavItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    closeMobileMenu();
-                });
-            });
-        }
-        
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', function() {
             // 检测是否为移动端
@@ -2748,7 +2727,6 @@
             setupTabs();
             setupSizeChartModal();
             setupSwipeButtons();
-            setupMobileMenu(); // 新增：初始化移动菜单
             
             // 只在移动端初始化触摸事件
             if (isMobile) {

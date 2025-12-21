@@ -2133,13 +2133,30 @@
             </div>
         </section>
         
-        <!-- 修改推荐产品部分 -->
-        <section class="related-products">
-            <h2 class="section-title">您可能还会喜欢</h2>
-            <div class="related-items" id="relatedItems">
-                <!-- 这里会通过JS动态生成 -->
-            </div>
-        </section>
+	<!-- 在每个详情页的<head>中添加 -->
+<script src="products.js"></script>
+
+<!-- 修改推荐产品部分 -->
+<section class="related-products">
+    <h2 class="section-title">您可能还会喜欢</h2>
+    <div class="related-items" id="relatedItems">
+        <!-- 这里会通过JS动态生成 -->
+    </div>
+</section>
+
+<!-- 在每个详情页的底部JavaScript中添加 -->
+<script>
+// 定义当前产品ID（每个页面需要修改这个值）
+const currentProductId = '详情页'; // 这个值根据实际页面修改
+
+// 生成推荐产品
+document.addEventListener('DOMContentLoaded', function() {
+    const relatedItems = document.getElementById('relatedItems');
+    if (relatedItems) {
+        relatedItems.innerHTML = generateRecommendations(currentProductId);
+    }
+});
+</script>
     </main>
     
     <!-- 尺码表模态框 -->

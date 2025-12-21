@@ -74,6 +74,7 @@
             filter: grayscale(0%);
             opacity: 1;
         }
+		
     </style>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
 <body class="bg-gray-50">
@@ -1162,6 +1163,189 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+	/* 在现有的CSS中添加以下样式 */
+
+/* 手机端新闻动态调整 */
+@media (max-width: 768px) {
+    #news {
+        padding-top: 40px; /* 减少上下内边距 */
+        padding-bottom: 40px;
+    }
+    
+    #news .text-center.mb-12 {
+        margin-bottom: 30px; /* 减少标题下方间距 */
+    }
+    
+    #news h2 {
+        font-size: 1.5rem; /* 调整主标题大小 */
+        margin-bottom: 4px;
+    }
+    
+    #news p.text-gray-600 {
+        font-size: 0.875rem; /* 调整副标题大小 */
+    }
+    
+    /* 新闻卡片网格布局调整 */
+    #news .grid {
+        gap: 20px; /* 减少卡片间距 */
+    }
+    
+    /* 新闻卡片样式调整 */
+    .news-card {
+        margin-bottom: 0;
+    }
+    
+    .news-card .relative {
+        height: 150px; /* 调整图片高度 */
+    }
+    
+    .news-card img {
+        height: 100%; /* 确保图片填充容器 */
+    }
+    
+    /* 新闻卡片内容区域调整 */
+    .news-card .p-6 {
+        padding: 16px; /* 减少内边距 */
+    }
+    
+    /* 新闻标题调整 */
+    .news-card h3 {
+        font-size: 1rem; /* 调整标题字体大小 */
+        line-height: 1.4;
+        margin-bottom: 8px;
+        height: 2.8em; /* 控制标题高度，显示2行 */
+        overflow: hidden;
+    }
+    
+    /* 新闻内容摘要调整 */
+    .news-card p.text-gray-600 {
+        font-size: 0.8125rem; /* 13px */
+        line-height: 1.5;
+        height: 4.5em; /* 控制摘要高度，显示3行 */
+        overflow: hidden;
+    }
+    
+    /* 日期和标签调整 */
+    .news-card .text-xs {
+        font-size: 0.75rem; /* 12px */
+    }
+    
+    /* 查看更多按钮调整 */
+    #news .text-center a {
+        padding: 10px 24px; /* 调整按钮内边距 */
+        font-size: 0.875rem;
+    }
+    
+    /* 标签样式调整 */
+    .news-card span.px-3.py-1 {
+        padding: 4px 8px; /* 调整标签内边距 */
+        font-size: 0.7rem;
+    }
+    
+    /* 阅读更多箭头调整 */
+    .news-card .text-blue-600 {
+        font-size: 0.75rem;
+    }
+}
+
+/* 超小屏幕设备（手机横向） */
+@media (max-width: 480px) {
+    #news {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    
+    #news .grid {
+        gap: 16px;
+    }
+    
+    .news-card .relative {
+        height: 130px;
+    }
+    
+    .news-card .p-6 {
+        padding: 12px;
+    }
+    
+    .news-card h3 {
+        font-size: 0.9375rem; /* 15px */
+        height: 2.4em; /* 更紧凑的标题高度 */
+    }
+    
+    .news-card p.text-gray-600 {
+        font-size: 0.75rem; /* 12px */
+        height: 3.6em; /* 更紧凑的摘要高度 */
+    }
+    
+    /* 按钮进一步调整 */
+    #news .text-center a {
+        padding: 8px 20px;
+        font-size: 0.8125rem;
+    }
+    
+    /* 标签在超小屏幕上调整 */
+    .news-card span.px-3.py-1 {
+        padding: 3px 6px;
+        font-size: 0.625rem;
+        top: 8px;
+        left: 8px;
+    }
+    
+    /* 日期和阅读更多间距调整 */
+    .news-card .flex.justify-between {
+        margin-bottom: 6px;
+    }
+}
+
+/* 针对iPhone SE等超小设备 */
+@media (max-width: 375px) {
+    .news-card h3 {
+        font-size: 0.875rem; /* 14px */
+    }
+    
+    .news-card p.text-gray-500 {
+        font-size: 0.625rem; /* 10px */
+    }
+    
+    /* 减少新闻卡片之间的间距 */
+    #news .grid {
+        gap: 12px;
+    }
+}
+
+/* 确保新闻卡片中的图片在手机上正确显示 */
+.news-card .relative.overflow-hidden {
+    position: relative;
+}
+
+.news-card img {
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* 优化新闻卡片悬停效果在手机上的表现 */
+@media (hover: hover) {
+    .news-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* 添加手机端的触摸反馈效果 */
+@media (hover: none) and (pointer: coarse) {
+    .news-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+}
+
+/* 确保新闻卡片内的链接可点击区域足够大 */
+.news-card a {
+    display: block;
+    position: relative;
+    z-index: 1;
+}
 </style>
 
 <script>

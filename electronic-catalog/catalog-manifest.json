@@ -1,0 +1,4 @@
+{
+  "note": "Built-in 8-page demonstration is displayed while books is empty. Set books to real catalog pages to publish actual images.",
+  "books": []
+}

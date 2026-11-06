@@ -146,38 +146,6 @@ async function makeSocialCoverJpg(book){
  book.shareCoverJpg=path;
  return {path:DIR+'/'+path,mode:'100644',type:'blob',sha:uploaded.sha};
 }
-
-async function makeMiniShareCardJpg(book){
- const source=coverSrc(book);if(!source)return null;
- const img=new Image();img.crossOrigin='anonymous';img.decoding='async';
- await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error('分享卡片封面图片读取失败'));img.src=source});
- const canvas=document.createElement('canvas');canvas.width=600;canvas.height=480;
- const ctx=canvas.getContext('2d');if(!ctx)throw new Error('浏览器不支持画布');
- ctx.fillStyle='#1b1b1b';ctx.fillRect(0,0,600,480);
- const ratio=Math.min(223/img.naturalWidth,410/img.naturalHeight);
- const w=Math.round(img.naturalWidth*ratio),h=Math.round(img.naturalHeight*ratio),cx=28+Math.round((223-w)/2),cy=35+Math.round((410-h)/2);
- ctx.fillStyle='#292929';ctx.fillRect(27,34,226,412);ctx.drawImage(img,cx,cy,w,h);
- ctx.strokeStyle='#48443d';ctx.strokeRect(27.5,34.5,226,412);
- ctx.fillStyle='#c8ae82';ctx.font='bold 29px "PingFang SC","Microsoft YaHei",sans-serif';ctx.fillText('9+1=10',287,95);
- ctx.strokeStyle='#685a42';ctx.beginPath();ctx.moveTo(287,128);ctx.lineTo(568,128);ctx.stroke();
- const title=String(book.title||'餐饮制服图册').replace(/^9\+1=10/,'').trim()||'餐饮制服图册';
- ctx.fillStyle='#f4f2ec';ctx.font='bold 27px "PingFang SC","Microsoft YaHei",sans-serif';
- const chars=Array.from(title);
- let line='',lines=[];
- for(const ch of chars){if(ctx.measureText(line+ch).width>270&&line){lines.push(line);line=ch}else line+=ch}
- if(line)lines.push(line);
- lines.slice(0,3).forEach((t,i)=>ctx.fillText(t,286,202+i*43,270));
- ctx.fillStyle='#b7b3aa';ctx.font='17px "PingFang SC","Microsoft YaHei",sans-serif';
- ctx.fillText(String(book.year||'')+' · '+String(book.category||'餐饮制服'),287,360,275);
- ctx.fillText(book.pages.length+' 页电子产品图册',287,395,275);
- ctx.fillStyle='#aa9574';ctx.font='13px Arial,sans-serif';ctx.fillText('PROFESSIONAL UNIFORM',287,439);
- const blob=await new Promise((resolve,reject)=>canvas.toBlob(v=>v?resolve(v):reject(new Error('生成分享卡片失败')),'image/jpeg',.86));
- const saved=await req('POST','/git/blobs',{content:await blobToBase64(blob),encoding:'base64'});
- const path='share/cards/'+encodeURIComponent(book.id)+'.jpg';
- book.miniShareCardJpg=path;
- return {path:DIR+'/'+path,mode:'100644',type:'blob',sha:saved.sha};
-}
-
 function catalogCoverKey(b){
  if(!b)return '';
  return b.coverSrc||b.pages?.[Math.max(0,Math.min(b.pages.length-1,(Number(b.coverPage)||1)-1))]?.src||'';
@@ -193,10 +161,6 @@ for(const b of nextManifest.books){
  if(b.published!==false&&(!b.shareCoverJpg||changed)){
   try{const image=await makeSocialCoverJpg(b);if(image)socialAssets.push(image)}
   catch(err){console.warn('分享封面转 JPG 失败，将使用原封面',err);b.shareCoverJpg=''}
- }
- if(b.published!==false&&(!b.miniShareCardJpg||changed)){
-  try{const card=await makeMiniShareCardJpg(b);if(card)socialAssets.push(card)}
-  catch(err){console.warn('小程序卡片生成失败，将使用图册原封面',err);b.miniShareCardJpg=''}
  }
 }
 const assets=await uploadedAssets(nextManifest);const copy=materialize(structuredClone(nextManifest),assets);

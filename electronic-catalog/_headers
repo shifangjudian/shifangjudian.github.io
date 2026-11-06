@@ -1,0 +1,13 @@
+# Cloudflare Pages static-site response headers
+/admin/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: no-store
+
+/catalog-manifest.json
+  Cache-Control: no-cache
+
+/share/*
+  Cache-Control: public, max-age=300
+
+/books/*
+  Cache-Control: public, max-age=3600

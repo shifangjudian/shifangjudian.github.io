@@ -70,6 +70,45 @@
 .page-loading-hint{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);background:#1b1b1ba6;color:#dedbd4;border-radius:3px;font-size:10px;letter-spacing:.08em;padding:5px 9px;pointer-events:none;z-index:4}
 @media(max-width:850px){.turn-arrow{display:grid;width:33px;height:44px;min-width:33px;border-radius:12px;opacity:.44}.turn-arrow.prev{left:6px}.turn-arrow.next{right:6px}.turn-arrow svg{width:17px;height:17px}.flip-sheet img{padding:0}}
 @media(prefers-reduced-motion:reduce){.flip-sheet.flip-next.is-turning,.flip-sheet.flip-prev.is-turning{animation-duration:.01ms!important}}
+
+/* 2026-11 mobile reader: black canvas and controls stay in the viewport.
+   The paper scales proportionally (object-fit:contain), never crops. */
+html.catalog-reading,body.catalog-reading{height:100%;width:100%;overflow:hidden!important;overscroll-behavior:none;-webkit-overflow-scrolling:auto}
+body.catalog-reading{position:fixed;inset:0;touch-action:pan-y;background:#171717}
+body.catalog-reading #root{height:100%;width:100%;overflow:hidden}
+body.catalog-reading .viewer{
+ position:fixed;inset:0;width:100%;max-width:100%;height:100dvh;min-height:0;
+ padding-bottom:0;overflow:hidden;overscroll-behavior:contain;
+ background:#181818;display:flex;flex-direction:column;
+}
+body.catalog-reading .viewer-header{flex:0 0 64px;min-height:0;max-width:100%;background:#191919;z-index:4}
+body.catalog-reading .viewer-left{min-width:0}
+body.catalog-reading .book-stage{
+ flex:1 1 auto;min-height:0;min-width:0;width:100%;max-width:100%;
+ overflow:hidden;overscroll-behavior:contain;touch-action:pan-y;
+ padding:6px 5px;gap:0;background:#181818;display:flex;align-items:center;justify-content:center;
+}
+body.catalog-reading .stage-frame{max-height:100%;max-width:100%;overflow:hidden}
+body.catalog-reading .book-stack{max-height:100%;max-width:100%;filter:none}
+body.catalog-reading .paper{object-fit:contain;max-height:100%;max-width:100%;-webkit-user-select:none;user-select:none}
+body.catalog-reading .bottom-reader-toolbar{
+ position:relative;inset:auto;bottom:auto;left:auto;right:auto;flex:0 0 calc(64px + env(safe-area-inset-bottom,0px));
+ width:100%;max-width:100%;z-index:15;box-sizing:border-box;overflow:hidden;background:#20201f;
+}
+body.catalog-reading .toolbar-more-menu{position:fixed;z-index:28}
+@media(max-width:850px){
+ body.catalog-reading .viewer-header{flex-basis:57px}
+ body.catalog-reading .book-stage{flex:1 1 auto;min-height:0;padding:5px;}
+ body.catalog-reading .stage-frame{
+  width:calc(100vw - 10px);height:100%;max-height:100%;aspect-ratio:auto;
+  flex:0 1 auto;border:0;border-radius:0;background:#181818;box-shadow:none;
+ }
+ body.catalog-reading .book-stack{width:100%;height:100%;max-height:100%}
+ body.catalog-reading .paper{width:100%;height:100%;max-height:100%;padding:0;object-fit:contain}
+ body.catalog-reading .bottom-reader-toolbar{height:auto;padding-bottom:calc(5px + env(safe-area-inset-bottom,0px))}
+}
+@supports(height:100svh){body.catalog-reading .viewer{height:100svh}}
+
 </style>
 </head>
 <body>
@@ -152,12 +191,18 @@ const publicBooks=()=>books.filter(b=>b&&b.published!==false&&Array.isArray(b.pa
 const listedBooks=()=>publicBooks().filter(b=>b.showOnHome!==false).sort((a,b)=>(Number(b.featured===true)-Number(a.featured===true))||(Number(a.sortOrder??999)-Number(b.sortOrder??999)));
 const bookById=id=>id?publicBooks().find(b=>b.id===id)||null:(listedBooks()[0]||publicBooks()[0]||null);
 const coverOf=b=>b.coverSrc||b.pages[Math.max(0,Math.min(b.pages.length-1,(Number(b.coverPage)||1)-1))]?.src||b.pages[0]?.src||'';
-function unavailable(){cancelPreload();isViewer=false;document.title='图册暂不可用 | 9+1=10';root.innerHTML=`<main class="book-unavailable"><div><h1>这本图册暂不可用</h1><p>图册可能已下架或分享链接有误。</p><a href="./">返回图册首页</a></div></main>`}
+function setReaderMode(active){
+ document.documentElement.classList.toggle('catalog-reading',active);
+ document.body.classList.toggle('catalog-reading',active);
+ // Reset any scroll left behind by a WeChat in-app browser navigation.
+ if(active){try{window.scrollTo(0,0)}catch(_){}}
+}
+function unavailable(){setReaderMode(false);cancelPreload();isViewer=false;document.title='图册暂不可用 | 9+1=10';root.innerHTML=`<main class="book-unavailable"><div><h1>这本图册暂不可用</h1><p>图册可能已下架或分享链接有误。</p><a href="./">返回图册首页</a></div></main>`}
 function updateUrl(){const u=new URL(location.href);u.searchParams.set('book',book.id);u.searchParams.set('p',String(page+1));history.replaceState(null,'',u);}
 function toast(msg){qs('.toast')?.remove();const d=document.createElement('div');d.className='toast';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
 function cover(){return esc(coverOf(book||bundledBook))}
 function home(){
-cancelPreload();isViewer=false;const list=listedBooks(),feature=list[0]||null;if(feature)book=feature;
+setReaderMode(false);cancelPreload();isViewer=false;const list=listedBooks(),feature=list[0]||null;if(feature)book=feature;
 document.title='9+1=10 | 电子产品图册';
 const hero=feature?`<section class="hero"><div><div class="eyebrow">9+1=10 / DIGITAL EDITION</div><h1 class="headline">FORM.<br><strong>FUNCTION.</strong><br>IDENTITY.</h1><p class="cn-headline">专业于内　风格于外</p><div class="section-line"></div><p class="hero-desc">原创专业厨师职业装电子图册。选择系列，在线阅读，也可将单本图册分享给客户。</p><div class="editorial-meta">EDITION ${esc(feature.year||'2026')} &nbsp;·&nbsp; ${feature.pages.length} PAGES</div><button class="primary-btn" id="enter">阅读精选图册 ${icon('next')}</button></div><div class="hero-art"><div class="cover"><img src="${esc(coverOf(feature))}" alt="${esc(feature.title)} 封面" draggable="false"></div><div class="cover-caption">${esc(feature.title)} / ${esc(feature.category||'')}</div></div></section>`:`<section class="hero"><div><div class="eyebrow">9+1=10 / DIGITAL EDITION</div><h1 class="headline">FORM.<br><strong>FUNCTION.</strong><br>IDENTITY.</h1><p class="cn-headline">专业于内　风格于外</p><p class="hero-desc">图册正在整理，敬请期待。</p></div></section>`;
 const cards=list.map(b=>`<button type="button" class="catalog-card" data-book="${esc(b.id)}" aria-label="阅读 ${esc(b.title)}"><div class="catalog-card-cover"><img src="${esc(coverOf(b))}" loading="lazy" alt="${esc(b.title)} 封面"></div><div class="catalog-card-title">${esc(b.title)}</div><div class="catalog-card-meta">${esc(b.year||'')} · ${esc(b.category||'产品图册')} · ${b.pages.length} PAGES</div></button>`).join('');
@@ -167,7 +212,7 @@ root.querySelectorAll('[data-book]').forEach(btn=>btn.addEventListener('click',(
 }
 function spreadStart(p){return p}
 function currentPages(){return [page]}
-function openViewer(p){isViewer=true;page=Math.min(Math.max(0,p),book.pages.length-1);setLoadPriority(page,true);updateUrl();renderViewer()}
+function openViewer(p){setReaderMode(true);isViewer=true;page=Math.min(Math.max(0,p),book.pages.length-1);setLoadPriority(page,true);updateUrl();renderViewer()}
 function renderViewer(turn=null){
 if(!isViewer)return;
 document.title=book.title+' | 9+1=10';
@@ -183,7 +228,7 @@ root.innerHTML=`<main class="viewer" id="viewer">
 <div class="toolbar-more-menu" id="readerMoreMenu" hidden><button data-do="toc">${icon('list')} 按款式查看目录</button><button data-do="prev" ${page===0?'disabled':''}>${icon('back')} 上一页</button><button data-do="next" ${page>=count-1?'disabled':''}>${icon('next')} 下一页</button><button data-do="sound" aria-pressed="${soundOn}">${icon(soundOn?'volume':'mute')} 翻页音效：${soundOn?'开启':'关闭'}</button><button data-do="full">${icon('full')} 全屏阅读</button></div>
 </main>`;
 root.querySelectorAll('[data-do]').forEach(e=>e.addEventListener('click',()=>action(e.dataset.do)));
-root.querySelectorAll('.paper').forEach(e=>e.addEventListener('click',()=>openZoom(Number(e.dataset.page))));
+// Image tap intentionally does nothing. Zoom is available only from the bottom tool bar.
 const visibleImg=qs('.paper'),visiblePage=page,visibleBook=book;
 let readyHandled=false;
 function onReady(ok){if(readyHandled)return;readyHandled=true;if(preload.bookRef===visibleBook)markPageVisible(visiblePage,ok);if(turn?.src)finishPageFlip(visibleImg,turn.src,turn.dir)}
@@ -214,7 +259,7 @@ function action(a){
 if(a!=='more'){const menu=qs('#readerMoreMenu');if(menu)menu.hidden=true;qs('[data-do="more"]')?.setAttribute('aria-expanded','false')}
 if(a==='more'){const m=qs('#readerMoreMenu'),b=qs('[data-do="more"]');if(!m)return;m.hidden=!m.hidden;b?.setAttribute('aria-expanded',String(!m.hidden));return}
 if(a==='sound'){soundOn=!soundOn;const m=qs('#readerMoreMenu [data-do="sound"]');if(m){m.setAttribute('aria-pressed',String(soundOn));m.innerHTML=icon(soundOn?'volume':'mute')+' 翻页音效：'+(soundOn?'开启':'关闭')}return}
-if(a==='home'){isViewer=false;const u=new URL(location.href);u.search='';history.pushState(null,'',u);home()}
+if(a==='home'){setReaderMode(false);isViewer=false;const u=new URL(location.href);u.search='';history.pushState(null,'',u);home()}
 if(a==='next')flip(1);
 if(a==='prev')flip(-1);
 if(a==='thumb'||a==='toc')openDrawer(a);
@@ -224,7 +269,7 @@ if(a==='full'){if(document.fullscreenElement)document.exitFullscreen?.();else qs
 }
 function openDrawer(which){drawer=which;const scr=document.createElement('div');scr.className='scrim';scr.id='scrim';const el=document.createElement('aside');el.className='drawer';el.id='drawer';el.setAttribute('aria-label',which==='toc'?'目录':'页面缩略图');let contents=which==='toc'?`<div class="chapters">${(book.chapters||[{title:'封面',page:1}]).map(c=>`<button class="chapter" data-page="${c.page-1}">${esc(c.title)}<span>PAGE ${c.page}</span></button>`).join('')}</div>`:`<div class="thumbs">${book.pages.map((p,i)=>`<button class="thumb ${i===page?'active':''}" data-page="${i}"><img src="${esc(p.src)}" alt="${esc(p.title||'')}" loading="lazy"><span>${String(i+1).padStart(2,'0')} &nbsp;${esc(p.title||'')}</span></button>`).join('')}</div>`;el.innerHTML=`<div class="drawer-head"><h2>${which==='toc'?'CONTENTS / 目录':'ALL PAGES / 页面'}</h2><button class="tool" id="closeDrawer" aria-label="关闭">${icon('close')}</button></div>${contents}`;document.body.append(scr,el);scr.onclick=closeDrawer;qs('#closeDrawer').onclick=closeDrawer;el.querySelectorAll('[data-page]').forEach(x=>x.onclick=()=>go(Number(x.dataset.page)));}
 function closeDrawer(){qs('#scrim')?.remove();qs('#drawer')?.remove();drawer=''}
-async function share(){updateUrl();const link=new URL(`./share/${encodeURIComponent(book.id)}.html`,location.href);try{if(navigator.share){await navigator.share({title:book.title,text:'9+1=10 电子产品图册',url:link.href});return}if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(link.href);toast('本图册专属阅读链接已复制');return}const ta=document.createElement('textarea');ta.value=link.href;ta.style.position='fixed';ta.style.opacity='0';document.body.append(ta);ta.select();const ok=document.execCommand('copy');ta.remove();toast(ok?'链接已复制':'请复制浏览器地址分享')}catch(e){if(e.name!=='AbortError')toast('请复制浏览器地址分享')}}
+async function share(){updateUrl();const shareOrigin=location.hostname.endsWith('.pages.dev')?'https://book.shifangjudian.com':location.origin;const link=new URL(`/share/${encodeURIComponent(book.id)}.html`,shareOrigin);try{if(navigator.share){await navigator.share({title:book.title,text:'9+1=10 电子产品图册',url:link.href});return}if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(link.href);toast('本图册专属阅读链接已复制');return}const ta=document.createElement('textarea');ta.value=link.href;ta.style.position='fixed';ta.style.opacity='0';document.body.append(ta);ta.select();const ok=document.execCommand('copy');ta.remove();toast(ok?'链接已复制':'请复制浏览器地址分享')}catch(e){if(e.name!=='AbortError')toast('请复制浏览器地址分享')}}
 function openZoom(i){zoomed=i;zoom=1;const z=document.createElement('div');z.className='zoom-panel';z.id='zoomer';z.innerHTML=`<header class="zoom-head"><span style="font-size:12px;letter-spacing:.12em">第 ${i+1} 页 · ${esc(book.pages[i].title||'')}</span><div class="zoom-tools"><button class="tool" id="zminus" aria-label="缩小">${icon('minus')}</button><span id="zpct" class="zoom-percent">100%</span><button class="tool" id="zplus" aria-label="放大">${icon('plus')}</button><button class="tool" id="zclose" aria-label="关闭">${icon('close')}</button></div></header><div class="zoom-body" id="zbody"><img id="zimg" src="${esc(book.pages[i].src)}" alt="第${i+1}页" draggable="false"></div>`;document.body.append(z);qs('#zclose').onclick=closeZoom;qs('#zminus').onclick=()=>setZoom(zoom-.25);qs('#zplus').onclick=()=>setZoom(zoom+.25);qs('#zbody').ondblclick=()=>setZoom(zoom>1?1:2);}
 function setZoom(v){zoom=Math.min(3,Math.max(.5,v));qs('#zimg').style.transform=`scale(${zoom})`;qs('#zpct').textContent=Math.round(zoom*100)+'%'}function closeZoom(){zoomed=-1;qs('#zoomer')?.remove()}
 document.addEventListener('click',e=>{const m=qs('#readerMoreMenu');if(m&&!m.hidden&&!e.target.closest('#readerMoreMenu')&&!e.target.closest('[data-do="more"]')){m.hidden=true;qs('[data-do="more"]')?.setAttribute('aria-expanded','false')}});

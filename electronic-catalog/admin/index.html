@@ -35,14 +35,15 @@ function busyProgress(message,p){$('#busyText').textContent=message;$('#busyBar'
 function unbusy(){state.busy=false;$('#busy').hidden=true;$('#busyBar').style.width='0%'}
 function copy(text){return navigator.clipboard?.writeText(text).then(()=>toast('链接已复制')).catch(()=>legacyCopy(text))??legacyCopy(text)}
 function legacyCopy(text){const el=document.createElement('textarea');el.value=text;el.style.position='fixed';el.style.left='-10000px';document.body.append(el);el.select();document.execCommand('copy');el.remove();toast('链接已复制')}
-function shareUrl(b){return new URL(`../share/${encodeURIComponent(b.id)}.html`,location.href).href}
+const PUBLIC_BOOK_ORIGIN='https://book.shifangjudian.com';
+function shareUrl(b){return new URL(`/share/${encodeURIComponent(b.id)}.html`,PUBLIC_BOOK_ORIGIN).href}
 function sharePageHtml(b){
 const link=shareUrl(b);
-const read=new URL(`../?book=${encodeURIComponent(b.id)}&p=1&only=1`,location.href).href;
+const read=new URL(`/?book=${encodeURIComponent(b.id)}&p=1&only=1`,PUBLIC_BOOK_ORIGIN).href;
 const heading=esc(b.title||'产品图册')+' | 9+1=10';
-const image=b.published!==false?coverSrc(b):'';
+const image=b.published!==false?coverSrc(b).replace(location.origin,PUBLIC_BOOK_ORIGIN):'';
 const desc=esc(`${b.year||''} ${b.category||'专业厨师职业装'} · ${b.pages.length} 页电子图册`);
-const dest=b.published!==false?read:new URL('../',location.href).href;
+const dest=b.published!==false?read:PUBLIC_BOOK_ORIGIN+'/';
 const escapedDest=esc(dest);
 return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${heading}</title><meta name="description" content="${desc}"><meta property="og:type" content="website"><meta property="og:title" content="${heading}"><meta property="og:description" content="${desc}"><meta property="og:url" content="${esc(link)}">${image?`<meta property="og:image" content="${esc(image)}">`:''}<meta http-equiv="refresh" content="0;url=${escapedDest}"><link rel="canonical" href="${escapedDest}"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;font-family:Arial,'Microsoft YaHei',sans-serif;background:#191919;color:#eee;text-align:center}a{color:#d1b992;font-size:14px}p{color:#aaa;font-size:12px}</style></head><body><main><h2>${heading}</h2><p>${b.published!==false?'正在打开专属图册…':'图册暂未发布'}</p><a href="${escapedDest}">点击进入图册</a></main></body></html>`;
 }

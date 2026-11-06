@@ -38,8 +38,14 @@
 
 ## 站点地址与域名
 
-代码目前位于 `shifangjudian/shifangjudian.github.io` 的 `electronic-catalog/` 独立目录。项目保留仓库根目录 `index.html` 以及 `CNAME` 文件不变。**只有当这个 GitHub Pages 分支实际被发布时，仓库内容才能成为在线管理页面。** 如果 `www.shifangjudian.com` 实际托管在其他平台，GitHub 源码更新不会自动更新那个平台，需要在该平台同步部署或关联 GitHub 持续部署。
+**当前采用 GitHub 存储 + Cloudflare Pages 独立静态托管方案。**
 
-如果以后改用 `book.shifangjudian.com`，建议单独托管图册：同步本目录作为独立站点根目录，并修改管理后台 JS 中的 `OWNER`、`REPO`、`BRANCH`、`DIR`（`DIR` 用于仓库路径；独立仓库根目录时须为空并同步检查构建路径），避免同一个站点多个不同自定义域名相互覆盖。现阶段**没有自动设置任何 DNS**。
+- GitHub 仓库：`shifangjudian/shifangjudian.github.io`，只发布其中 `electronic-catalog/` 目录作为 Pages 站点根目录。
+- 计划绑定 `book.shifangjudian.com`（**尚未完成实际 Cloudflare Pages 创建和域名验证**）。
+- 完成后首页为 `https://book.shifangjudian.com/`，后台为 `https://book.shifangjudian.com/admin/`。
+- 管理后台写入该 GitHub 仓库 `electronic-catalog/`，Cloudflare Pages 通过 Git 集成自动发布，无需运行 Workers 或 Functions。
+- 原官网 `www.shifangjudian.com`、GitHub 仓库根目录 `index.html` / `CNAME` 和原 Cloudflare Worker 均不修改。
 
-GitHub Pages 的中国大陆访问稳定性不可保证，可按需要迁移到可稳定访问大陆地区的静态托管平台。
+**详细操作请查看 [Cloudflare Pages 部署指南](./CLOUDFLARE_PAGES_%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97.md)。**
+
+请优先完成 Pages `*.pages.dev` 预览验证，确认正常后再绑定自定义子域名。中国大陆访问 Cloudflare Pages 的连通性仍需通过实际网络测试。

@@ -250,7 +250,8 @@
       "featured": false,
       "coverSrc": "",
       "shareDescription": "2026 厨师工作服系列 · 专业品质与简约设计，在线翻阅完整图册。",
-      "shareCoverJpg": "share/covers/chef-2026.jpg"
+      "shareCoverJpg": "share/covers/chef-2026.jpg",
+      "miniShareCardJpg": "share/cards/chef-2026.jpg"
     }
   ]
 }

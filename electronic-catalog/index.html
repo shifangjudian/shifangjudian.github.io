@@ -112,23 +112,28 @@ body.catalog-reading .toolbar-more-menu{position:fixed;z-index:28}
 
 /* Brand asset and compact mobile reading toolbar (2026-11-06) */
 .brand-header-logo{display:block;width:auto;height:34px;max-width:140px;object-fit:contain}
-.viewer-brand-line{display:flex;align-items:center;gap:10px;min-width:0;max-width:100%}
-.viewer-brand-logo{width:auto;height:27px;max-width:100px;object-fit:contain;flex:none}
-.viewer-heading{min-width:0}
 .viewer-title-wrap{min-width:0;max-width:100%}
 .viewer-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(max-width:850px){
  .brand-header-logo{height:30px}
- body.catalog-reading .viewer-brand-logo{height:26px}
- body.catalog-reading .viewer-brand-line{gap:8px}
- body.catalog-reading .bottom-reader-toolbar{justify-content:space-between;gap:0;padding-left:10px;padding-right:10px}
+ body.catalog-reading .bottom-reader-toolbar{justify-content:space-between;gap:0;padding-left:10px;padding-right:clamp(16px,4.5vw,22px)}
  body.catalog-reading .seek-area{flex:0 0 30%;width:30%;min-width:0;max-width:30%;gap:5px}
  body.catalog-reading .bottom-reader-actions{flex:0 0 60%;width:60%;min-width:0;justify-content:space-between;gap:0}
- body.catalog-reading .bottom-reader-actions .tool{flex:0 0 34px;width:34px;min-width:0}
+ body.catalog-reading .bottom-reader-actions .tool{flex:0 0 clamp(38px,13.1vw,51px);width:clamp(38px,13.1vw,51px);height:50px;min-width:0;padding:0}
 }
 @media(max-width:360px){
- body.catalog-reading .bottom-reader-toolbar{padding-left:8px;padding-right:8px}
- body.catalog-reading .bottom-reader-actions .tool{flex-basis:32px;width:32px}
+ body.catalog-reading .bottom-reader-toolbar{padding-left:8px;padding-right:16px}
+ body.catalog-reading .bottom-reader-actions .tool{flex-basis:clamp(38px,13.1vw,47px);width:clamp(38px,13.1vw,47px)}
+}
+
+
+/* Larger reading controls: 150% icon size, full-screen safe-edge spacing. */
+.bottom-reader-actions .tool{width:clamp(52px,5.4vw,64px);height:52px;min-width:0;display:grid;place-items:center}
+.bottom-reader-actions .icon{width:33px;height:33px;stroke-width:1.7}
+.bottom-reader-toolbar{padding-right:clamp(18px,3vw,40px)}
+@media(max-width:850px){
+ body.catalog-reading .bottom-reader-actions .icon{width:clamp(27px,8.1vw,32px);height:clamp(27px,8.1vw,32px)}
+ body.catalog-reading .bottom-reader-actions{justify-content:space-between;gap:0}
 }
 
 </style>
@@ -243,7 +248,7 @@ document.title=book.title+' | 9+1=10';
 const shown=currentPages(),first=shown[0],last=shown[shown.length-1],count=book.pages.length;
 const progr=count>1?(page/(count-1))*100:100;
 root.innerHTML=`<main class="viewer" id="viewer">
-<header class="viewer-header"><div class="viewer-left"><div class="viewer-title-wrap"><div class="viewer-brand-line"><img class="viewer-brand-logo" src="${BRAND_LOGO}" alt="9+1=10" width="600" height="257" decoding="async"><div class="viewer-heading"><div class="viewer-title">${esc(bookTitleNoBrand(book.title))}</div><div class="viewer-sub">${esc(book.subtitle||'DIGITAL LOOKBOOK')}</div></div></div></div></div></header>
+<header class="viewer-header"><div class="viewer-left"><div class="viewer-title-wrap"><div class="viewer-title">${esc(bookTitleNoBrand(book.title))}</div><div class="viewer-sub">${esc(book.subtitle||'DIGITAL LOOKBOOK')}</div></div></div></header>
 <section class="book-stage" id="stage" aria-label="画册阅读区"><button class="turn-arrow prev" data-do="prev" aria-label="上一页" ${first===0?'disabled':''}>${icon('back')}</button><div class="stage-frame"><div class="book-stack single" id="bookstack">${shown.map(i=>`<img class="paper" src="${esc(book.pages[i].src)}" alt="第${i+1}页 ${esc(book.pages[i].title||'')}" loading="eager" fetchpriority="high" decoding="async" draggable="false" data-page="${i}">`).join('')}${turn?.src?`<div id="flipSheet" class="flip-sheet flip-${turn.dir}"><img src="${esc(turn.src)}" alt="" aria-hidden="true" draggable="false"></div>`:''}</div></div><button class="turn-arrow next" data-do="next" aria-label="下一页" ${last>=count-1?'disabled':''}>${icon('next')}</button></section>
 <footer class="bottom-reader-toolbar" aria-label="阅读与翻页工具">
 <div class="seek-area"><div class="seek-count"><strong>${String(page+1).padStart(2,'0')}</strong> / ${count}</div><input class="page-seek" id="pageSeek" type="range" min="1" max="${count}" step="1" value="${page+1}" style="--seek-progress:${progr}%" aria-label="拖动跳转页面" aria-valuetext="第 ${page+1} 页，共 ${count} 页"></div>

@@ -9,7 +9,6 @@
 <meta property="og:title" content="9+1=10 | 电子产品图册">
 <meta property="og:description" content="专业于内 风格于外 · 9+1=10 电子产品图册">
 <title>9+1=10 | 2026 厨师服电子产品图册</title>
-<link rel="preload" as="image" href="books/chef-2026/001.webp">
 <style>
 :root{--ink:#171715;--muted:#88867e;--paper:#f3f1eb;--gold:#b5a17f;--line:rgba(255,255,255,.14);font-family:Inter,"Helvetica Neue","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;color:#eee;background:var(--ink);font-synthesis:none}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}body{min-height:100dvh}button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}a{color:inherit;text-decoration:none}button{border:0;background:none;color:inherit}img{display:block;max-width:100%}[hidden]{display:none!important} .icon{height:19px;width:19px;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;fill:none;flex:none}
@@ -47,6 +46,30 @@
 .toolbar-more-menu button .icon{width:16px;height:16px}
 @media(max-width:850px){.book-stage{flex:1 0 auto;min-height:calc(100dvh - 57px - 64px - env(safe-area-inset-bottom,0px));padding:8px 5px}.bottom-reader-toolbar{gap:10px;padding-inline:10px}.seek-area{gap:5px}.bottom-reader-actions{gap:2px}.bottom-reader-actions .tool{width:35px;height:44px}.bottom-reader-actions .icon{width:21px;height:21px}}
 @media(max-width:380px){.bottom-reader-toolbar{gap:7px;padding-inline:8px}.bottom-reader-actions{gap:0}.bottom-reader-actions .tool{width:34px}.seek-count{font-size:9px}.viewer-title{max-width:none}}
+
+/* 2026-11: lightweight paper-turn, small translucent side controls, and visible-page-first loading. */
+.book-stack{isolation:isolate}
+.paper.enter-next,.paper.enter-prev{animation:none}
+.flip-sheet{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;pointer-events:none;transform-style:preserve-3d;backface-visibility:hidden;will-change:transform,opacity;overflow:hidden;background:transparent}
+.flip-sheet img{display:block;width:100%;height:100%;object-fit:contain;padding:5px;user-select:none;-webkit-user-drag:none}
+.flip-sheet::after{content:"";position:absolute;top:0;bottom:0;width:8%;pointer-events:none;opacity:0;background:linear-gradient(90deg,transparent,#fff3 70%,#0004);transition:opacity .15s}
+.flip-sheet.flip-next{transform-origin:left center}
+.flip-sheet.flip-prev{transform-origin:right center}
+.flip-sheet.flip-next::after{right:0}
+.flip-sheet.flip-prev::after{left:0;transform:scaleX(-1)}
+.flip-sheet.is-turning::after{opacity:.8}
+.flip-sheet.flip-next.is-turning{animation:turn-next .47s cubic-bezier(.18,.6,.4,1) forwards}
+.flip-sheet.flip-prev.is-turning{animation:turn-prev .47s cubic-bezier(.18,.6,.4,1) forwards}
+@keyframes turn-next{0%{transform:perspective(1250px) rotateY(0);opacity:1}63%{opacity:.95}100%{transform:perspective(1250px) rotateY(-88deg);opacity:0}}
+@keyframes turn-prev{0%{transform:perspective(1250px) rotateY(0);opacity:1}63%{opacity:.95}100%{transform:perspective(1250px) rotateY(88deg);opacity:0}}
+.turn-arrow{display:grid;width:36px;height:48px;min-width:36px;border-radius:13px;background:rgba(20,20,20,.31);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:.54;z-index:10;box-shadow:none;touch-action:manipulation}
+.turn-arrow svg{width:18px;height:18px}
+.turn-arrow:hover,.turn-arrow:focus-visible{opacity:.95;background:rgba(20,20,20,.52)}
+.turn-arrow:disabled{opacity:.12;pointer-events:none}
+.turn-arrow.prev{left:7px}.turn-arrow.next{right:7px}
+.page-loading-hint{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);background:#1b1b1ba6;color:#dedbd4;border-radius:3px;font-size:10px;letter-spacing:.08em;padding:5px 9px;pointer-events:none;z-index:4}
+@media(max-width:850px){.turn-arrow{display:grid;width:33px;height:44px;min-width:33px;border-radius:12px;opacity:.44}.turn-arrow.prev{left:6px}.turn-arrow.next{right:6px}.turn-arrow svg{width:17px;height:17px}.flip-sheet img{padding:0}}
+@media(prefers-reduced-motion:reduce){.flip-sheet.flip-next.is-turning,.flip-sheet.flip-prev.is-turning{animation-duration:.01ms!important}}
 </style>
 </head>
 <body>
@@ -59,21 +82,82 @@ const qs=(s,ctx=document)=>ctx.querySelector(s);
 const params=new URLSearchParams(location.search);
 const bundledBook={"id":"chef-2026","title":"2026 厨师服产品图册","subtitle":"PROFESSIONAL CHEF UNIFORM · 2026","category":"厨师服 · 围裙","year":"2026","pages":[{"src":"books/chef-2026/001.webp","title":"封面"},{"src":"books/chef-2026/002.webp","title":"君临天下 · 白色"},{"src":"books/chef-2026/003.webp","title":"君临天下 · 白色"},{"src":"books/chef-2026/004.webp","title":"君临天下 · 黑色"},{"src":"books/chef-2026/005.webp","title":"君临天下 · 黑色"},{"src":"books/chef-2026/006.webp","title":"雄才大略 · 白色"},{"src":"books/chef-2026/007.webp","title":"雄才大略 · 白色"},{"src":"books/chef-2026/008.webp","title":"雄才大略 · 黑色"},{"src":"books/chef-2026/009.webp","title":"雄才大略 · 黑色"},{"src":"books/chef-2026/010.webp","title":"丰神俊朗 · 白色"},{"src":"books/chef-2026/011.webp","title":"丰神俊朗 · 黑色"},{"src":"books/chef-2026/012.webp","title":"逸群之才 · 白色"},{"src":"books/chef-2026/013.webp","title":"逸群之才 · 黑色"},{"src":"books/chef-2026/014.webp","title":"德高望重 · 白色"},{"src":"books/chef-2026/015.webp","title":"德高望重 · 白色"},{"src":"books/chef-2026/016.webp","title":"德高望重 · 黑色"},{"src":"books/chef-2026/017.webp","title":"德高望重 · 黑色"},{"src":"books/chef-2026/018.webp","title":"大展宏图 · 白色"},{"src":"books/chef-2026/019.webp","title":"大展宏图 · 黑色"},{"src":"books/chef-2026/020.webp","title":"源远流长 · 白色"},{"src":"books/chef-2026/021.webp","title":"源远流长 · 黑色"},{"src":"books/chef-2026/022.webp","title":"书香门第 · 白色"},{"src":"books/chef-2026/023.webp","title":"书香门第 · 白色"},{"src":"books/chef-2026/024.webp","title":"书香门第 · 黑色"},{"src":"books/chef-2026/025.webp","title":"书香门第 · 黑色"},{"src":"books/chef-2026/026.webp","title":"玉树临风 · 白色"},{"src":"books/chef-2026/027.webp","title":"玉树临风 · 白色"},{"src":"books/chef-2026/028.webp","title":"玉树临风 · 黑色"},{"src":"books/chef-2026/029.webp","title":"玉树临风 · 黑色"},{"src":"books/chef-2026/030.webp","title":"海纳百川 · 白色"},{"src":"books/chef-2026/031.webp","title":"海纳百川 · 黑色"},{"src":"books/chef-2026/032.webp","title":"雄姿英发 · 黑色"},{"src":"books/chef-2026/033.webp","title":"雄姿英发 · 白色"},{"src":"books/chef-2026/034.webp","title":"惠质兰心 · 白色"},{"src":"books/chef-2026/035.webp","title":"惠质兰心"},{"src":"books/chef-2026/036.webp","title":"金榜题名 · 围裙"},{"src":"books/chef-2026/037.webp","title":"平步青云 · 围裙"},{"src":"books/chef-2026/038.webp","title":"欣欣向荣 · 围裙"},{"src":"books/chef-2026/039.webp","title":"一举成名 · 围裙"},{"src":"books/chef-2026/040.webp","title":"风调雨顺 · 围裙"}],"chapters":[{"title":"封面","page":1},{"title":"君临天下","page":2},{"title":"雄才大略","page":6},{"title":"丰神俊朗","page":10},{"title":"逸群之才","page":12},{"title":"德高望重","page":14},{"title":"大展宏图","page":18},{"title":"源远流长","page":20},{"title":"书香门第","page":22},{"title":"玉树临风","page":26},{"title":"海纳百川","page":30},{"title":"雄姿英发","page":32},{"title":"惠质兰心","page":34},{"title":"金榜题名 · 围裙","page":36},{"title":"平步青云 · 围裙","page":37},{"title":"欣欣向荣 · 围裙","page":38},{"title":"一举成名 · 围裙","page":39},{"title":"风调雨顺 · 围裙","page":40}],"description":"专业厨师服与围裙系列 · 源自原版40页产品画册"};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const icons={back:'<path d="m15 18-6-6 6-6"/>',next:'<path d="m9 18 6-6-6-6"/>',grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h1M3 12h1M3 18h1"/>',share:'<path d="M12 16V3m0 0L7 8m5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',full:'<path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/>',zoom:'<circle cx="11" cy="11" r="7"/><path d="m16 16 5 5M8 11h6m-3-3v6"/>',close:'<path d="M18 6 6 18M6 6l12 12"/>',home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',more:'<circle cx="12" cy="12" r="9"/><circle cx="8" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="1" fill="currentColor" stroke="none"/>',minus:'<path d="M5 12h14"/>',plus:'<path d="M5 12h14M12 5v14"/>'};
+const icons={back:'<path d="m15 18-6-6 6-6"/>',next:'<path d="m9 18 6-6-6-6"/>',grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h1M3 12h1M3 18h1"/>',share:'<path d="M12 16V3m0 0L7 8m5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',full:'<path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/>',zoom:'<circle cx="11" cy="11" r="7"/><path d="m16 16 5 5M8 11h6m-3-3v6"/>',close:'<path d="M18 6 6 18M6 6l12 12"/>',volume:'<path d="M11 5 6 9H3v6h3l5 4V5ZM15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/>',mute:'<path d="M11 5 6 9H3v6h3l5 4V5ZM16 9l5 6m0-6-5 6"/>',home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',more:'<circle cx="12" cy="12" r="9"/><circle cx="8" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="1" fill="currentColor" stroke="none"/>',minus:'<path d="M5 12h14"/>',plus:'<path d="M5 12h14M12 5v14"/>'};
 const icon=name=>`<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${icons[name]||''}</svg>`;
 let books=[bundledBook],book=bundledBook,page=0,drawer='',zoom=1,zoomed=-1,lastDirection='next',isViewer=false;
+let soundOn=true,flipAudioCtx=null;
+// Only one low-priority network task at a time. No Blob URLs are retained in memory.
+const preload={bookRef:null,seen:new Set(),failed:new Set(),order:[],active:false,controller:null,epoch:0,waitFor:null};
+function cancelPreload(){preload.epoch++;preload.controller?.abort();preload.controller=null;preload.active=false;preload.order=[];preload.waitFor=null}
+function resetPreloadBook(){if(preload.bookRef!==book){cancelPreload();preload.bookRef=book;preload.seen=new Set();preload.failed=new Set()}}
+function setLoadPriority(index,force){
+ resetPreloadBook();
+ // Jumping cancels uncompleted image downloads and replaces the pending sequence.
+ if(force){cancelPreload();preload.waitFor=index;preload.order=Array.from({length:book.pages.length},(_,k)=>(index+k)%book.pages.length)}
+ else if(!preload.order.length&&!preload.active){preload.waitFor=index;preload.order=Array.from({length:book.pages.length},(_,k)=>(index+k)%book.pages.length)}
+ if(preload.seen.has(index)){preload.waitFor=null;startBackgroundPreload()}
+}
+function markPageVisible(i,ok){
+ if(preload.bookRef!==book)return;
+ if(ok){preload.seen.add(i);preload.failed.delete(i)}else preload.failed.add(i);
+ if(preload.waitFor===i)preload.waitFor=null;
+ startBackgroundPreload();
+}
+async function runPreload(epoch,i,signal){
+ try{
+  const src=book.pages[i]?.src;
+  if(!src)throw new Error('empty page');
+  const response=await fetch(src,{signal,cache:'default'});
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  await response.blob(); // fully consume for browser HTTP caching
+  if(epoch===preload.epoch)preload.seen.add(i);
+ }catch(err){if(epoch===preload.epoch&&err?.name!=='AbortError')preload.failed.add(i)}
+ finally{if(epoch===preload.epoch){preload.controller=null;preload.active=false;setTimeout(()=>{if(epoch===preload.epoch)startBackgroundPreload()},35)}}
+}
+function startBackgroundPreload(){
+ if(!isViewer||preload.bookRef!==book||preload.active||preload.waitFor!==null||document.hidden)return;
+ const i=preload.order.find(i=>!preload.seen.has(i)&&!preload.failed.has(i));
+ if(i===undefined)return;
+ const ctrl=new AbortController();preload.controller=ctrl;preload.active=true;
+ runPreload(preload.epoch,i,ctrl.signal);
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)startBackgroundPreload()});
+function playPaperTurn(){
+ if(!soundOn)return;
+ try{
+  const A=window.AudioContext||window.webkitAudioContext;if(!A)return;
+  flipAudioCtx ||=new A();const a=flipAudioCtx;
+  if(a.state==='suspended')a.resume().catch(()=>{});
+  const t=a.currentTime,len=Math.floor(a.sampleRate*.14),buf=a.createBuffer(1,len,a.sampleRate),data=buf.getChannelData(0);
+  for(let i=0;i<len;i++){const fade=Math.sin(Math.PI*i/len);data[i]=(Math.random()*2-1)*fade}
+  const src=a.createBufferSource();src.buffer=buf;
+  const filter=a.createBiquadFilter();filter.type='bandpass';filter.frequency.setValueAtTime(1200,t);filter.frequency.exponentialRampToValueAtTime(2400,t+.13);filter.Q.value=.5;
+  const amp=a.createGain();amp.gain.setValueAtTime(.0001,t);amp.gain.exponentialRampToValueAtTime(.035,t+.025);amp.gain.exponentialRampToValueAtTime(.0001,t+.14);
+  src.connect(filter).connect(amp).connect(a.destination);src.start(t);src.stop(t+.145);
+ }catch(err){/* Browser may block audio before a user gesture; visual flipping still works. */}
+}
+function pageFlipSource(){return qs('.flip-sheet img')?.getAttribute('src')||(qs('.paper')?.naturalWidth?book.pages[page]?.src:null)}
+function finishPageFlip(img,prevSrc,dir){
+ const layer=qs('#flipSheet');if(!layer)return;
+ if(!img.isConnected||!img.naturalWidth){layer.remove();return}
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches){layer.remove();return}
+ layer.classList.add('is-turning');
+ layer.addEventListener('animationend',()=>layer.remove(),{once:true});
+ setTimeout(()=>layer.remove(),620);
+}
+
 const mobile=()=>matchMedia('(max-width:850px)').matches;
 const URLpage=()=>Math.min(book.pages.length-1,Math.max(0,Number(params.get('p')||1)-1||0));
 const publicBooks=()=>books.filter(b=>b&&b.published!==false&&Array.isArray(b.pages)&&b.pages.length>0);
 const listedBooks=()=>publicBooks().filter(b=>b.showOnHome!==false).sort((a,b)=>(Number(b.featured===true)-Number(a.featured===true))||(Number(a.sortOrder??999)-Number(b.sortOrder??999)));
 const bookById=id=>id?publicBooks().find(b=>b.id===id)||null:(listedBooks()[0]||publicBooks()[0]||null);
 const coverOf=b=>b.coverSrc||b.pages[Math.max(0,Math.min(b.pages.length-1,(Number(b.coverPage)||1)-1))]?.src||b.pages[0]?.src||'';
-function unavailable(){isViewer=false;document.title='图册暂不可用 | 9+1=10';root.innerHTML=`<main class="book-unavailable"><div><h1>这本图册暂不可用</h1><p>图册可能已下架或分享链接有误。</p><a href="./">返回图册首页</a></div></main>`}
+function unavailable(){cancelPreload();isViewer=false;document.title='图册暂不可用 | 9+1=10';root.innerHTML=`<main class="book-unavailable"><div><h1>这本图册暂不可用</h1><p>图册可能已下架或分享链接有误。</p><a href="./">返回图册首页</a></div></main>`}
 function updateUrl(){const u=new URL(location.href);u.searchParams.set('book',book.id);u.searchParams.set('p',String(page+1));history.replaceState(null,'',u);}
 function toast(msg){qs('.toast')?.remove();const d=document.createElement('div');d.className='toast';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
 function cover(){return esc(coverOf(book||bundledBook))}
 function home(){
-isViewer=false;const list=listedBooks(),feature=list[0]||null;if(feature)book=feature;
+cancelPreload();isViewer=false;const list=listedBooks(),feature=list[0]||null;if(feature)book=feature;
 document.title='9+1=10 | 电子产品图册';
 const hero=feature?`<section class="hero"><div><div class="eyebrow">9+1=10 / DIGITAL EDITION</div><h1 class="headline">FORM.<br><strong>FUNCTION.</strong><br>IDENTITY.</h1><p class="cn-headline">专业于内　风格于外</p><div class="section-line"></div><p class="hero-desc">原创专业厨师职业装电子图册。选择系列，在线阅读，也可将单本图册分享给客户。</p><div class="editorial-meta">EDITION ${esc(feature.year||'2026')} &nbsp;·&nbsp; ${feature.pages.length} PAGES</div><button class="primary-btn" id="enter">阅读精选图册 ${icon('next')}</button></div><div class="hero-art"><div class="cover"><img src="${esc(coverOf(feature))}" alt="${esc(feature.title)} 封面" draggable="false"></div><div class="cover-caption">${esc(feature.title)} / ${esc(feature.category||'')}</div></div></section>`:`<section class="hero"><div><div class="eyebrow">9+1=10 / DIGITAL EDITION</div><h1 class="headline">FORM.<br><strong>FUNCTION.</strong><br>IDENTITY.</h1><p class="cn-headline">专业于内　风格于外</p><p class="hero-desc">图册正在整理，敬请期待。</p></div></section>`;
 const cards=list.map(b=>`<button type="button" class="catalog-card" data-book="${esc(b.id)}" aria-label="阅读 ${esc(b.title)}"><div class="catalog-card-cover"><img src="${esc(coverOf(b))}" loading="lazy" alt="${esc(b.title)} 封面"></div><div class="catalog-card-title">${esc(b.title)}</div><div class="catalog-card-meta">${esc(b.year||'')} · ${esc(b.category||'产品图册')} · ${b.pages.length} PAGES</div></button>`).join('');
@@ -83,36 +167,53 @@ root.querySelectorAll('[data-book]').forEach(btn=>btn.addEventListener('click',(
 }
 function spreadStart(p){return p}
 function currentPages(){return [page]}
-function openViewer(p){isViewer=true;page=Math.min(Math.max(0,p),book.pages.length-1);updateUrl();renderViewer()}
-function renderViewer(){
+function openViewer(p){isViewer=true;page=Math.min(Math.max(0,p),book.pages.length-1);setLoadPriority(page,true);updateUrl();renderViewer()}
+function renderViewer(turn=null){
 if(!isViewer)return;
 document.title=book.title+' | 9+1=10';
 const shown=currentPages(),first=shown[0],last=shown[shown.length-1],count=book.pages.length;
-const progr=(page/(count-1))*100;
+const progr=count>1?(page/(count-1))*100:100;
 root.innerHTML=`<main class="viewer" id="viewer">
 <header class="viewer-header"><div class="viewer-left">${new URLSearchParams(location.search).get('only')==='1'?'':`<button class="tool" data-do="home" aria-label="返回图册首页" title="图册首页">${icon('home')}</button>`}<div class="viewer-title-wrap"><div class="viewer-title">${esc(book.title)}</div><div class="viewer-sub">${esc(book.subtitle||'DIGITAL LOOKBOOK')}</div></div></div></header>
-<section class="book-stage" id="stage" aria-label="画册阅读区"><button class="turn-arrow prev" data-do="prev" aria-label="上一页" ${first===0?'disabled':''}>${icon('back')}</button><div class="stage-frame"><div class="book-stack single" id="bookstack">${shown.map(i=>`<img class="paper enter-${lastDirection}" src="${esc(book.pages[i].src)}" alt="第${i+1}页 ${esc(book.pages[i].title||'')}" loading="eager" draggable="false" data-page="${i}">`).join('')}</div></div><button class="turn-arrow next" data-do="next" aria-label="下一页" ${last>=count-1?'disabled':''}>${icon('next')}</button></section>
+<section class="book-stage" id="stage" aria-label="画册阅读区"><button class="turn-arrow prev" data-do="prev" aria-label="上一页" ${first===0?'disabled':''}>${icon('back')}</button><div class="stage-frame"><div class="book-stack single" id="bookstack">${shown.map(i=>`<img class="paper" src="${esc(book.pages[i].src)}" alt="第${i+1}页 ${esc(book.pages[i].title||'')}" loading="eager" fetchpriority="high" decoding="async" draggable="false" data-page="${i}">`).join('')}${turn?.src?`<div id="flipSheet" class="flip-sheet flip-${turn.dir}"><img src="${esc(turn.src)}" alt="" aria-hidden="true" draggable="false"></div>`:''}</div></div><button class="turn-arrow next" data-do="next" aria-label="下一页" ${last>=count-1?'disabled':''}>${icon('next')}</button></section>
 <footer class="bottom-reader-toolbar" aria-label="阅读与翻页工具">
 <div class="seek-area"><div class="seek-count"><strong>${String(page+1).padStart(2,'0')}</strong> / ${count}</div><input class="page-seek" id="pageSeek" type="range" min="1" max="${count}" step="1" value="${page+1}" style="--seek-progress:${progr}%" aria-label="拖动跳转页面" aria-valuetext="第 ${page+1} 页，共 ${count} 页"></div>
 <nav class="bottom-reader-actions" aria-label="阅读工具"><button class="tool" data-do="thumb" aria-label="页面缩略图" title="缩略图">${icon('grid')}</button><button class="tool" data-do="zoom" aria-label="放大当前页面" title="放大">${icon('zoom')}</button><button class="tool" data-do="share" aria-label="分享本图册" title="分享">${icon('share')}</button><button class="tool" data-do="more" aria-label="更多操作" aria-expanded="false" title="更多">${icon('more')}</button></nav>
 </footer>
-<div class="toolbar-more-menu" id="readerMoreMenu" hidden><button data-do="toc">${icon('list')} 按款式查看目录</button><button data-do="prev" ${page===0?'disabled':''}>${icon('back')} 上一页</button><button data-do="next" ${page>=count-1?'disabled':''}>${icon('next')} 下一页</button><button data-do="full">${icon('full')} 全屏阅读</button></div>
+<div class="toolbar-more-menu" id="readerMoreMenu" hidden><button data-do="toc">${icon('list')} 按款式查看目录</button><button data-do="prev" ${page===0?'disabled':''}>${icon('back')} 上一页</button><button data-do="next" ${page>=count-1?'disabled':''}>${icon('next')} 下一页</button><button data-do="sound" aria-pressed="${soundOn}">${icon(soundOn?'volume':'mute')} 翻页音效：${soundOn?'开启':'关闭'}</button><button data-do="full">${icon('full')} 全屏阅读</button></div>
 </main>`;
 root.querySelectorAll('[data-do]').forEach(e=>e.addEventListener('click',()=>action(e.dataset.do)));
 root.querySelectorAll('.paper').forEach(e=>e.addEventListener('click',()=>openZoom(Number(e.dataset.page))));
+const visibleImg=qs('.paper'),visiblePage=page,visibleBook=book;
+let readyHandled=false;
+function onReady(ok){if(readyHandled)return;readyHandled=true;if(preload.bookRef===visibleBook)markPageVisible(visiblePage,ok);if(turn?.src)finishPageFlip(visibleImg,turn.src,turn.dir)}
+if(visibleImg){
+ visibleImg.addEventListener('load',()=>onReady(true),{once:true});
+ visibleImg.addEventListener('error',()=>onReady(false),{once:true});
+ if(visibleImg.complete){if(visibleImg.naturalWidth)onReady(true);else if(visibleImg.getAttribute('src'))onReady(false)}
+}
+
 const seek=qs('#pageSeek');
-seek.addEventListener('input',()=>{seek.style.setProperty('--seek-progress',String(((Number(seek.value)-1)/(count-1))*100)+'%');const label=qs('.seek-count strong');if(label)label.textContent=String(seek.value).padStart(2,'0');seek.setAttribute('aria-valuetext',`第 ${seek.value} 页，共 ${count} 页`)});
+seek.addEventListener('input',()=>{seek.style.setProperty('--seek-progress',String(count>1?((Number(seek.value)-1)/(count-1))*100:100)+'%');const label=qs('.seek-count strong');if(label)label.textContent=String(seek.value).padStart(2,'0');seek.setAttribute('aria-valuetext',`第 ${seek.value} 页，共 ${count} 页`)});
 seek.addEventListener('change',()=>go(Number(seek.value)-1));
 let startX=0,startY=0;
 qs('#stage').addEventListener('touchstart',e=>{startX=e.changedTouches[0].screenX;startY=e.changedTouches[0].screenY},{passive:true});
 qs('#stage').addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-startX,dy=e.changedTouches[0].screenY-startY;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.2)flip(dx<0?1:-1)},{passive:true});
 }
 
-function flip(dir){const n=book.pages.length;if(dir===1){const next=page+1;if(next>=n)return;page=next;lastDirection='next';}else{const prev=page-1;if(prev<0)return;page=prev;lastDirection='prev';}updateUrl();renderViewer()}
-function go(n){page=Math.max(0,Math.min(book.pages.length-1,n));lastDirection='next';closeDrawer();updateUrl();renderViewer()}
+function turnTo(n,priority){
+ const next=Math.max(0,Math.min(book.pages.length-1,n));if(next===page)return;
+ const direction=next>page?'next':'prev';const old=pageFlipSource();
+ page=next;lastDirection=direction;playPaperTurn();
+ if(priority||!preload.seen.has(next))setLoadPriority(next,true);
+ updateUrl();renderViewer(old?{src:old,dir:direction}:null);
+}
+function flip(dir){turnTo(page+(dir>0?1:-1),false)}
+function go(n){closeDrawer();turnTo(n,true)}
 function action(a){
 if(a!=='more'){const menu=qs('#readerMoreMenu');if(menu)menu.hidden=true;qs('[data-do="more"]')?.setAttribute('aria-expanded','false')}
 if(a==='more'){const m=qs('#readerMoreMenu'),b=qs('[data-do="more"]');if(!m)return;m.hidden=!m.hidden;b?.setAttribute('aria-expanded',String(!m.hidden));return}
+if(a==='sound'){soundOn=!soundOn;const m=qs('#readerMoreMenu [data-do="sound"]');if(m){m.setAttribute('aria-pressed',String(soundOn));m.innerHTML=icon(soundOn?'volume':'mute')+' 翻页音效：'+(soundOn?'开启':'关闭')}return}
 if(a==='home'){isViewer=false;const u=new URL(location.href);u.search='';history.pushState(null,'',u);home()}
 if(a==='next')flip(1);
 if(a==='prev')flip(-1);

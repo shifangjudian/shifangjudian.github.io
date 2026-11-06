@@ -35,7 +35,17 @@ function busyProgress(message,p){$('#busyText').textContent=message;$('#busyBar'
 function unbusy(){state.busy=false;$('#busy').hidden=true;$('#busyBar').style.width='0%'}
 function copy(text){return navigator.clipboard?.writeText(text).then(()=>toast('链接已复制')).catch(()=>legacyCopy(text))??legacyCopy(text)}
 function legacyCopy(text){const el=document.createElement('textarea');el.value=text;el.style.position='fixed';el.style.left='-10000px';document.body.append(el);el.select();document.execCommand('copy');el.remove();toast('链接已复制')}
-function shareUrl(b){const u=new URL('../',location.href);u.search=`?book=${encodeURIComponent(b.id)}&p=1&only=1`;u.hash='';return u.href}
+function shareUrl(b){return new URL(`../share/${encodeURIComponent(b.id)}.html`,location.href).href}
+function sharePageHtml(b){
+const link=shareUrl(b);
+const read=new URL(`../?book=${encodeURIComponent(b.id)}&p=1&only=1`,location.href).href;
+const heading=esc(b.title||'产品图册')+' | 9+1=10';
+const image=b.published!==false?coverSrc(b):'';
+const desc=esc(`${b.year||''} ${b.category||'专业厨师职业装'} · ${b.pages.length} 页电子图册`);
+const dest=b.published!==false?read:new URL('../',location.href).href;
+const escapedDest=esc(dest);
+return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${heading}</title><meta name="description" content="${desc}"><meta property="og:type" content="website"><meta property="og:title" content="${heading}"><meta property="og:description" content="${desc}"><meta property="og:url" content="${esc(link)}">${image?`<meta property="og:image" content="${esc(image)}">`:''}<meta http-equiv="refresh" content="0;url=${escapedDest}"><link rel="canonical" href="${escapedDest}"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;font-family:Arial,'Microsoft YaHei',sans-serif;background:#191919;color:#eee;text-align:center}a{color:#d1b992;font-size:14px}p{color:#aaa;font-size:12px}</style></head><body><main><h2>${heading}</h2><p>${b.published!==false?'正在打开专属图册…':'图册暂未发布'}</p><a href="${escapedDest}">点击进入图册</a></main></body></html>`;
+}
 function imgUrl(page){if(!page)return '';const src=page.src||'';if(src.startsWith('__temp__:'))return state.assets.get(src.slice(9))?.url||'';return new URL('../'+src,location.href).href}
 function coverSrc(b){if(!b)return '';if(b.coverSrc)return imgUrl({src:b.coverSrc});const n=Math.min(b.pages.length,Math.max(1,Number(b.coverPage)||1));return imgUrl(b.pages[n-1]||b.pages[0])}
 function normalized(b){return {...b,coverPage:Number(b.coverPage)||1,sortOrder:Number(b.sortOrder??100),published:b.published!==false,showOnHome:b.showOnHome!==false,featured:b.featured===true,pages:b.pages.map(p=>typeof p==='string'?{src:p,title:''}:p)}}
@@ -85,7 +95,9 @@ async function commitManifest(nextManifest,message){if(state.busy||state.convers
 const [ref,remote]=await Promise.all([req('GET',`/git/ref/heads/${BRANCH}`),getManifest()]);if(remote.sha!==state.manifestSha)throw new Error('GitHub 的图册列表已被其他操作修改。请刷新列表后重试，避免覆盖别人的更新。');const headSha=ref.object.sha;
 const commit=await req('GET',`/git/commits/${headSha}`);busyProgress('正在准备待上传的文件',8);
 const assets=await uploadedAssets(nextManifest);const copy=materialize(structuredClone(nextManifest),assets);
-const entries=[...Array.from(assets.values(),v=>({path:`${DIR}/${v.path}`,mode:'100644',type:'blob',sha:v.sha})),{path:MANIFEST,mode:'100644',type:'blob',content:JSON.stringify(copy,null,2)+'\n'}];
+const shares=copy.books.map(b=>({path:`${DIR}/share/${encodeURIComponent(b.id)}.html`,mode:'100644',type:'blob',content:sharePageHtml(b)}));
+const removed=state.manifest.books.filter(old=>!copy.books.some(b=>b.id===old.id)).map(old=>({path:`${DIR}/share/${encodeURIComponent(old.id)}.html`,mode:'100644',type:'blob',sha:null}));
+const entries=[...Array.from(assets.values(),v=>({path:`${DIR}/${v.path}`,mode:'100644',type:'blob',sha:v.sha})),{path:MANIFEST,mode:'100644',type:'blob',content:JSON.stringify(copy,null,2)+'\n'},...shares,...removed];
 busyProgress('正在创建 GitHub 文件目录',80);const tree=await req('POST','/git/trees',{base_tree:commit.tree.sha,tree:entries});
 busyProgress('正在生成新版本',90);const created=await req('POST','/git/commits',{message,tree:tree.sha,parents:[headSha]});
 busyProgress('正在发布到 main 分支',96);await req('PATCH',`/git/refs/heads/${BRANCH}`,{sha:created.sha,force:false});

@@ -136,6 +136,17 @@ body.catalog-reading .toolbar-more-menu{position:fixed;z-index:28}
  body.catalog-reading .bottom-reader-actions{justify-content:space-between;gap:0}
 }
 
+
+/* Native-feeling photo gestures: pinch to zoom (1–4x), drag enlarged fabric details. */
+body.catalog-reading .stage-frame,body.catalog-reading .book-stack,body.catalog-reading .paper{
+ touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+}
+body.catalog-reading .book-stage{touch-action:none}
+body.catalog-reading .paper{transform-origin:center center;will-change:transform}
+body.catalog-reading .stage-frame.is-zoomed{overflow:hidden}
+body.catalog-reading .stage-frame.is-zoomed .paper{cursor:grab}
+body.catalog-reading [data-do="zoom"][aria-pressed="true"]{color:#d8c49d}
+
 </style>
 </head>
 <body>
@@ -154,6 +165,8 @@ const icons={back:'<path d="m15 18-6-6 6-6"/>',next:'<path d="m9 18 6-6-6-6"/>',
 const icon=name=>`<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${icons[name]||''}</svg>`;
 let books=[bundledBook],book=bundledBook,page=0,drawer='',zoom=1,zoomed=-1,lastDirection='next',isViewer=false;
 let soundOn=true,flipAudioCtx=null;
+// Inline image magnification; reset whenever a different catalog page is opened.
+const readerZoom={scale:1,x:0,y:0};
 // Only one low-priority network task at a time. No Blob URLs are retained in memory.
 const preload={bookRef:null,seen:new Set(),failed:new Set(),order:[],active:false,controller:null,epoch:0,waitFor:null};
 function cancelPreload(){preload.epoch++;preload.controller?.abort();preload.controller=null;preload.active=false;preload.order=[];preload.waitFor=null}
@@ -204,6 +217,99 @@ function playPaperTurn(){
   src.connect(filter).connect(amp).connect(a.destination);src.start(t);src.stop(t+.145);
  }catch(err){/* Browser may block audio before a user gesture; visual flipping still works. */}
 }
+
+function zoomBounds(){
+ const img=qs('.paper'),frame=qs('.stage-frame');
+ if(!img||!frame)return {img:null,frame:null,maxX:0,maxY:0};
+ const rect=frame.getBoundingClientRect();
+ const iw=img.naturalWidth||973,ih=img.naturalHeight||1459;
+ const fit=Math.min(rect.width/iw,rect.height/ih);
+ const imageWidth=iw*fit*readerZoom.scale,imageHeight=ih*fit*readerZoom.scale;
+ return {img,frame,maxX:Math.max(0,(imageWidth-rect.width)/2),maxY:Math.max(0,(imageHeight-rect.height)/2)};
+}
+function applyReaderZoom(){
+ const {img,frame,maxX,maxY}=zoomBounds();
+ if(!img||!frame)return;
+ readerZoom.x=Math.max(-maxX,Math.min(maxX,readerZoom.x));
+ readerZoom.y=Math.max(-maxY,Math.min(maxY,readerZoom.y));
+ if(readerZoom.scale<=1.001){readerZoom.scale=1;readerZoom.x=0;readerZoom.y=0;}
+ img.style.transform=readerZoom.scale===1?'':`translate3d(${readerZoom.x}px,${readerZoom.y}px,0) scale(${readerZoom.scale})`;
+ frame.classList.toggle('is-zoomed',readerZoom.scale>1);
+ const control=qs('[data-do="zoom"]');if(control){control.setAttribute('aria-pressed',String(readerZoom.scale>1));control.title=readerZoom.scale>1?'恢复原始大小':'放大';}
+}
+function setReaderZoom(scale,x=readerZoom.x,y=readerZoom.y){
+ readerZoom.scale=Math.max(1,Math.min(4,scale));
+ readerZoom.x=x;readerZoom.y=y;
+ applyReaderZoom();
+}
+function resetReaderZoom(){readerZoom.scale=1;readerZoom.x=0;readerZoom.y=0;applyReaderZoom()}
+function toggleReaderZoom(){setReaderZoom(readerZoom.scale>1.01?1:2,0,0)}
+function attachPinchZoom(frame){
+ if(!frame)return;
+ let gesture=null;
+ const distance=(a,b)=>Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+ const center=(a,b)=>({x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2});
+ function startPinch(e){
+  const [a,b]=e.touches;
+  if(!a||!b)return;
+  const mid=center(a,b);
+  gesture={mode:'pinch',distance:Math.max(8,distance(a,b)),scale:readerZoom.scale,
+   x:readerZoom.x,y:readerZoom.y,mx:mid.x,my:mid.y};
+ }
+ frame.addEventListener('touchstart',e=>{
+  if(e.touches.length>=2){startPinch(e);if(e.cancelable)e.preventDefault();return}
+  if(e.touches.length!==1)return;
+  if(gesture?.mode==='pinch'||gesture?.mode==='released'){gesture={mode:'released'};return}
+  const t=e.touches[0];
+  gesture={mode:readerZoom.scale>1.01?'pan':'swipe',sx:t.clientX,sy:t.clientY,
+   x:readerZoom.x,y:readerZoom.y};
+  if(readerZoom.scale>1.01&&e.cancelable)e.preventDefault();
+ },{passive:false});
+ frame.addEventListener('touchmove',e=>{
+  if(e.touches.length>=2){
+   if(!gesture||gesture.mode!=='pinch')startPinch(e);
+   const [a,b]=e.touches,mid=center(a,b);
+   const newScale=Math.max(1,Math.min(4,gesture.scale*distance(a,b)/gesture.distance));
+   const rect=frame.getBoundingClientRect(),focusX=gesture.mx-rect.left-rect.width/2,
+     focusY=gesture.my-rect.top-rect.height/2;
+   const factor=newScale/gesture.scale;
+   setReaderZoom(newScale,(gesture.x-focusX)*factor+focusX+mid.x-gesture.mx,
+     (gesture.y-focusY)*factor+focusY+mid.y-gesture.my);
+   if(e.cancelable)e.preventDefault();return;
+  }
+  if(e.touches.length===1&&gesture?.mode==='pan'){
+   const t=e.touches[0];
+   setReaderZoom(readerZoom.scale,gesture.x+t.clientX-gesture.sx,
+     gesture.y+t.clientY-gesture.sy);
+   if(e.cancelable)e.preventDefault();return;
+  }
+  if(e.touches.length===1&&gesture?.mode==='swipe'&&e.cancelable)e.preventDefault();
+ },{passive:false});
+ frame.addEventListener('touchend',e=>{
+  if(gesture?.mode==='pinch'){gesture=e.touches.length?{mode:'released'}:null;return}
+  if(gesture?.mode==='released'){if(!e.touches.length)gesture=null;return}
+  if(gesture?.mode==='pan'){if(!e.touches.length)gesture=null;return}
+  if(gesture?.mode==='swipe'&&!e.touches.length){
+   const point=e.changedTouches[0],dx=point.clientX-gesture.sx,dy=point.clientY-gesture.sy;
+   gesture=null;
+   if(readerZoom.scale===1&&Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.2)flip(dx<0?1:-1);
+  }
+ },{passive:true});
+ frame.addEventListener('touchcancel',()=>{gesture=null},{passive:true});
+ // Prevent Safari's page-level pinch zoom while touching the product image.
+ for(const event of ['gesturestart','gesturechange'])frame.addEventListener(event,e=>{if(e.cancelable)e.preventDefault()},{passive:false});
+ // Desktop trackpads: Ctrl + wheel performs the same inline zoom.
+ frame.addEventListener('wheel',e=>{
+  if(!e.ctrlKey)return;
+  if(e.cancelable)e.preventDefault();
+  const rect=frame.getBoundingClientRect(),focusX=e.clientX-rect.left-rect.width/2,
+    focusY=e.clientY-rect.top-rect.height/2;
+  const scale=Math.max(1,Math.min(4,readerZoom.scale*Math.exp(-e.deltaY*.012)));
+  const factor=scale/readerZoom.scale;
+  setReaderZoom(scale,(readerZoom.x-focusX)*factor+focusX,(readerZoom.y-focusY)*factor+focusY);
+ },{passive:false});
+}
+
 function pageFlipSource(){return qs('.flip-sheet img')?.getAttribute('src')||(qs('.paper')?.naturalWidth?book.pages[page]?.src:null)}
 function finishPageFlip(img,prevSrc,dir){
  const layer=qs('#flipSheet');if(!layer)return;
@@ -240,7 +346,7 @@ root.querySelectorAll('[data-book]').forEach(btn=>btn.addEventListener('click',(
 }
 function spreadStart(p){return p}
 function currentPages(){return [page]}
-function openViewer(p){setReaderMode(true);isViewer=true;page=Math.min(Math.max(0,p),book.pages.length-1);setLoadPriority(page,true);updateUrl();renderViewer()}
+function openViewer(p){setReaderMode(true);isViewer=true;page=Math.min(Math.max(0,p),book.pages.length-1);readerZoom.scale=1;readerZoom.x=0;readerZoom.y=0;setLoadPriority(page,true);updateUrl();renderViewer()}
 function renderViewer(turn=null){
 if(!isViewer)return;
 document.title=book.title+' | 9+1=10';
@@ -248,7 +354,7 @@ const shown=currentPages(),first=shown[0],last=shown[shown.length-1],count=book.
 const progr=count>1?(page/(count-1))*100:100;
 root.innerHTML=`<main class="viewer" id="viewer">
 <header class="viewer-header"><div class="viewer-left"><div class="viewer-title-wrap"><div class="viewer-title">${esc(bookTitleNoBrand(book.title))}</div><div class="viewer-sub">${esc(book.subtitle||'DIGITAL LOOKBOOK')}</div></div></div></header>
-<section class="book-stage" id="stage" aria-label="画册阅读区"><button class="turn-arrow prev" data-do="prev" aria-label="上一页" ${first===0?'disabled':''}>${icon('back')}</button><div class="stage-frame"><div class="book-stack single" id="bookstack">${shown.map(i=>`<img class="paper" src="${esc(book.pages[i].src)}" alt="第${i+1}页 ${esc(book.pages[i].title||'')}" loading="eager" fetchpriority="high" decoding="async" draggable="false" data-page="${i}">`).join('')}${turn?.src?`<div id="flipSheet" class="flip-sheet flip-${turn.dir}"><img src="${esc(turn.src)}" alt="" aria-hidden="true" draggable="false"></div>`:''}</div></div><button class="turn-arrow next" data-do="next" aria-label="下一页" ${last>=count-1?'disabled':''}>${icon('next')}</button></section>
+<section class="book-stage" id="stage" aria-label="画册阅读区"><button class="turn-arrow prev" data-do="prev" aria-label="上一页" ${first===0?'disabled':''}>${icon('back')}</button><div class="stage-frame" aria-label="双指捏合放大图片，放大后单指拖动，恢复原始大小后左右滑动翻页"><div class="book-stack single" id="bookstack">${shown.map(i=>`<img class="paper" src="${esc(book.pages[i].src)}" alt="第${i+1}页 ${esc(book.pages[i].title||'')}" loading="eager" fetchpriority="high" decoding="async" draggable="false" data-page="${i}">`).join('')}${turn?.src?`<div id="flipSheet" class="flip-sheet flip-${turn.dir}"><img src="${esc(turn.src)}" alt="" aria-hidden="true" draggable="false"></div>`:''}</div></div><button class="turn-arrow next" data-do="next" aria-label="下一页" ${last>=count-1?'disabled':''}>${icon('next')}</button></section>
 <footer class="bottom-reader-toolbar" aria-label="阅读与翻页工具">
 <div class="seek-area"><div class="seek-count"><strong>${String(page+1).padStart(2,'0')}</strong> / ${count}</div><input class="page-seek" id="pageSeek" type="range" min="1" max="${count}" step="1" value="${page+1}" style="--seek-progress:${progr}%" aria-label="拖动跳转页面" aria-valuetext="第 ${page+1} 页，共 ${count} 页"></div>
 <nav class="bottom-reader-actions" aria-label="阅读工具"><button class="tool" data-do="thumb" aria-label="页面缩略图" title="缩略图">${icon('grid')}</button><button class="tool" data-do="zoom" aria-label="放大当前页面" title="放大">${icon('zoom')}</button><button class="tool" data-do="share" aria-label="分享本图册" title="分享">${icon('share')}</button><button class="tool" data-do="more" aria-label="更多操作" aria-expanded="false" title="更多">${icon('more')}</button></nav>
@@ -258,6 +364,8 @@ root.innerHTML=`<main class="viewer" id="viewer">
 root.querySelectorAll('[data-do]').forEach(e=>e.addEventListener('click',()=>action(e.dataset.do)));
 // Image tap intentionally does nothing. Zoom is available only from the bottom tool bar.
 const visibleImg=qs('.paper'),visiblePage=page,visibleBook=book;
+attachPinchZoom(qs('.stage-frame'));
+if(readerZoom.scale>1)applyReaderZoom();
 let readyHandled=false;
 function onReady(ok){if(readyHandled)return;readyHandled=true;if(preload.bookRef===visibleBook)markPageVisible(visiblePage,ok);if(turn?.src)finishPageFlip(visibleImg,turn.src,turn.dir)}
 if(visibleImg){
@@ -269,15 +377,13 @@ if(visibleImg){
 const seek=qs('#pageSeek');
 seek.addEventListener('input',()=>{seek.style.setProperty('--seek-progress',String(count>1?((Number(seek.value)-1)/(count-1))*100:100)+'%');const label=qs('.seek-count strong');if(label)label.textContent=String(seek.value).padStart(2,'0');seek.setAttribute('aria-valuetext',`第 ${seek.value} 页，共 ${count} 页`)});
 seek.addEventListener('change',()=>go(Number(seek.value)-1));
-let startX=0,startY=0;
-qs('#stage').addEventListener('touchstart',e=>{startX=e.changedTouches[0].screenX;startY=e.changedTouches[0].screenY},{passive:true});
-qs('#stage').addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-startX,dy=e.changedTouches[0].screenY-startY;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.2)flip(dx<0?1:-1)},{passive:true});
+// Single-finger page turns and two-finger pinch / drag are handled within attachPinchZoom().
 }
 
 function turnTo(n,priority){
  const next=Math.max(0,Math.min(book.pages.length-1,n));if(next===page)return;
  const direction=next>page?'next':'prev';const old=pageFlipSource();
- page=next;lastDirection=direction;playPaperTurn();
+ page=next;lastDirection=direction;readerZoom.scale=1;readerZoom.x=0;readerZoom.y=0;playPaperTurn();
  if(priority||!preload.seen.has(next))setLoadPriority(next,true);
  updateUrl();renderViewer(old?{src:old,dir:direction}:null);
 }
@@ -291,7 +397,7 @@ if(a==='home'){setReaderMode(false);isViewer=false;const u=new URL(location.href
 if(a==='next')flip(1);
 if(a==='prev')flip(-1);
 if(a==='thumb'||a==='toc')openDrawer(a);
-if(a==='zoom')openZoom(currentPages()[0]);
+if(a==='zoom')toggleReaderZoom();
 if(a==='share')share();
 if(a==='full'){if(document.fullscreenElement)document.exitFullscreen?.();else qs('#viewer')?.requestFullscreen?.().catch(()=>toast('当前浏览器不支持全屏'))}
 }

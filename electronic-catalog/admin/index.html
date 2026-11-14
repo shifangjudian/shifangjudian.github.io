@@ -57,7 +57,7 @@ function sharePageHtml(b){
 <meta name="description" content="${desc}">
 <meta property="og:type" content="website"><meta property="og:site_name" content="9+1=10 餐饮职业制服"><meta property="og:locale" content="zh_CN">
 <meta property="og:title" content="${title}"><meta property="og:description" content="${desc}"><meta property="og:url" content="${esc(share)}">
-${img?`<meta property="og:image" content="${image}"><meta property="og:image:secure_url" content="${image}"><meta property="og:image:alt" content="${title} 封面"><link rel="image_src" href="${image}"><meta name="twitter:image" content="${image}">`:""}
+${img?`<meta property="og:image" content="${image}"><meta property="og:image:secure_url" content="${image}"><meta property="og:image:alt" content="${title} 封面"><meta itemprop="image" content="${image}"><link rel="image_src" href="${image}"><meta name="twitter:image" content="${image}">`:""}
 <meta name="twitter:card" content="summary"><meta name="twitter:title" content="${title}"><meta name="twitter:description" content="${desc}">
 <link rel="canonical" href="${esc(share)}">
 <style>
@@ -65,11 +65,19 @@ ${img?`<meta property="og:image" content="${image}"><meta property="og:image:sec
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;min-height:100dvh;overflow:hidden;background:#171717;color:#eee}
 .reader{display:block;position:fixed;inset:0;width:100%;height:100%;height:100dvh;border:0;background:#171717}
+.reader{z-index:1}
+.share-preview{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;background:#171717;color:#eae5dc;text-align:center}
+.share-preview[hidden]{display:none}
+.share-preview img{display:block;width:min(72vw,300px);height:min(72vw,300px);object-fit:contain;border:1px solid #ffffff20;border-radius:4px}
+.share-preview .brand{color:#c7ab7e;font-size:13px;letter-spacing:.18em}
+.share-preview .name{max-width:90%;font-size:15px;line-height:1.6;letter-spacing:.02em}
+.share-preview .loading{font-size:11px;color:#999;letter-spacing:.08em}
+
 .unpublished{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
 .unpublished h1{font-size:20px;font-weight:500;line-height:1.5}
 .unpublished p{font-size:13px;color:#aaa}
 </style></head><body>
-${available?`<iframe class="reader" src="${esc(read)}" title="在线翻阅《${title}》" loading="eager" allow="fullscreen; web-share" allowfullscreen></iframe>`:`<main class="unpublished"><h1>${title}</h1><p>图册暂未发布</p></main>`}
+${available?`<div class="share-preview" id="share-preview"><span class="brand">9+1=10</span>${img?`<img src="${image}" alt="${title} 封面" width="300" height="300" fetchpriority="high">`:""}<div class="name">${title}</div><span class="loading">正在打开电子图册…</span></div><iframe class="reader" src="${esc(read)}" title="在线翻阅《${title}》" loading="eager" allow="fullscreen; web-share" onload="var p=document.getElementById('share-preview');if(p)p.hidden=true" allowfullscreen></iframe>`:`<main class="unpublished"><h1>${title}</h1><p>图册暂未发布</p></main>`}
 </body></html>`;
 }
 function imgUrl(page){if(!page)return '';const src=page.src||'';if(src.startsWith('__temp__:'))return state.assets.get(src.slice(9))?.url||'';return new URL('../'+src,location.href).href}
